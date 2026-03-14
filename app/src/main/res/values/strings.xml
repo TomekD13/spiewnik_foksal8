@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Śpiewnik ADS</string>
+    <string name="label_song_number">Numer pieśni</string>
+    <string name="hint_song_number">np. 42</string>
+    <string name="btn_open">Otwórz</string>
+    <string name="error_not_found">Nie znaleziono pieśni o numerze %d</string>
+    <string name="error_empty">Podaj numer pieśni</string>
+</resources>

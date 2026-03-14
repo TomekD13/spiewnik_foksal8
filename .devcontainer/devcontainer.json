@@ -1,0 +1,21 @@
+{
+	"name": "Spiewnik Android",
+	"image": "mcr.microsoft.com/devcontainers/universal:4.0.1-noble",
+	"features": {
+		"ghcr.io/devcontainers/features/android-sdk:1": {
+			"version": "latest",
+			"buildToolsVersion": "34.0.0",
+			"platformVersion": "34"
+		}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"fwcd.kotlin",
+				"vscjava.vscode-gradle",
+				"vscjava.vscode-java-pack"
+			]
+		}
+	},
+	"postCreateCommand": "echo 'Android SDK ready. Use Gradle to build the project.'"
+}
