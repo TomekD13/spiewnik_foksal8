@@ -6,4 +6,5 @@
     <string name="btn_open">Otwórz</string>
     <string name="error_not_found">Nie znaleziono pieśni o numerze %d</string>
     <string name="error_empty">Podaj numer pieśni</string>
+    <string name="error_pdf_not_found">Nie można otworzyć pliku śpiewnika.\nUpewnij się, że plik PDF jest dostępny.</string>
 </resources>
