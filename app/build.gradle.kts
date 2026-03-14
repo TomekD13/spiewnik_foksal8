@@ -31,15 +31,11 @@ android {
     }
 }
 
-// android-pdf-viewer is hosted on JitPack
-repositories {
-    maven { url = uri("https://jitpack.io") }
-}
-
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.pdf.viewer)
+    // mhiew fork of barteksc/AndroidPdfViewer — actively maintained, available on JitPack
     implementation(libs.gson)
 }
