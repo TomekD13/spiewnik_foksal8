@@ -1,13 +1,6 @@
 {
 	"name": "Spiewnik Android",
-	"image": "mcr.microsoft.com/devcontainers/universal:4.0.1-noble",
-	"features": {
-		"ghcr.io/devcontainers/features/android-sdk:1": {
-			"version": "latest",
-			"buildToolsVersion": "34.0.0",
-			"platformVersion": "34"
-		}
-	},
+	"image": "mcr.microsoft.com/devcontainers/java:21",
 	"customizations": {
 		"vscode": {
 			"extensions": [
@@ -17,5 +10,5 @@
 			]
 		}
 	},
-	"postCreateCommand": "echo 'Android SDK ready. Use Gradle to build the project.'"
+	"postCreateCommand": "bash .devcontainer/install-android-sdk.sh"
 }

@@ -3,51 +3,161 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@color/background"
+    android:keepScreenOn="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="24dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/label_song_number"
-        android:textSize="16sp"
-        android:layout_marginBottom="8dp" />
-
-    <com.google.android.material.textfield.TextInputLayout
+    <!-- ── Top info bar ── -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/bar_background"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etSongNumber"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvSongInfo"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_song_number"
-            android:inputType="number"
-            android:imeOptions="actionGo" />
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:textColor="@color/bar_text"
+            android:textStyle="bold"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text="@string/app_name" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/tvPageInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/bar_text"
+            android:paddingStart="12dp" />
+    </LinearLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnOpen"
+    <!-- ── Input row ── -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_open" />
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/input_background"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
 
+        <!-- Number input -->
+        <EditText
+            android:id="@+id/etNumber"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:hint="@string/hint_number"
+            android:inputType="number"
+            android:imeOptions="actionGo"
+            android:maxLength="4"
+            android:textSize="22sp"
+            android:textAlignment="center"
+            android:background="@drawable/input_background"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
+
+        <Button
+            android:id="@+id/btnGo"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:text="@string/btn_go"
+            android:textSize="18sp"
+            android:backgroundTint="@color/accent" />
+
+        <!-- Title search -->
+        <AutoCompleteTextView
+            android:id="@+id/actvTitle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="12dp"
+            android:hint="@string/hint_search"
+            android:inputType="text"
+            android:textSize="16sp"
+            android:completionThreshold="1"
+            android:background="@drawable/input_background"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
+
+        <!-- Nav mode toggle -->
+        <Button
+            android:id="@+id/btnNavMode"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="12dp"
+            android:text="@string/nav_spread"
+            android:textSize="14sp"
+            android:backgroundTint="@color/accent_secondary" />
+    </LinearLayout>
+
+    <!-- ── Error message ── -->
     <TextView
         android:id="@+id/tvError"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:textColor="@color/error"
-        android:visibility="gone" />
+        android:padding="8dp"
+        android:textSize="15sp"
+        android:textColor="@color/error_text"
+        android:background="@color/error_background"
+        android:visibility="gone"
+        android:gravity="center" />
+
+    <!-- ── PDF spread area ── -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <!-- Left nav button -->
+        <Button
+            android:id="@+id/btnPrev"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:text="◀"
+            android:textSize="24sp"
+            android:backgroundTint="@color/nav_button"
+            android:textColor="@color/nav_button_text" />
+
+        <!-- Left page -->
+        <ImageView
+            android:id="@+id/ivLeft"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:background="@color/page_background"
+            android:contentDescription="@string/cd_left_page" />
+
+        <!-- Right page -->
+        <ImageView
+            android:id="@+id/ivRight"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:background="@color/page_background"
+            android:contentDescription="@string/cd_right_page"
+            android:visibility="invisible" />
+
+        <!-- Right nav button -->
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:text="▶"
+            android:textSize="24sp"
+            android:backgroundTint="@color/nav_button"
+            android:textColor="@color/nav_button_text" />
+    </LinearLayout>
 
 </LinearLayout>

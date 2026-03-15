@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Śpiewnik ADS</string>
-    <string name="label_song_number">Numer pieśni</string>
-    <string name="hint_song_number">np. 42</string>
-    <string name="btn_open">Otwórz</string>
-    <string name="error_not_found">Nie znaleziono pieśni o numerze %d</string>
-    <string name="error_empty">Podaj numer pieśni</string>
-    <string name="error_pdf_not_found">Nie można otworzyć pliku śpiewnika.\nUpewnij się, że plik PDF jest dostępny.</string>
+    <string name="app_name">Śpiewnik</string>
+    <string name="hint_number">Nr pieśni</string>
+    <string name="hint_search">Szukaj po tytule…</string>
+    <string name="btn_go">Idź</string>
+    <string name="nav_spread">Rozkładówka</string>
+    <string name="nav_page">Strona</string>
+    <string name="nav_song">Pieśń</string>
+    <string name="cd_left_page">Lewa strona PDF</string>
+    <string name="cd_right_page">Prawa strona PDF</string>
 </resources>

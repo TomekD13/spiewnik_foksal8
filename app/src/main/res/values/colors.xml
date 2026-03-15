@@ -1,7 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Main background -->
+    <color name="background">#1A1A2E</color>
+
+    <!-- Top bar -->
+    <color name="bar_background">#16213E</color>
+    <color name="bar_text">#E0E0E0</color>
+
+    <!-- Input row -->
+    <color name="input_background">#0F3460</color>
+
+    <!-- Accent buttons -->
+    <color name="accent">#E94560</color>
+    <color name="accent_secondary">#533483</color>
+
+    <!-- Nav arrows -->
+    <color name="nav_button">#0F3460</color>
+    <color name="nav_button_text">#FFFFFF</color>
+
+    <!-- PDF page area -->
+    <color name="page_background">#2C2C3E</color>
+
+    <!-- Error -->
+    <color name="error_text">#FFFFFF</color>
+    <color name="error_background">#C0392B</color>
+
+    <!-- Material theme required -->
+    <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
-    <color name="error">#FFB00020</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
 </resources>
