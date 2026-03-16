@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- VS Code Dark+ palette -->
     <!-- Main background -->
-    <color name="background">#1A1A2E</color>
+    <color name="background">#1E1E1E</color>
 
     <!-- Top bar -->
-    <color name="bar_background">#16213E</color>
-    <color name="bar_text">#E0E0E0</color>
+    <color name="bar_background">#252526</color>
+    <color name="bar_text">#D4D4D4</color>
 
     <!-- Input row -->
-    <color name="input_background">#0F3460</color>
+    <color name="input_background">#2D2D2D</color>
 
     <!-- Accent buttons -->
-    <color name="accent">#E94560</color>
-    <color name="accent_secondary">#533483</color>
+    <color name="accent">#0E639C</color>
+    <color name="accent_secondary">#264F78</color>
 
     <!-- Nav arrows -->
-    <color name="nav_button">#0F3460</color>
-    <color name="nav_button_text">#FFFFFF</color>
+    <color name="nav_button">#37373D</color>
+    <color name="nav_button_disabled">#2D2D2D</color>
+    <color name="nav_button_text">#D4D4D4</color>
+    <color name="nav_button_text_disabled">#555555</color>
 
     <!-- PDF page area -->
-    <color name="page_background">#2C2C3E</color>
+    <color name="page_background">#1E1E1E</color>
 
-    <!-- Error -->
+    <!-- Error banner (critical only) -->
     <color name="error_text">#FFFFFF</color>
-    <color name="error_background">#C0392B</color>
+    <color name="error_background">#F44747</color>
 
     <!-- Material theme required -->
     <color name="purple_200">#FFBB86FC</color>

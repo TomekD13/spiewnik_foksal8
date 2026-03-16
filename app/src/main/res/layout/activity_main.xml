@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -14,7 +15,7 @@
         android:gravity="center_vertical"
         android:background="@color/bar_background"
         android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        android:paddingEnd="8dp">
 
         <TextView
             android:id="@+id/tvSongInfo"
@@ -34,7 +35,18 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:textColor="@color/bar_text"
-            android:paddingStart="12dp" />
+            android:paddingStart="12dp"
+            android:paddingEnd="4dp" />
+
+        <Button
+            android:id="@+id/btnSettings"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="4dp"
+            android:text="@string/btn_settings"
+            android:textSize="20sp"
+            android:padding="0dp"
+            app:backgroundTint="@color/bar_background" />
     </LinearLayout>
 
     <!-- ── Input row ── -->
@@ -71,7 +83,7 @@
             android:layout_marginStart="8dp"
             android:text="@string/btn_go"
             android:textSize="18sp"
-            android:backgroundTint="@color/accent" />
+            app:backgroundTint="@color/accent" />
 
         <!-- Title search -->
         <AutoCompleteTextView
@@ -96,10 +108,10 @@
             android:layout_marginStart="12dp"
             android:text="@string/nav_spread"
             android:textSize="14sp"
-            android:backgroundTint="@color/accent_secondary" />
+            app:backgroundTint="@color/accent_secondary" />
     </LinearLayout>
 
-    <!-- ── Error message ── -->
+    <!-- ── Critical error banner (hidden by default) ── -->
     <TextView
         android:id="@+id/tvError"
         android:layout_width="match_parent"
@@ -125,29 +137,38 @@
             android:layout_height="match_parent"
             android:text="◀"
             android:textSize="24sp"
-            android:backgroundTint="@color/nav_button"
-            android:textColor="@color/nav_button_text" />
+            app:backgroundTint="@color/nav_button_tint"
+            android:textColor="@color/nav_button_text_tint" />
 
-        <!-- Left page -->
-        <ImageView
-            android:id="@+id/ivLeft"
+        <!-- PDF pages container — touch target for zoom/pan -->
+        <LinearLayout
+            android:id="@+id/pdfContainer"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="fitCenter"
-            android:background="@color/page_background"
-            android:contentDescription="@string/cd_left_page" />
+            android:orientation="horizontal">
 
-        <!-- Right page -->
-        <ImageView
-            android:id="@+id/ivRight"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:scaleType="fitCenter"
-            android:background="@color/page_background"
-            android:contentDescription="@string/cd_right_page"
-            android:visibility="invisible" />
+            <!-- Left page -->
+            <ImageView
+                android:id="@+id/ivLeft"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:background="@color/page_background"
+                android:contentDescription="@string/cd_left_page" />
+
+            <!-- Right page -->
+            <ImageView
+                android:id="@+id/ivRight"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:background="@color/page_background"
+                android:contentDescription="@string/cd_right_page"
+                android:visibility="invisible" />
+        </LinearLayout>
 
         <!-- Right nav button -->
         <Button
@@ -156,8 +177,8 @@
             android:layout_height="match_parent"
             android:text="▶"
             android:textSize="24sp"
-            android:backgroundTint="@color/nav_button"
-            android:textColor="@color/nav_button_text" />
+            app:backgroundTint="@color/nav_button_tint"
+            android:textColor="@color/nav_button_text_tint" />
     </LinearLayout>
 
 </LinearLayout>

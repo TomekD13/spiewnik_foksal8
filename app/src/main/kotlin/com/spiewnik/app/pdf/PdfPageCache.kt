@@ -76,7 +76,8 @@ class PdfPageCache(private val context: Context) {
                 // Scale to fit keeping aspect ratio
                 val pageW = page.width.toFloat()
                 val pageH = page.height.toFloat()
-                val scale = minOf(width / pageW, height / pageH)
+                // 2x render resolution for quality zoom up to 2x without pixelation
+                val scale = minOf(width / pageW, height / pageH) * 2f
                 val bmpW = (pageW * scale).toInt().coerceAtLeast(1)
                 val bmpH = (pageH * scale).toInt().coerceAtLeast(1)
 

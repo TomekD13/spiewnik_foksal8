@@ -9,7 +9,7 @@ import org.junit.Test
 
 /**
  * Unit tests for song data parsing and lookup logic.
- * These tests work directly on the data model without needing Android context.
+ * JSON format matches piesni.json: nr_piesni, tytul, strony_pdf, interpolated.
  */
 class SongRepositoryTest {
 
@@ -17,10 +17,10 @@ class SongRepositoryTest {
 
     private val sampleJson = """
         [
-          {"number": 480, "title": "Przyjdź Duchu Święty", "pages": [470, 471]},
-          {"number": 1,   "title": "Bóg jest miłością",    "pages": [1, 2]},
-          {"number": 150, "title": "Jezu, ufam Tobie",     "pages": [143]},
-          {"number": 700, "title": "Zdrowaś Maryjo",       "pages": [691, 692]}
+          {"nr_piesni": 480, "tytul": "Przyjdź Duchu Święty", "strony_pdf": [470, 471], "interpolated": false},
+          {"nr_piesni": 1,   "tytul": "Bóg jest miłością",    "strony_pdf": [1, 2],     "interpolated": false},
+          {"nr_piesni": 150, "tytul": "Jezu, ufam Tobie",     "strony_pdf": [143],      "interpolated": false},
+          {"nr_piesni": 700, "tytul": "Zdrowaś Maryjo",       "strony_pdf": [691, 692], "interpolated": false}
         ]
     """.trimIndent()
 
@@ -45,8 +45,7 @@ class SongRepositoryTest {
 
     @Test
     fun `find by number returns null for missing song`() {
-        val song = songs.find { it.number == 999 }
-        assertNull(song)
+        assertNull(songs.find { it.number == 999 })
     }
 
     @Test
@@ -58,8 +57,7 @@ class SongRepositoryTest {
 
     @Test
     fun `two-page song has two pages`() {
-        val song = songs.find { it.number == 480 }!!
-        assertEquals(2, song.pages.size)
+        assertEquals(2, songs.find { it.number == 480 }!!.pages.size)
     }
 
     @Test
@@ -79,15 +77,13 @@ class SongRepositoryTest {
     @Test
     fun `firstSong has no previous`() {
         val idx = songs.indexOfFirst { it.number == 1 }
-        val prev = if (idx > 0) songs[idx - 1] else null
-        assertNull(prev)
+        assertNull(if (idx > 0) songs[idx - 1] else null)
     }
 
     @Test
     fun `lastSong has no next`() {
         val idx = songs.indexOfFirst { it.number == 700 }
-        val next = if (idx < songs.size - 1) songs[idx + 1] else null
-        assertNull(next)
+        assertNull(if (idx < songs.size - 1) songs[idx + 1] else null)
     }
 
     @Test
@@ -95,5 +91,18 @@ class SongRepositoryTest {
         val results = songs.filter { it.title.lowercase().contains("maryjo") }
         assertEquals(1, results.size)
         assertEquals(700, results[0].number)
+    }
+
+    @Test
+    fun `interpolated field defaults to false`() {
+        songs.forEach { assertFalse(it.interpolated) }
+    }
+
+    @Test
+    fun `song with interpolated true is parsed correctly`() {
+        val json = """[{"nr_piesni": 5, "tytul": "Test", "strony_pdf": [10], "interpolated": true}]"""
+        val type = object : TypeToken<List<Song>>() {}.type
+        val parsed: List<Song> = Gson().fromJson(json, type)
+        assertTrue(parsed[0].interpolated)
     }
 }

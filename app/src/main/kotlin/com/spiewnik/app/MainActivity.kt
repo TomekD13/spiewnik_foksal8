@@ -1,15 +1,19 @@
 package com.spiewnik.app
 
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import android.view.View
 import android.view.WindowManager
+import android.view.GestureDetector
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.spiewnik.app.databinding.ActivityMainBinding
-import com.spiewnik.app.pdf.PdfPageCache
+import com.spiewnik.app.ui.settings.SettingsFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -18,6 +22,14 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: SongViewModel by viewModels()
+
+    // ── Zoom / pan state ──────────────────────────────────────────────────────
+    private var zoomScale = 1f
+    private lateinit var scaleDetector: ScaleGestureDetector
+    private lateinit var gestureDetector: GestureDetector
+
+    // Track song changes to reset pan (not zoom) when song switches
+    private var lastSongNumber: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +48,10 @@ class MainActivity : AppCompatActivity() {
 
         setupInput()
         setupNavigation()
+        setupZoom()
         observeState()
+        observeLoadState()
+        observeToasts()
     }
 
     // ── Input & search ────────────────────────────────────────────────────────
@@ -50,7 +65,6 @@ class MainActivity : AppCompatActivity() {
             } else false
         }
 
-        // Title autocomplete – adapter populated when songs list arrives
         viewModel.allSongs.observe(this) { songs ->
             val items = songs.map { "${it.number}. ${it.title}" }
             binding.actvTitle.setAdapter(
@@ -67,6 +81,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnNavMode.setOnClickListener { viewModel.cycleNavMode() }
+
+        binding.btnSettings.setOnClickListener {
+            SettingsFragment.show(supportFragmentManager)
+        }
     }
 
     private fun openSongFromInput() {
@@ -81,16 +99,101 @@ class MainActivity : AppCompatActivity() {
         binding.btnNext.setOnClickListener { viewModel.navigateRight() }
     }
 
-    // ── State observer ────────────────────────────────────────────────────────
+    // ── Zoom / pan ────────────────────────────────────────────────────────────
+
+    private fun setupZoom() {
+        scaleDetector = ScaleGestureDetector(this,
+            object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+                override fun onScale(detector: ScaleGestureDetector): Boolean {
+                    zoomScale = (zoomScale * detector.scaleFactor).coerceIn(1f, 5f)
+                    applyZoom()
+                    return true
+                }
+            }
+        )
+
+        gestureDetector = GestureDetector(this,
+            object : GestureDetector.SimpleOnGestureListener() {
+                override fun onScroll(
+                    e1: MotionEvent?, e2: MotionEvent,
+                    distanceX: Float, distanceY: Float
+                ): Boolean {
+                    if (zoomScale <= 1f) return false
+                    binding.pdfContainer.translationX -= distanceX
+                    binding.pdfContainer.translationY -= distanceY
+                    clampTranslation()
+                    return true
+                }
+            }
+        )
+
+        binding.pdfContainer.setOnTouchListener { _, event ->
+            scaleDetector.onTouchEvent(event)
+            if (!scaleDetector.isInProgress) gestureDetector.onTouchEvent(event)
+            true
+        }
+    }
+
+    private fun applyZoom() {
+        binding.pdfContainer.scaleX = zoomScale
+        binding.pdfContainer.scaleY = zoomScale
+        clampTranslation()
+    }
+
+    private fun clampTranslation() {
+        val c = binding.pdfContainer
+        val maxTx = c.width * (zoomScale - 1f) / 2f
+        val maxTy = c.height * (zoomScale - 1f) / 2f
+        c.translationX = c.translationX.coerceIn(-maxTx, maxTx)
+        c.translationY = c.translationY.coerceIn(-maxTy, maxTy)
+    }
+
+    private fun resetPan() {
+        binding.pdfContainer.translationX = 0f
+        binding.pdfContainer.translationY = 0f
+    }
+
+    // ── Observers ─────────────────────────────────────────────────────────────
 
     private fun observeState() {
         viewModel.state.observe(this) { state ->
+            // Reset pan when song changes (zoom persists)
+            val currentNumber = state.song?.number
+            if (currentNumber != lastSongNumber) {
+                lastSongNumber = currentNumber
+                resetPan()
+            }
+
             updateTopBar(state)
             updateNavMode(state)
-            updateError(state)
+            updateNavButtons(state)
             renderPages(state)
         }
     }
+
+    private fun observeLoadState() {
+        viewModel.loadState.observe(this) { loadState ->
+            when (loadState) {
+                is LoadState.Error -> {
+                    binding.tvError.text = loadState.message
+                    binding.tvError.visibility = View.VISIBLE
+                }
+                LoadState.Ready -> binding.tvError.visibility = View.GONE
+                LoadState.Loading -> binding.tvError.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun observeToasts() {
+        viewModel.toastEvent.observe(this) { msg ->
+            if (msg != null) {
+                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+                viewModel.clearToast()
+            }
+        }
+    }
+
+    // ── UI update helpers ─────────────────────────────────────────────────────
 
     private fun updateTopBar(state: UiState) {
         if (state.song != null) {
@@ -106,15 +209,12 @@ class MainActivity : AppCompatActivity() {
         binding.btnNavMode.text = state.navMode.label()
     }
 
-    private fun updateError(state: UiState) {
-        val msg = state.error
-        if (msg != null) {
-            binding.tvError.text = msg
-            binding.tvError.visibility = View.VISIBLE
-        } else {
-            binding.tvError.visibility = View.GONE
-        }
+    private fun updateNavButtons(state: UiState) {
+        binding.btnPrev.isEnabled = state.canGoLeft
+        binding.btnNext.isEnabled = state.canGoRight
     }
+
+    // ── PDF rendering ─────────────────────────────────────────────────────────
 
     private fun renderPages(state: UiState) {
         val leftIdx = state.leftPdfIndex
@@ -125,7 +225,6 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        // If views haven't been laid out yet, wait for layout pass
         if (binding.ivLeft.width == 0) {
             binding.ivLeft.post { renderPages(viewModel.state.value ?: return@post) }
             return
@@ -154,7 +253,6 @@ class MainActivity : AppCompatActivity() {
                 binding.ivRight.visibility = View.INVISIBLE
             }
 
-            // Prefetch neighbours in the background
             prefetchNeighbours(state)
         }
     }

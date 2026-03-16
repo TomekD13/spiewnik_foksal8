@@ -9,7 +9,7 @@ class SongRepository(private val context: Context) {
 
     companion object {
         private const val TAG = "SongRepository"
-        private const val SONGS_FILE = "songs.json"
+        private const val SONGS_FILE = "piesni.json"
     }
 
     private var cachedSongs: List<Song>? = null
