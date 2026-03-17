@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.activity.ktx)
     implementation(libs.fragment.ktx)
+    implementation(libs.core.splashscreen)
     implementation(libs.gson)
     implementation(libs.kotlinx.coroutines.android)
 

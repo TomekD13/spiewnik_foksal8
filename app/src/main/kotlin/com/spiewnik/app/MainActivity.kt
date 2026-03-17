@@ -2,6 +2,7 @@ package com.spiewnik.app
 
 import android.os.Bundle
 import android.view.MotionEvent
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import android.view.ScaleGestureDetector
 import android.view.View
 import android.view.WindowManager
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     private var lastSongNumber: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
 
         // Keep screen on + fullscreen immersive

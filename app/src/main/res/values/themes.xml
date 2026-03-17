@@ -9,5 +9,9 @@
         <item name="android:windowBackground">@color/background</item>
         <item name="android:statusBarColor">@color/bar_background</item>
         <item name="android:navigationBarColor">@color/bar_background</item>
+
+        <!-- Splash screen (Android 12+ / API 31+) -->
+        <item name="android:windowSplashScreenBackground">#EEECEA</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/logo</item>
     </style>
 </resources>
