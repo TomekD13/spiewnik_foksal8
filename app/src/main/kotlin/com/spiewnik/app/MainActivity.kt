@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import com.spiewnik.app.databinding.ActivityMainBinding
 import com.spiewnik.app.ui.settings.SettingsFragment
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
