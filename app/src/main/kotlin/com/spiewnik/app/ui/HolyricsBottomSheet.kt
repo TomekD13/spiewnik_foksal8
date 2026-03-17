@@ -39,9 +39,12 @@ class HolyricsBottomSheet : BottomSheetDialogFragment() {
 
         binding.btnHolyricsClose.setOnClickListener { dismiss() }
 
-        // Numbers passed directly as arguments to avoid LiveData timing issues
-        val numbers = arguments?.getIntArray(ARG_NUMBERS)?.toList() ?: emptyList()
-        populateButtons(numbers)
+        // Observe LiveData so the list updates automatically when a new fetch completes,
+        // even if the sheet is already open (e.g. user added songs in Holyrics and
+        // pressed the button again without closing the sheet first).
+        viewModel.holyricsPlaylist.observe(viewLifecycleOwner) { numbers ->
+            if (numbers.isNotEmpty()) populateButtons(numbers)
+        }
     }
 
     private fun populateButtons(numbers: List<Int>) {
@@ -76,15 +79,10 @@ class HolyricsBottomSheet : BottomSheetDialogFragment() {
 
     companion object {
         private const val TAG = "HolyricsBottomSheet"
-        private const val ARG_NUMBERS = "numbers"
 
-        fun show(fragmentManager: FragmentManager, numbers: List<Int>) {
+        fun show(fragmentManager: FragmentManager) {
             if (fragmentManager.findFragmentByTag(TAG) == null) {
-                val sheet = HolyricsBottomSheet()
-                sheet.arguments = Bundle().apply {
-                    putIntArray(ARG_NUMBERS, numbers.toIntArray())
-                }
-                sheet.show(fragmentManager, TAG)
+                HolyricsBottomSheet().show(fragmentManager, TAG)
             }
         }
     }

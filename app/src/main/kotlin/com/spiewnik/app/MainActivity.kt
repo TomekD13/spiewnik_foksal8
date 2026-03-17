@@ -64,7 +64,6 @@ class MainActivity : AppCompatActivity() {
         observeState()
         observeLoadState()
         observeToasts()
-        observeHolyricsPlaylist()
     }
 
     // ── Input & search ────────────────────────────────────────────────────────
@@ -100,6 +99,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnHolyrics.setOnClickListener {
+            HolyricsBottomSheet.show(supportFragmentManager)
             viewModel.fetchHolyricsPlaylist()
         }
     }
@@ -252,14 +252,6 @@ class MainActivity : AppCompatActivity() {
             if (msg != null) {
                 Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
                 viewModel.clearToast()
-            }
-        }
-    }
-
-    private fun observeHolyricsPlaylist() {
-        viewModel.holyricsPlaylist.observe(this) { playlist ->
-            if (playlist.isNotEmpty()) {
-                HolyricsBottomSheet.show(supportFragmentManager, playlist)
             }
         }
     }
