@@ -1,5 +1,6 @@
 package com.spiewnik.app
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MotionEvent
@@ -37,6 +38,8 @@ class MainActivity : AppCompatActivity() {
     // Active render job — canceled before starting a new one to prevent stale bitmap flicker
     private var renderJob: kotlinx.coroutines.Job? = null
 
+    private var inputRowHeight = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -54,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupInput()
+        setupInputRowToggle()
         setupNavigation()
         setupZoom()
         observeState()
@@ -91,6 +95,49 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnSettings.setOnClickListener {
             SettingsFragment.show(supportFragmentManager)
+        }
+    }
+
+    private fun setupInputRowToggle() {
+        binding.inputRow.post {
+            inputRowHeight = binding.inputRow.measuredHeight
+        }
+        binding.btnSelect.setOnClickListener {
+            if (binding.inputRow.visibility == View.VISIBLE) hideInputRow()
+            else showInputRow()
+        }
+        // btnHolyrics: action not wired yet
+    }
+
+    private fun showInputRow() {
+        binding.inputRow.visibility = View.VISIBLE
+        binding.inputRow.layoutParams.height = 0
+        binding.inputRow.requestLayout()
+        binding.btnSelect.text = getString(R.string.btn_hide_bar)
+        ValueAnimator.ofInt(0, inputRowHeight).apply {
+            duration = 250
+            addUpdateListener {
+                binding.inputRow.layoutParams.height = it.animatedValue as Int
+                binding.inputRow.requestLayout()
+            }
+            start()
+        }
+    }
+
+    private fun hideInputRow() {
+        ValueAnimator.ofInt(inputRowHeight, 0).apply {
+            duration = 250
+            addUpdateListener {
+                binding.inputRow.layoutParams.height = it.animatedValue as Int
+                binding.inputRow.requestLayout()
+            }
+            addListener(object : android.animation.AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: android.animation.Animator) {
+                    binding.inputRow.visibility = View.GONE
+                    binding.btnSelect.text = getString(R.string.btn_select)
+                }
+            })
+            start()
         }
     }
 

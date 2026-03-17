@@ -150,6 +150,55 @@ binding.tvSongInfo.text = getString(R.string.song_info_format, song.number, song
 
 ---
 
+## Instalacja APK debug na emulatorze/urządzeniu — flaga -t
+
+**Problem:** `adb install` kończy się błędem `INSTALL_FAILED_TEST_ONLY`.
+
+**Przyczyna:** APK zbudowane w trybie debug mają w manifeście flagę `android:testOnly="true"`, którą Android blokuje przy normalnej instalacji.
+
+**Rozwiązanie:** Dodaj flagę `-t` do komendy install:
+```
+adb -s localhost:5555 install -t spiewnik.apk
+```
+
+---
+
+## Crash na Android < 13 — OnBackAnimationCallback
+
+**Problem:** Aplikacja crashuje natychmiast po uruchomieniu na urządzeniu z Androidem 9–12. Błąd w logcat: `ClassNotFoundException: android.window.OnBackAnimationCallback`.
+
+**Przyczyna:** `androidx.activity` w nowszych wersjach próbuje załadować klasę `OnBackAnimationCallback` dostępną dopiero od API 33 (Android 13). Przy `minSdk` ustawionym na 34 problem nie istnieje, ale po obniżeniu do 28 ujawnia się na starszych systemach.
+
+**Rozwiązanie zastosowane:** Problem jest łagodny (informacyjny — widoczny jako `I` nie `E` w logcat) i aplikacja działa mimo tego. `androidx.activity` obsługuje to przez reflection z graceful fallback. Jeśli crash nadal występuje, zaktualizuj `androidx.activity` do najnowszej wersji w `libs.versions.toml`.
+
+---
+
+## Animacja chowania/pokazywania widoku (slide) — ValueAnimator na height
+
+**Problem:** `view.animate().translationY(-height)` przesuwa widok poza ekran, ale nie zwalnia miejsca w layoucie — inne widoki nie wypełniają wolnego miejsca.
+
+**Przyczyna:** `translationY` zmienia tylko pozycję rysowania, nie wpływa na rozmiar widoku w layoucie.
+
+**Rozwiązanie:** Animuj właściwość `layoutParams.height` przez `ValueAnimator`, a po zakończeniu ustaw `visibility = GONE` (lub `VISIBLE` przy pokazywaniu):
+```kotlin
+ValueAnimator.ofInt(currentHeight, 0).apply {
+    duration = 250
+    addUpdateListener {
+        view.layoutParams.height = it.animatedValue as Int
+        view.requestLayout()
+    }
+    addListener(object : AnimatorListenerAdapter() {
+        override fun onAnimationEnd(animation: Animator) {
+            view.visibility = View.GONE
+        }
+    })
+    start()
+}
+```
+Zapamiętaj oryginalną wysokość przed pierwszą animacją (np. w `view.post { height = view.measuredHeight }`).
+
+---
+
 ## Duplikaty wpisów w libs.versions.toml
 
 **Problem:** `Invalid TOML catalog definition — coroutines previously defined`.

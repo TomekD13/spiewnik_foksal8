@@ -12,7 +12,7 @@ Procesor: MediaTek G99
 RAM: 8 GB
 Ekran: 14,3"
 System: Android 14
-Minimalna wersja SDK: API 34 (Android 14)
+Minimalna wersja SDK: API 28 (Android 9) — obniżone z 34 dla zgodności z LDPlayer i innymi urządzeniami
 Target SDK: API 34
 
 
@@ -39,7 +39,7 @@ Aplikacja:
 
 Platforma: Android
 Język: Kotlin
-Min SDK: API 34
+Min SDK: API 28
 
 UI:
 - Jetpack Compose (preferowane)
@@ -112,31 +112,34 @@ Przypadki brzegowe:
 - Orientacja: podąża za ustawieniami systemowymi, domyślnie landscape
 - Tryb: pełnoekranowy (immersive, bez paska systemu)
 - Ekran nigdy nie wygasza się podczas działania aplikacji (`FLAG_KEEP_SCREEN_ON`)
-- Pasek sterowania: zawsze widoczny (nie chowany)
+- Pasek sterowania: domyślnie widoczny, może być schowany przez użytkownika (patrz sekcja 5.4)
 - Obsługa tylko przyciskami ekranowymi (bez obsługi klawiatury BT ani przycisków głośności)
 
 ### 5.2 Układ elementów
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│  [Nr: 123]  [Tytuł pieśni]            [Strony: 12–13]  │  ← pasek informacji (góra)
-├─────────────────────────────────────────────────────────┤
-│ [etNumber][Idź] [actvTitle___________]   [⚙️]          │  ← pasek sterowania
-├─────────────────────────────────────────────────────────┤
-│  ◀   │         STRONA 12        │        STRONA 13  │ ▶ │  ← obszar PDF
-└─────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│  [Nr: 123]  [Tytuł pieśni]    [Strony: 12–13]  [Wybierz]  [⚙️]  │  ← pasek informacji (góra)
+├──────────────────────────────────────────────────────────────────┤
+│ [etNumber][Idź] [actvTitle___________] [Rozkładówka] [Schowaj]  │  ← pasek sterowania (chowany)
+├──────────────────────────────────────────────────────────────────┤
+│  ◀   │         STRONA 12        │        STRONA 13        │ ▶   │  ← obszar PDF
+└──────────────────────────────────────────────────────────────────┘
 ```
 
-**Pasek informacji (góra):**
+**Pasek informacji (góra) — zawsze widoczny:**
 - numer aktualnej pieśni
 - tytuł aktualnej pieśni
 - aktualnie wyświetlane strony (np. `12–13`)
+- przycisk przełączający **„Wybierz" / „Schowaj pasek"** (patrz sekcja 5.4)
+- przycisk **„Holyrics"** — bez akcji, do przyszłego użycia
+- ikona ⚙️ do ustawień
 
-**Pasek sterowania:**
+**Pasek sterowania (domyślnie widoczny, może być schowany):**
 - pole numeryczne `etNumber` (tylko cyfry, klawiatura numeryczna, maks. 4 znaki)
 - przycisk „Idź" + obsługa klawisza Enter
 - pole autocomplete `actvTitle` do wyszukiwania po tytule (osobne, obok numeru)
-- ikona ⚙️ do ustawień
+- przycisk trybu nawigacji (Rozkładówka / Strona / Pieśń)
 
 **Obszar PDF:**
 - Dwie strony obok siebie (rozkładówka) – zmaksymalizowany rozmiar, obie strony widoczne w całości
@@ -147,7 +150,16 @@ Przypadki brzegowe:
 **Stan startowy:**
 - Przy pierwszym uruchomieniu (brak `last_song_number`) → automatycznie otwiera pieśń nr 1
 
-### 5.3 Zoom i pan
+### 5.4 Chowanie paska sterowania
+
+- W górnym pasku znajduje się jeden przycisk przełączający:
+  - Gdy pasek sterowania jest **widoczny** → przycisk pokazuje **„Schowaj pasek"** → kliknięcie chowa pasek (animacja slide up, 250ms)
+  - Gdy pasek sterowania jest **schowany** → przycisk pokazuje **„Wybierz"** → kliknięcie pokazuje pasek (animacja slide down, 250ms)
+- Stan startowy: pasek sterowania widoczny, przycisk pokazuje „Schowaj pasek"
+- W górnym pasku znajduje się też przycisk **„Holyrics"** (osobny, bez akcji — do przyszłego użycia)
+- Cel: zwiększenie obszaru wyświetlania nut po wybraniu pieśni
+
+### 5.5 Zoom i pan
 
 - Zakres zoom: 1x – 5x (max 5-krotne powiększenie)
 - Rendering przy zoom: bitmapy w rozdzielczości 2x rozdzielczości ekranu (kompromis jakość/pamięć)
@@ -394,7 +406,7 @@ Tło logo: kremowe (~`#EEECEA`)
 - Koło z logo zajmuje ~60% powierzchni ikony — proporcja właściwa, nie wymaga powiększenia
 
 ### Splash screen
-- Mechanizm: natywny Android 12+ Splash Screen API (dostępny od API 31, minSdk=34)
+- Mechanizm: natywny Android 12+ Splash Screen API (dostępny od API 31, minSdk=28 — działa na urządzeniach z API 31+, na starszych degraduje się łagodnie)
 - Tło: `#EEECEA` (spójne z tłem logo)
 - Ikona: `logo.png` wyśrodkowane
 - Czas wyświetlania: naturalny — trwa dopóki aplikacja nie zakończy ładowania (kopiowanie PDF do cacheDir + otwarcie PdfRenderer)
