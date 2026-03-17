@@ -7,6 +7,7 @@ import android.graphics.pdf.PdfRenderer
 import android.os.ParcelFileDescriptor
 import android.util.Log
 import android.util.LruCache
+import java.io.File
 
 /**
  * Thread-safe PDF page renderer with an LruCache.
@@ -35,12 +36,22 @@ class PdfPageCache(private val context: Context) {
     /**
      * Opens the PDF from assets. Returns true on success.
      * Must be called from a background thread.
+     *
+     * PdfRenderer requires a seekable ParcelFileDescriptor pointing to the
+     * start of the PDF. Assets inside an APK have an offset, so we copy the
+     * file to cacheDir once and open it from there.
      */
     fun open(): Boolean {
         return try {
-            val afd = context.assets.openFd(PDF_FILE)
-            val pfd = ParcelFileDescriptor.dup(afd.fileDescriptor)
-            afd.close()
+            val cacheFile = File(context.cacheDir, PDF_FILE)
+            if (!cacheFile.exists()) {
+                Log.i(TAG, "Copying PDF to cache…")
+                context.assets.open(PDF_FILE).use { input ->
+                    cacheFile.outputStream().use { output -> input.copyTo(output) }
+                }
+                Log.i(TAG, "PDF copied (${cacheFile.length() / 1024} KB)")
+            }
+            val pfd = ParcelFileDescriptor.open(cacheFile, ParcelFileDescriptor.MODE_READ_ONLY)
             synchronized(this) {
                 renderer = PdfRenderer(pfd)
             }
