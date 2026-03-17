@@ -56,6 +56,16 @@
 - **Portrait + SPREAD** = zawsze przeskakuje do następnej/poprzedniej pieśni (jednolita logika w ViewModel przez `isPortrait` z `Configuration`)
 - **Zoom nie resetuje się** przy zmianie pieśni; **pan resetuje się** przy każdej zmianie pieśni
 
+## Poprawki po testach
+
+| Plik | Zmiana |
+|------|--------|
+| `pdf/PdfPageCache.kt` | `open()` kopiuje PDF do `cacheDir` przed otwarciem — `PdfRenderer` wymaga seekowalnego FD od offsetu 0, a assets w APK mają niezerowy offset |
+| `MainActivity.kt` | `ivRight.visibility = GONE` zamiast `INVISIBLE` — gdy pokazywana jest 1 strona, prawa połowa nie zajmuje miejsca i lewa strona wypełnia cały obszar PDF |
+| `activity_main.xml` | Domyślna widoczność `ivRight` zmieniona na `gone` |
+| `gradle/libs.versions.toml` | Usunięto zduplikowany wpis `coroutines`; dodano `fragment-ktx 1.8.1` |
+| `app/build.gradle.kts` | Dodano `implementation(libs.fragment.ktx)` — wymagane przez `activityViewModels()` w `SettingsFragment` |
+
 ## Pliki nie zmieniane
 
 - `data/SongRepository.kt` — logika wyszukiwania pozostała bez zmian (tylko nazwa pliku JSON)
