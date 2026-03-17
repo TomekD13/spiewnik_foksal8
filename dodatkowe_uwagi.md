@@ -140,6 +140,16 @@ binding.tvSongInfo.text = getString(R.string.song_info_format, song.number, song
 
 ---
 
+## Komentarze w kodzie muszą być po angielsku
+
+**Problem:** Lint zgłasza `Typo: In word 'możliwy'` (lub inne polskie słowa) w plikach `.kt`.
+
+**Przyczyna:** Android Lint sprawdza pisownię we wszystkich komentarzach używając angielskiego słownika — polskie słowa są flagowane jako literówki.
+
+**Rozwiązanie:** Wszystkie komentarze w plikach Kotlin pisz po angielsku.
+
+---
+
 ## Duplikaty wpisów w libs.versions.toml
 
 **Problem:** `Invalid TOML catalog definition — coroutines previously defined`.
