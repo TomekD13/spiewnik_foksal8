@@ -16,6 +16,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.spiewnik.app.databinding.ActivityMainBinding
+import com.spiewnik.app.ui.HolyricsBottomSheet
 import com.spiewnik.app.ui.settings.SettingsFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         observeState()
         observeLoadState()
         observeToasts()
+        observeHolyricsPlaylist()
     }
 
     // ── Input & search ────────────────────────────────────────────────────────
@@ -95,6 +97,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnSettings.setOnClickListener {
             SettingsFragment.show(supportFragmentManager)
+        }
+
+        binding.btnHolyrics.setOnClickListener {
+            viewModel.fetchHolyricsPlaylist()
         }
     }
 
@@ -246,6 +252,14 @@ class MainActivity : AppCompatActivity() {
             if (msg != null) {
                 Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
                 viewModel.clearToast()
+            }
+        }
+    }
+
+    private fun observeHolyricsPlaylist() {
+        viewModel.holyricsPlaylist.observe(this) { playlist ->
+            if (playlist.isNotEmpty()) {
+                HolyricsBottomSheet.show(supportFragmentManager)
             }
         }
     }

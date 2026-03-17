@@ -23,6 +23,19 @@
     <string name="settings_close">Zamknij</string>
     <string name="settings_version">Wersja</string>
 
+    <!-- Holyrics settings -->
+    <string name="holyrics_section_title">Holyrics</string>
+    <string name="holyrics_ip_label">Adres IP laptopa</string>
+    <string name="holyrics_ip_hint">np. 192.168.1.100</string>
+    <string name="holyrics_token_label">Token API</string>
+    <string name="holyrics_token_hint">token z Holyrics → Narzędzia → API</string>
+    <string name="holyrics_save">Zapisz</string>
+    <string name="holyrics_saved">Zapisano ustawienia Holyrics</string>
+
+    <!-- Holyrics bottom sheet -->
+    <string name="holyrics_sheet_title">Playlista Holyrics</string>
+    <string name="holyrics_close">Zamknij</string>
+
     <!-- Error messages -->
     <string name="error_pdf_missing">Brak pliku śpiewnika (Spiewnik.pdf) w assets</string>
     <string name="error_json_missing">Brak listy pieśni (piesni.json) w assets</string>
