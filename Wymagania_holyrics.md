@@ -9,6 +9,27 @@ Aplikacja powinna pobierać z Holyrics nr pieśni, które ma w sekcji lyrics wyb
 Użytkownik po wciśnięciu przycisku Holyrics rozwija listę wszystkich pieśni jaki są w playlist holyrics. Po klkinięciu w jakąś pieśń APK ustawia pdf na odpowiedniej stronie tego nr pieśni.
 Wykorzystaj ustawienia istniejące w aplikacji do tego by umieścić tam parametry potrzebne do połączenia się z Holyrics.
 
+## Zaimplementowane rozwiązanie (finalne)
+
+### UI: PopupWindow pod przyciskiem HOLYRICS
+- Zamiast `BottomSheetDialogFragment` użyto `PopupWindow` zakotwiczonego pod przyciskiem `btnHolyrics`
+- Popup wyrównany do prawej krawędzi przycisku, szerokość = 1/3 ekranu, max wysokość = 65% ekranu
+- Pieśni wyświetlane **w pionie** z paskiem przewijania (`ScrollView`) — lista może być dowolnie długa
+- Ponowne kliknięcie HOLYRICS gdy popup jest otwarty → zamknięcie popupu
+- Kluczowe parametry `PopupWindow`: `isFocusable = true`, `isOutsideTouchable = true` (zamknięcie przez kliknięcie poza)
+
+### Przepływ danych przy kliknięciu HOLYRICS
+1. Popup otwiera się natychmiast (ewentualnie z danymi z poprzedniego fetcha)
+2. Równolegle startuje `viewModel.fetchHolyricsPlaylist()` (żądanie HTTP na wątku IO)
+3. Po odpowiedzi: `_holyricsPlaylist.postValue(numbers)`
+4. Observer w `MainActivity` aktualizuje popup jeśli jest widoczny
+5. Ponowne kliknięcie przycisku odświeża dane — fetch wywoływany za każdym razem
+
+### Architektura LiveData dla popupu
+- `holyricsPlaylist: LiveData<List<Int>>` obserwowany w `MainActivity`
+- Popup tworzony i zarządzany bezpośrednio w `MainActivity` (nie Fragment — brak problemów z lifecycle)
+- Przy otwarciu popupu: natychmiastowe wypełnienie z `viewModel.holyricsPlaylist.value` (cache), potem aktualizacja gdy przyjdzie nowy fetch
+
 ## Uwagi implementacyjne
 
 ### Błąd: duplikat ID w layoucie
@@ -16,20 +37,17 @@ Wykorzystaj ustawienia istniejące w aplikacji do tego by umieścić tam paramet
 
 ### Błąd: BottomSheet pokazuje tylko nagłówek (przyciski niewidoczne)
 - `BottomSheetDialogFragment` domyślnie otwiera się w stanie *collapsed* (zwinięty do peek height). Treść poniżej nagłówka jest ukryta — użytkownik widzi pusty sheet.
-- **Rozwiązanie:** w `onViewCreated` wymusić `STATE_EXPANDED`:
-  ```kotlin
-  (dialog as? BottomSheetDialog)?.behavior?.apply {
-      state = BottomSheetBehavior.STATE_EXPANDED
-      skipCollapsed = true
-  }
-  ```
-- `skipCollapsed = true` zapobiega zatrzymaniu się sheetu w stanie pośrednim przy przeciąganiu w dół — od razu się zamyka.
 - Symptom mylący: logcat pokazywał `populateButtons: numbers=[5, 6, 7]` (dane były poprawne), ale przyciski wydawały się niewidoczne. Debugging danych to ślepy zaułek — problem był wyłącznie w zachowaniu BottomSheetBehavior.
+- **Ostateczne rozwiązanie:** porzucono `BottomSheetDialogFragment` na rzecz `PopupWindow` — problem z collapsed state przestał istnieć.
 
-### Błąd: LiveData timing w BottomSheetDialogFragment
-- Nie obserwuj `holyricsPlaylist` LiveData wewnątrz BottomSheet — fragment może subskrybować się po tym, gdy LiveData już dostarczyła wartość, ale może też dostać wartość `emptyList()` z inicjalizacji, zanim przyjdą prawdziwe dane.
-- **Rozwiązanie:** przekazuj numery przez `Bundle` jako argument fragmentu (`putIntArray`) przed wywołaniem `show()`. Odczyt w `onViewCreated` z `arguments?.getIntArray(ARG_NUMBERS)`.
-- Obserwatorem `holyricsPlaylist` jest `MainActivity` — ona wywołuje `HolyricsBottomSheet.show(fragmentManager, playlist)` dopiero gdy lista jest niepusta.
+### Błąd: LiveData timing w BottomSheetDialogFragment (rozwiązany przez zmianę architektury)
+- Fragment może subskrybować LiveData po tym, gdy wartość już dotarła, albo dostać `emptyList()` z inicjalizacji zanim przyjdą dane.
+- Pośrednie rozwiązanie: przekazywanie numerów przez `Bundle` (`putIntArray`) przed `show()`.
+- **Ostateczne rozwiązanie:** przeniesienie całego zarządzania popupem do `MainActivity` — LiveData obserwowana tam, popup aktualizowany bezpośrednio. Żadnego Fragment lifecycle do zarządzania.
+
+### Błąd: lista pieśni nie odświeżała się przy kolejnych kliknięciach
+- `findFragmentByTag(TAG) != null` blokował tworzenie nowego fragmentu z odświeżonymi danymi.
+- **Rozwiązanie:** `PopupWindow` — przy każdym kliknięciu fetch jest wywołany na nowo, observer aktualizuje widoczny popup gdy dane dotrą.
 
 ## Konfiguracja Holyrics (zweryfikowana)
 
