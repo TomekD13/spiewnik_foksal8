@@ -221,7 +221,7 @@ class MainActivity : AppCompatActivity() {
         if (leftIdx == null) {
             binding.ivLeft.setImageBitmap(null)
             binding.ivRight.setImageBitmap(null)
-            binding.ivRight.visibility = View.INVISIBLE
+            binding.ivRight.visibility = View.GONE
             return
         }
 
@@ -250,7 +250,7 @@ class MainActivity : AppCompatActivity() {
                 binding.ivRight.setImageBitmap(rightBmp)
             } else {
                 binding.ivRight.setImageBitmap(null)
-                binding.ivRight.visibility = View.INVISIBLE
+                binding.ivRight.visibility = View.GONE
             }
 
             prefetchNeighbours(state)

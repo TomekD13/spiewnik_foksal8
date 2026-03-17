@@ -167,7 +167,7 @@
                 android:scaleType="fitCenter"
                 android:background="@color/page_background"
                 android:contentDescription="@string/cd_right_page"
-                android:visibility="invisible" />
+                android:visibility="gone" />
         </LinearLayout>
 
         <!-- Right nav button -->
