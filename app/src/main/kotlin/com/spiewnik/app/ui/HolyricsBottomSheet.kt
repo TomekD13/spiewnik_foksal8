@@ -33,7 +33,9 @@ class HolyricsBottomSheet : BottomSheetDialogFragment() {
         binding.btnHolyricsClose.setOnClickListener { dismiss() }
 
         // Numbers passed directly as arguments to avoid LiveData timing issues
-        val numbers = arguments?.getIntArray(ARG_NUMBERS)?.toList() ?: emptyList()
+        val raw = arguments?.getIntArray(ARG_NUMBERS)
+        android.widget.Toast.makeText(requireContext(), "BottomSheet args: ${raw?.toList()}", android.widget.Toast.LENGTH_LONG).show()
+        val numbers = raw?.toList() ?: emptyList()
         populateButtons(numbers)
     }
 
