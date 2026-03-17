@@ -133,9 +133,10 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        binding.pdfContainer.setOnTouchListener { _, event ->
+        binding.pdfContainer.setOnTouchListener { v, event ->
             scaleDetector.onTouchEvent(event)
             if (!scaleDetector.isInProgress) gestureDetector.onTouchEvent(event)
+            if (event.action == MotionEvent.ACTION_UP) v.performClick()
             true
         }
     }
@@ -203,7 +204,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateTopBar(state: UiState) {
         if (state.song != null) {
-            binding.tvSongInfo.text = "#${state.song.number}  ${state.song.title}"
+            binding.tvSongInfo.text = getString(R.string.song_info_format, state.song.number, state.song.title)
             binding.tvPageInfo.text = state.displayPages
         } else {
             binding.tvSongInfo.text = getString(R.string.app_name)

@@ -86,6 +86,14 @@
 
 Splash screen pojawia się podczas ładowania PDF (kopiowanie do cacheDir + otwieranie PdfRenderer). Logo wyświetlane jest na kremowym tle, spójnym z samym obrazem.
 
+## Poprawki lint (Android Lint warnings)
+
+| Plik | Zmiana |
+|------|--------|
+| `MainActivity.kt` | `setOnTouchListener` — dodano `v.performClick()` przy `ACTION_UP` (wymóg dostępności) |
+| `MainActivity.kt` | `tvSongInfo.text` — zamieniono konkatenację Kotlin (`"#${nr}  ${tytul}"`) na `getString(R.string.song_info_format, nr, tytul)` |
+| `res/values/strings.xml` | Dodano `song_info_format = "#%1$d  %2$s"` jako zasób z placeholderami |
+
 ## Pliki nie zmieniane
 
 - `data/SongRepository.kt` — logika wyszukiwania pozostała bez zmian (tylko nazwa pliku JSON)

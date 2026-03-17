@@ -106,6 +106,40 @@ Wymaga zależności `implementation(libs.core.splashscreen)` oraz atrybutów w t
 
 ---
 
+## setOnTouchListener wymaga performClick (lint + dostępność)
+
+**Problem:** Android Lint ostrzega: `Custom view has setOnTouchListener called on it but does not override performClick`.
+
+**Przyczyna:** Widoki z `setOnTouchListener` powinny wywoływać `performClick()` przy `ACTION_UP`, żeby obsługiwać zdarzenia dostępności (TalkBack, Switch Access).
+
+**Rozwiązanie:** W lambdzie `setOnTouchListener` wywołaj `v.performClick()` przy zwolnieniu palca:
+```kotlin
+view.setOnTouchListener { v, event ->
+    // … obsługa gestów …
+    if (event.action == MotionEvent.ACTION_UP) v.performClick()
+    true
+}
+```
+
+---
+
+## setText z konkatenacją — użyj zasobu z placeholderami
+
+**Problem:** Lint ostrzega: `Do not concatenate text displayed with setText`.
+
+**Przyczyna:** Sklejanie tekstu przez interpolację Kotlin (`"#${nr}  ${tytul}"`) utrudnia tłumaczenia i jest flagowane przez lint.
+
+**Rozwiązanie:** Dodaj zasób z placeholderami w `strings.xml`:
+```xml
+<string name="song_info_format">#%1$d  %2$s</string>
+```
+i użyj `getString()` w kodzie:
+```kotlin
+binding.tvSongInfo.text = getString(R.string.song_info_format, song.number, song.title)
+```
+
+---
+
 ## Duplikaty wpisów w libs.versions.toml
 
 **Problem:** `Invalid TOML catalog definition — coroutines previously defined`.

@@ -8,6 +8,7 @@
     <string name="nav_spread">Rozkładówka</string>
     <string name="nav_page">Strona</string>
     <string name="nav_song">Pieśń</string>
+    <string name="song_info_format">#%1$d  %2$s</string>
     <string name="cd_left_page">Lewa strona PDF</string>
     <string name="cd_right_page">Prawa strona PDF</string>
 
