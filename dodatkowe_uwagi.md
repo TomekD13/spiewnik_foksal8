@@ -17,6 +17,25 @@ fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version = "
 
 ---
 
+## PdfRenderer — otwieranie pliku z assets
+
+**Problem:** `PdfRenderer` nie może otworzyć PDF bezpośrednio z assets — pojawia się komunikat "Brak śpiewnika".
+
+**Przyczyna:** `PdfRenderer` wymaga seekowalnego `ParcelFileDescriptor` zaczynającego się od bajtu 0. Pliki w APK mają niezerowy offset, więc `openFd()` + `dup()` zwraca deskryptor całego APK, nie samego PDF.
+
+**Rozwiązanie:** Przed otwarciem `PdfRenderer` zawsze kopiuj PDF do `context.cacheDir`:
+```kotlin
+val cacheFile = File(context.cacheDir, "Spiewnik.pdf")
+if (!cacheFile.exists()) {
+    context.assets.open("Spiewnik.pdf").use { it.copyTo(cacheFile.outputStream()) }
+}
+val pfd = ParcelFileDescriptor.open(cacheFile, ParcelFileDescriptor.MODE_READ_ONLY)
+val renderer = PdfRenderer(pfd)
+```
+Kopia tworzona jest tylko raz (sprawdzenie `exists()`). Plik cache jest automatycznie czyszczony przez system gdy brakuje miejsca.
+
+---
+
 ## Duplikaty wpisów w libs.versions.toml
 
 **Problem:** `Invalid TOML catalog definition — coroutines previously defined`.
