@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
 
     // ── Zoom / pan ────────────────────────────────────────────────────────────
 
-    // LinearLayout nie może nadpisać performClick() — suppress jest jedynym rozwiązaniem
+    // LinearLayout cannot override performClick() — suppress is the only option here
     @SuppressLint("ClickableViewAccessibility")
     private fun setupZoom() {
         scaleDetector = ScaleGestureDetector(this,
