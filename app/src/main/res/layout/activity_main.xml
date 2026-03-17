@@ -135,16 +135,6 @@
             android:textSize="14sp"
             app:backgroundTint="@color/accent_secondary" />
 
-        <!-- Holyrics playlist button -->
-        <Button
-            android:id="@+id/btnHolyrics"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:text="@string/btn_holyrics"
-            android:textSize="14sp"
-            app:backgroundTint="@color/holyrics_button" />
-
     </LinearLayout>
 
     <!-- ── Critical error banner (hidden by default) ── -->
