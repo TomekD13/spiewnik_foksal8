@@ -36,6 +36,40 @@ Kopia tworzona jest tylko raz (sprawdzenie `exists()`). Plik cache jest automaty
 
 ---
 
+## Splash screen — installSplashScreen() musi być przed super.onCreate()
+
+**Problem:** Splash screen nie pojawia się lub aplikacja crashuje przy starcie.
+
+**Przyczyna:** `installSplashScreen()` musi być wywołane **przed** `super.onCreate()`, inaczej system nie może poprawnie zainicjować splash screen window.
+
+**Rozwiązanie:**
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+    installSplashScreen()   // ← PRZED super
+    super.onCreate(savedInstanceState)
+    ...
+}
+```
+Wymaga zależności `implementation(libs.core.splashscreen)` oraz atrybutów w themes.xml:
+```xml
+<item name="android:windowSplashScreenBackground">#EEECEA</item>
+<item name="android:windowSplashScreenAnimatedIcon">@drawable/logo</item>
+```
+
+---
+
+## Ikona aplikacji — logo z białym tłem na ciemnym tle
+
+**Problem:** Logo ma jasne tło — przy ikonie aplikacji na ciemnym launche rze widać biały kwadrat/prostokąt zamiast przezroczystego tła.
+
+**Przyczyna:** PNG logo nie ma kanału alfa (przezroczystości) — tło jest kremowe (`#EEECEA`).
+
+**Rozwiązanie zastosowane:** Ustawiono tło adaptive ikony na ten sam kolor kremowy (`#EEECEA`), przez co logo wygląda naturalnie. Ikona ma spójny wygląd.
+
+**Rozwiązanie docelowe (lepsza jakość):** Przygotować wersję logo z przezroczystym tłem (PNG z kanałem alfa) i użyć jej jako foreground adaptive ikony — wtedy launcher może swobodnie dobierać kształt ikony (kółko, zaokrąglony kwadrat itp.).
+
+---
+
 ## Duplikaty wpisów w libs.versions.toml
 
 **Problem:** `Invalid TOML catalog definition — coroutines previously defined`.

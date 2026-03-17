@@ -382,7 +382,28 @@ com.spiewnik.app/
 
 ---
 
-## 15. SZATA GRAFICZNA (DARK MODE – INSPIROWANA VS CODE)
+## 15. LOGO I IKONA APLIKACJI
+
+### Logo
+Plik: `Logo.png` (skopiowany z assets do `res/drawable/logo.png`)
+Zawartość: okrągła pieczęć z kluczem wiolinowym i nutami, napis „ŚPIEWNIK" (góra) i „KADS FOKSAL 8" (dół)
+Tło logo: kremowe (~`#EEECEA`)
+
+### Ikona aplikacji
+- Adaptive icon (foreground: logo, background: `#EEECEA`)
+- Koło z logo zajmuje ~60% powierzchni ikony — proporcja właściwa, nie wymaga powiększenia
+
+### Splash screen
+- Mechanizm: natywny Android 12+ Splash Screen API (dostępny od API 31, minSdk=34)
+- Tło: `#EEECEA` (spójne z tłem logo)
+- Ikona: `logo.png` wyśrodkowane
+- Czas wyświetlania: naturalny — trwa dopóki aplikacja nie zakończy ładowania (kopiowanie PDF do cacheDir + otwarcie PdfRenderer)
+- `installSplashScreen()` wywoływane w `MainActivity.onCreate()` przed `super.onCreate()`
+
+
+---
+
+## 16. SZATA GRAFICZNA (DARK MODE – INSPIROWANA VS CODE)
 
 ### Ogólny styl
 - Dark mode jako jedyny tryb
@@ -410,7 +431,7 @@ com.spiewnik.app/
 
 ---
 
-## 16. WYJŚCIE OCZEKIWANE OD LLM
+## 17. WYJŚCIE OCZEKIWANE OD LLM
 
 LLM powinien wygenerować:
 

@@ -66,8 +66,21 @@
 | `gradle/libs.versions.toml` | Usunięto zduplikowany wpis `coroutines`; dodano `fragment-ktx 1.8.1` |
 | `app/build.gradle.kts` | Dodano `implementation(libs.fragment.ktx)` — wymagane przez `activityViewModels()` w `SettingsFragment` |
 
+## Logo i splash screen
+
+| Plik | Zmiana |
+|------|--------|
+| `res/drawable/logo.png` | Logo aplikacji (skopiowane z assets) — klucz wiolinowy + "ŚPIEWNIK KADS FOKSAL 8" |
+| `res/drawable/ic_launcher_foreground.xml` | Zastąpiono placeholder vectorem → bitmap z `logo.png` |
+| `res/drawable/ic_launcher_background.xml` | Kolor tła `#1565C0` → **`#EEECEA`** (kremowy, pasujący do tła logo) |
+| `res/values/themes.xml` | Dodano atrybuty splash screen: `windowSplashScreenBackground` (#EEECEA) i `windowSplashScreenAnimatedIcon` (logo) |
+| `MainActivity.kt` | `installSplashScreen()` wywoływane przed `super.onCreate()` |
+| `gradle/libs.versions.toml` | Dodano `core-splashscreen 1.0.1` |
+| `app/build.gradle.kts` | Dodano `implementation(libs.core.splashscreen)` |
+
+Splash screen pojawia się podczas ładowania PDF (kopiowanie do cacheDir + otwieranie PdfRenderer). Logo wyświetlane jest na kremowym tle, spójnym z samym obrazem.
+
 ## Pliki nie zmieniane
 
 - `data/SongRepository.kt` — logika wyszukiwania pozostała bez zmian (tylko nazwa pliku JSON)
-- `res/values/themes.xml` — bez zmian (kolory zaktualizowane w colors.xml)
 - `res/drawable/input_background.xml` — bez zmian
