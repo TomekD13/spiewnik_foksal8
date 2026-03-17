@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.google.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:holyrics.com.br)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)",
+      "WebFetch(domain:community.holyrics.com.br)",
+      "WebFetch(domain:forum.holyrics.com.br)",
+      "WebFetch(domain:webcache.googleusercontent.com)",
+      "WebFetch(domain:search.yahoo.com)",
+      "WebFetch(domain:deepwiki.com)"
+    ]
+  }
+}
