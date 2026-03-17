@@ -8,3 +8,7 @@ Co jest do zrobienia:
 Aplikacja powinna pobierać z Holyrics nr pieśni, które ma w sekcji lyrics wybrane do wyświetlania (sam nr).
 Użytkownik po wciśnięciu przycisku Holyrics rozwija listę wszystkich pieśni jaki są w playlist holyrics. Po klkinięciu w jakąś pieśń APK ustawia pdf na odpowiedniej stronie tego nr pieśni.
 Wykorzystaj ustawienia istniejące w aplikacji do tego by umieścić tam parametry potrzebne do połączenia się z Holyrics.
+
+## Uwagi implementacyjne
+
+- Przed dodaniem przycisku `btnHolyrics` do layoutu zawsze sprawdź najpierw, czy taki ID już istnieje w pliku `activity_main.xml`. Duplikat tego samego ID w jednym layoucie powoduje błąd kompilacji (`databinding: conflicts with another tag that has the same ID`).
