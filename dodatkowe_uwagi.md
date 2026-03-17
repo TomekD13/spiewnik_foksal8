@@ -36,6 +36,19 @@ Kopia tworzona jest tylko raz (sprawdzenie `exists()`). Plik cache jest automaty
 
 ---
 
+## isActive wymaga jawnego importu w coroutine
+
+**Problem:** `Unresolved reference: isActive` wewnątrz bloku `lifecycleScope.launch { }`.
+
+**Przyczyna:** `isActive` to właściwość rozszerzająca `CoroutineScope` z pakietu `kotlinx.coroutines` — wymaga jawnego importu, kompilator jej nie znajdzie automatycznie.
+
+**Rozwiązanie:** Dodaj import:
+```kotlin
+import kotlinx.coroutines.isActive
+```
+
+---
+
 ## Migotanie ekranu przy renderowaniu PDF
 
 **Problem:** Ekran migota czarnym przy zmianie strony lub szybkiej nawigacji.
