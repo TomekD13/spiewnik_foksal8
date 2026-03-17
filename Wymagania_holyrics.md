@@ -11,7 +11,25 @@ Wykorzystaj ustawienia istniejące w aplikacji do tego by umieścić tam paramet
 
 ## Uwagi implementacyjne
 
+### Błąd: duplikat ID w layoucie
 - Przed dodaniem przycisku `btnHolyrics` do layoutu zawsze sprawdź najpierw, czy taki ID już istnieje w pliku `activity_main.xml`. Duplikat tego samego ID w jednym layoucie powoduje błąd kompilacji (`databinding: conflicts with another tag that has the same ID`).
+
+### Błąd: BottomSheet pokazuje tylko nagłówek (przyciski niewidoczne)
+- `BottomSheetDialogFragment` domyślnie otwiera się w stanie *collapsed* (zwinięty do peek height). Treść poniżej nagłówka jest ukryta — użytkownik widzi pusty sheet.
+- **Rozwiązanie:** w `onViewCreated` wymusić `STATE_EXPANDED`:
+  ```kotlin
+  (dialog as? BottomSheetDialog)?.behavior?.apply {
+      state = BottomSheetBehavior.STATE_EXPANDED
+      skipCollapsed = true
+  }
+  ```
+- `skipCollapsed = true` zapobiega zatrzymaniu się sheetu w stanie pośrednim przy przeciąganiu w dół — od razu się zamyka.
+- Symptom mylący: logcat pokazywał `populateButtons: numbers=[5, 6, 7]` (dane były poprawne), ale przyciski wydawały się niewidoczne. Debugging danych to ślepy zaułek — problem był wyłącznie w zachowaniu BottomSheetBehavior.
+
+### Błąd: LiveData timing w BottomSheetDialogFragment
+- Nie obserwuj `holyricsPlaylist` LiveData wewnątrz BottomSheet — fragment może subskrybować się po tym, gdy LiveData już dostarczyła wartość, ale może też dostać wartość `emptyList()` z inicjalizacji, zanim przyjdą prawdziwe dane.
+- **Rozwiązanie:** przekazuj numery przez `Bundle` jako argument fragmentu (`putIntArray`) przed wywołaniem `show()`. Odczyt w `onViewCreated` z `arguments?.getIntArray(ARG_NUMBERS)`.
+- Obserwatorem `holyricsPlaylist` jest `MainActivity` — ona wywołuje `HolyricsBottomSheet.show(fragmentManager, playlist)` dopiero gdy lista jest niepusta.
 
 ## Konfiguracja Holyrics (zweryfikowana)
 
