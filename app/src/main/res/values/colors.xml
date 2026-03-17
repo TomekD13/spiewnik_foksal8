@@ -21,6 +21,9 @@
     <color name="nav_button_text">#D4D4D4</color>
     <color name="nav_button_text_disabled">#555555</color>
 
+    <!-- Holyrics button -->
+    <color name="holyrics_button">#6A0DAD</color>
+
     <!-- PDF page area -->
     <color name="page_background">#1E1E1E</color>
 

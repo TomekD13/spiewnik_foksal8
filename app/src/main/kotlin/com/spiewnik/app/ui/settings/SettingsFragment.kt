@@ -54,6 +54,15 @@ class SettingsFragment : DialogFragment() {
             dismiss()
         }
 
+        // Holyrics connection settings
+        binding.etHolyricsIp.setText(viewModel.settings.holyricsIp)
+        binding.etHolyricsToken.setText(viewModel.settings.holyricsToken)
+        binding.btnSaveHolyrics.setOnClickListener {
+            viewModel.settings.holyricsIp = binding.etHolyricsIp.text.toString().trim()
+            viewModel.settings.holyricsToken = binding.etHolyricsToken.text.toString().trim()
+            viewModel.showToast(getString(R.string.holyrics_saved))
+        }
+
         binding.tvAppInfo.text = "${getString(R.string.settings_version)} ${BuildConfig.VERSION_NAME}"
 
         binding.btnClose.setOnClickListener { dismiss() }

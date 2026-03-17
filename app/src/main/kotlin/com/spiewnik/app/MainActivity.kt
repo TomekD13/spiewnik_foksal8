@@ -2,11 +2,17 @@ package com.spiewnik.app
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.MotionEvent
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.PopupWindow
+import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import android.view.ScaleGestureDetector
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.GestureDetector
 import android.view.inputmethod.EditorInfo
@@ -26,6 +32,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: SongViewModel by viewModels()
+
+    private var holyricsPopup: PopupWindow? = null
+    private var holyricsPopupButtons: LinearLayout? = null
 
     // ── Zoom / pan state ──────────────────────────────────────────────────────
     private var zoomScale = 1f
@@ -63,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         observeState()
         observeLoadState()
         observeToasts()
+        observeHolyricsPlaylist()
     }
 
     // ── Input & search ────────────────────────────────────────────────────────
@@ -95,6 +105,15 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnSettings.setOnClickListener {
             SettingsFragment.show(supportFragmentManager)
+        }
+
+        binding.btnHolyrics.setOnClickListener {
+            if (holyricsPopup?.isShowing == true) {
+                holyricsPopup?.dismiss()
+            } else {
+                showHolyricsPopup()
+                viewModel.fetchHolyricsPlaylist()
+            }
         }
     }
 
@@ -247,6 +266,65 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
                 viewModel.clearToast()
             }
+        }
+    }
+
+    // ── Holyrics popup ────────────────────────────────────────────────────────
+
+    private fun showHolyricsPopup() {
+        val popView = layoutInflater.inflate(R.layout.popup_holyrics, null)
+        holyricsPopupButtons = popView.findViewById(R.id.llSongButtons)
+        popView.findViewById<Button>(R.id.btnHolyricsClose).setOnClickListener {
+            holyricsPopup?.dismiss()
+        }
+
+        val screenWidth = resources.displayMetrics.widthPixels
+        val popupWidth = screenWidth / 3
+        val maxHeight = (resources.displayMetrics.heightPixels * 0.65f).toInt()
+
+        holyricsPopup = PopupWindow(popView, popupWidth, maxHeight, true).apply {
+            setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this@MainActivity, R.color.bar_background)))
+            elevation = 12f
+            isOutsideTouchable = true
+        }
+
+        // Populate immediately with cached data if available
+        viewModel.holyricsPlaylist.value
+            ?.takeIf { it.isNotEmpty() }
+            ?.let { populateHolyricsButtons(it) }
+
+        // Right-align popup with the button
+        val xOffset = binding.btnHolyrics.width - popupWidth
+        holyricsPopup?.showAsDropDown(binding.btnHolyrics, xOffset, 0)
+    }
+
+    private fun observeHolyricsPlaylist() {
+        viewModel.holyricsPlaylist.observe(this) { numbers ->
+            if (numbers.isNotEmpty() && holyricsPopup?.isShowing == true) {
+                populateHolyricsButtons(numbers)
+            }
+        }
+    }
+
+    private fun populateHolyricsButtons(numbers: List<Int>) {
+        val container = holyricsPopupButtons ?: return
+        container.removeAllViews()
+        val allSongs = viewModel.allSongs.value ?: emptyList()
+        numbers.forEach { number ->
+            val song = allSongs.find { it.number == number }
+            val label = if (song != null) "$number. ${song.title}" else "$number"
+            val btn = Button(this).apply {
+                text = label
+                textSize = 14f
+                setOnClickListener {
+                    viewModel.openSong(number)
+                    holyricsPopup?.dismiss()
+                }
+            }
+            container.addView(
+                btn,
+                ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            )
         }
     }
 

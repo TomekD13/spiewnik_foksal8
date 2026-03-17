@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Allows cleartext HTTP for local network (Holyrics runs HTTP on port 8091).
+    HTTPS is still enforced for all other traffic.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

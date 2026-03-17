@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.spiewnik.app.data.Song
 import com.spiewnik.app.data.SongRepository
+import com.spiewnik.app.holyrics.HolyricsRepository
 import com.spiewnik.app.pdf.PdfPageCache
 import com.spiewnik.app.settings.AppSettings
 import kotlinx.coroutines.Dispatchers
@@ -96,9 +97,13 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
     val repository = SongRepository(application)
     val pdfCache = PdfPageCache(application)
     val settings = AppSettings(application)
+    val holyricsRepository = HolyricsRepository()
 
     private val _state = MutableLiveData(UiState())
     val state: LiveData<UiState> = _state
+
+    private val _holyricsPlaylist = MutableLiveData<List<Int>>(emptyList())
+    val holyricsPlaylist: LiveData<List<Int>> = _holyricsPlaylist
 
     private val _allSongs = MutableLiveData<List<Song>>(emptyList())
     val allSongs: LiveData<List<Song>> = _allSongs
@@ -266,6 +271,34 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
         settings.resetPosition()
         openSong(1, _state.value?.navMode, 0)
         _toastEvent.postValue("Pozycja zresetowana (pieśń 1)")
+    }
+
+    fun fetchHolyricsPlaylist() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val ip = settings.holyricsIp
+            val token = settings.holyricsToken
+            if (ip.isBlank() || token.isBlank()) {
+                _toastEvent.postValue("Uzupełnij IP i token Holyrics w ustawieniach")
+                return@launch
+            }
+            holyricsRepository.fetchPlaylist(ip, token)
+                .onSuccess { numbers ->
+                    Log.i(TAG, "Holyrics fetchPlaylist success: $numbers")
+                    if (numbers.isEmpty()) {
+                        _toastEvent.postValue("Playlista Holyrics jest pusta")
+                    } else {
+                        _holyricsPlaylist.postValue(numbers)
+                    }
+                }
+                .onFailure { e ->
+                    Log.e(TAG, "Holyrics fetchPlaylist failure", e)
+                    _toastEvent.postValue("Holyrics niedostępny")
+                }
+        }
+    }
+
+    fun showToast(message: String) {
+        _toastEvent.postValue(message)
     }
 
     fun clearToast() {
