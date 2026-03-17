@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.activity.ktx)
+    implementation(libs.fragment.ktx)
     implementation(libs.gson)
     implementation(libs.kotlinx.coroutines.android)
 
