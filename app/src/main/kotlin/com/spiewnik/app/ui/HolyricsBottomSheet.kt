@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.spiewnik.app.SongViewModel
 import com.spiewnik.app.databinding.FragmentHolyricsBinding
@@ -30,17 +32,19 @@ class HolyricsBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (dialog as? BottomSheetDialog)?.behavior?.apply {
+            state = BottomSheetBehavior.STATE_EXPANDED
+            skipCollapsed = true
+        }
+
         binding.btnHolyricsClose.setOnClickListener { dismiss() }
 
         // Numbers passed directly as arguments to avoid LiveData timing issues
-        val raw = arguments?.getIntArray(ARG_NUMBERS)
-        android.widget.Toast.makeText(requireContext(), "BottomSheet args: ${raw?.toList()}", android.widget.Toast.LENGTH_LONG).show()
-        val numbers = raw?.toList() ?: emptyList()
+        val numbers = arguments?.getIntArray(ARG_NUMBERS)?.toList() ?: emptyList()
         populateButtons(numbers)
     }
 
     private fun populateButtons(numbers: List<Int>) {
-        android.util.Log.i("HolyricsBottomSheet", "populateButtons: numbers=$numbers")
         binding.llSongButtons.removeAllViews()
         val allSongs = viewModel.allSongs.value ?: emptyList()
 

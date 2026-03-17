@@ -287,13 +287,12 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
                     if (numbers.isEmpty()) {
                         _toastEvent.postValue("Playlista Holyrics jest pusta")
                     } else {
-                        _toastEvent.postValue("Holyrics: ${numbers.size} pieśni: $numbers")
                         _holyricsPlaylist.postValue(numbers)
                     }
                 }
                 .onFailure { e ->
                     Log.e(TAG, "Holyrics fetchPlaylist failure", e)
-                    _toastEvent.postValue("Holyrics niedostępny: ${e.message}")
+                    _toastEvent.postValue("Holyrics niedostępny")
                 }
         }
     }
