@@ -1,5 +1,6 @@
 package com.spiewnik.app
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MotionEvent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     // Track song changes to reset pan (not zoom) when song switches
     private var lastSongNumber: Int? = null
 
-    // Active render job — cancelled before starting a new one to prevent stale bitmap flicker
+    // Active render job — canceled before starting a new one to prevent stale bitmap flicker
     private var renderJob: kotlinx.coroutines.Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,6 +108,8 @@ class MainActivity : AppCompatActivity() {
 
     // ── Zoom / pan ────────────────────────────────────────────────────────────
 
+    // LinearLayout nie może nadpisać performClick() — suppress jest jedynym rozwiązaniem
+    @SuppressLint("ClickableViewAccessibility")
     private fun setupZoom() {
         scaleDetector = ScaleGestureDetector(this,
             object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
