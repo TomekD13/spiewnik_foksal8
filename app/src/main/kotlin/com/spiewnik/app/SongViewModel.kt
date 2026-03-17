@@ -283,14 +283,17 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
             }
             holyricsRepository.fetchPlaylist(ip, token)
                 .onSuccess { numbers ->
+                    Log.i(TAG, "Holyrics fetchPlaylist success: $numbers")
                     if (numbers.isEmpty()) {
                         _toastEvent.postValue("Playlista Holyrics jest pusta")
                     } else {
+                        _toastEvent.postValue("Holyrics: ${numbers.size} pieśni: $numbers")
                         _holyricsPlaylist.postValue(numbers)
                     }
                 }
-                .onFailure {
-                    _toastEvent.postValue("Holyrics niedostępny")
+                .onFailure { e ->
+                    Log.e(TAG, "Holyrics fetchPlaylist failure", e)
+                    _toastEvent.postValue("Holyrics niedostępny: ${e.message}")
                 }
         }
     }

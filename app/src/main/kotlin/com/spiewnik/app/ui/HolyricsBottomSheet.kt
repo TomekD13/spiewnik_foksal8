@@ -38,6 +38,7 @@ class HolyricsBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun populateButtons(numbers: List<Int>) {
+        android.util.Log.i("HolyricsBottomSheet", "populateButtons: numbers=$numbers")
         binding.llSongButtons.removeAllViews()
         val allSongs = viewModel.allSongs.value ?: emptyList()
 

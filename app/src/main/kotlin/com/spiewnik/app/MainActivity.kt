@@ -258,6 +258,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeHolyricsPlaylist() {
         viewModel.holyricsPlaylist.observe(this) { playlist ->
+            android.util.Log.i("MainActivity", "holyricsPlaylist observer: $playlist")
             if (playlist.isNotEmpty()) {
                 HolyricsBottomSheet.show(supportFragmentManager, playlist)
             }
