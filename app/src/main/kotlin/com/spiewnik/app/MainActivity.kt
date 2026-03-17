@@ -32,6 +32,9 @@ class MainActivity : AppCompatActivity() {
     // Track song changes to reset pan (not zoom) when song switches
     private var lastSongNumber: Int? = null
 
+    // Active render job — cancelled before starting a new one to prevent stale bitmap flicker
+    private var renderJob: kotlinx.coroutines.Job? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -238,10 +241,12 @@ class MainActivity : AppCompatActivity() {
         val rightW = binding.ivRight.width
         val rightH = binding.ivRight.height
 
-        lifecycleScope.launch {
+        renderJob?.cancel()
+        renderJob = lifecycleScope.launch {
             val leftBmp = withContext(Dispatchers.IO) {
                 viewModel.pdfCache.renderPage(leftIdx, leftW, leftH)
             }
+            if (!isActive) return@launch
             binding.ivLeft.setImageBitmap(leftBmp)
 
             if (rightIdx != null) {
@@ -249,6 +254,7 @@ class MainActivity : AppCompatActivity() {
                 val rightBmp = withContext(Dispatchers.IO) {
                     viewModel.pdfCache.renderPage(rightIdx, rightW, rightH)
                 }
+                if (!isActive) return@launch
                 binding.ivRight.setImageBitmap(rightBmp)
             } else {
                 binding.ivRight.setImageBitmap(null)
