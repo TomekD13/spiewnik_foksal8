@@ -32,9 +32,9 @@ class HolyricsBottomSheet : BottomSheetDialogFragment() {
 
         binding.btnHolyricsClose.setOnClickListener { dismiss() }
 
-        viewModel.holyricsPlaylist.observe(viewLifecycleOwner) { numbers ->
-            populateButtons(numbers)
-        }
+        // Numbers passed directly as arguments to avoid LiveData timing issues
+        val numbers = arguments?.getIntArray(ARG_NUMBERS)?.toList() ?: emptyList()
+        populateButtons(numbers)
     }
 
     private fun populateButtons(numbers: List<Int>) {
@@ -69,10 +69,15 @@ class HolyricsBottomSheet : BottomSheetDialogFragment() {
 
     companion object {
         private const val TAG = "HolyricsBottomSheet"
+        private const val ARG_NUMBERS = "numbers"
 
-        fun show(fragmentManager: FragmentManager) {
+        fun show(fragmentManager: FragmentManager, numbers: List<Int>) {
             if (fragmentManager.findFragmentByTag(TAG) == null) {
-                HolyricsBottomSheet().show(fragmentManager, TAG)
+                val sheet = HolyricsBottomSheet()
+                sheet.arguments = Bundle().apply {
+                    putIntArray(ARG_NUMBERS, numbers.toIntArray())
+                }
+                sheet.show(fragmentManager, TAG)
             }
         }
     }

@@ -259,7 +259,7 @@ class MainActivity : AppCompatActivity() {
     private fun observeHolyricsPlaylist() {
         viewModel.holyricsPlaylist.observe(this) { playlist ->
             if (playlist.isNotEmpty()) {
-                HolyricsBottomSheet.show(supportFragmentManager)
+                HolyricsBottomSheet.show(supportFragmentManager, playlist)
             }
         }
     }
