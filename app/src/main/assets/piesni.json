@@ -1,0 +1,5994 @@
+[
+  {
+    "nr_piesni": 1,
+    "tytul": "Wielbij, ma duszo, Mocarza",
+    "strony_pdf": [
+      11
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 2,
+    "tytul": "Boże, oto my, Twe dzieci",
+    "strony_pdf": [
+      12
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 3,
+    "tytul": "Jezu drogi, dzieci Twe",
+    "strony_pdf": [
+      12, 13
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 4,
+    "tytul": "Przyszliśmy tu w przybytki Twe",
+    "strony_pdf": [
+      13
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 5,
+    "tytul": "O jak błogie jest to miejsce",
+    "strony_pdf": [
+      14
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 6,
+    "tytul": "Bóg jest między nami",
+    "strony_pdf": [
+      15
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 7,
+    "tytul": "Drzwi, otwórzcie swe podwoje",
+    "strony_pdf": [
+      16
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 8,
+    "tytul": "Pośród nas stań, Jezu",
+    "strony_pdf": [
+      16,17
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 9,
+    "tytul": "Zbliż się dziś ku nam, Jezu nasz",
+    "strony_pdf": [
+      17
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 10,
+    "tytul": "O jak jest miłe miejsce święte",
+    "strony_pdf": [
+      18
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 11,
+    "tytul": "Jakże jest to chwila miła",
+    "strony_pdf": [
+      19
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 12,
+    "tytul": "Pójdźmy, śpiewajmy wraz",
+    "strony_pdf": [
+      20
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 13,
+    "tytul": "Patrz na nasze zgromadzenie",
+    "strony_pdf": [
+      21
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 14,
+    "tytul": "Chwalmy Pana życiem swym",
+    "strony_pdf": [
+      22
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 15,
+    "tytul": "Pójdźmy przed święty Pana tron",
+    "strony_pdf": [
+      23
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 16,
+    "tytul": "Światłości wiecznej blask",
+    "strony_pdf": [
+      24
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 17,
+    "tytul": "Gdy na ten świat spoglądam, wielki Boże",
+    "strony_pdf": [
+      24, 25
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 18,
+    "tytul": "Daj Panu cześć!",
+    "strony_pdf": [
+      26
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 19,
+    "tytul": "Czego chcesz od nas, Panie, z Twe hojne dary?",
+    "strony_pdf": [
+      27
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 20,
+    "tytul": "Duszo moja, chwalże Pana",
+    "strony_pdf": [
+      28
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 21,
+    "tytul": "Dziękujmy Bogu wraz, i sercem, i ustami",
+    "strony_pdf": [
+      29
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 22,
+    "tytul": "Boże wielki, pełnyś chwał",
+    "strony_pdf": [
+      30
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 23,
+    "tytul": "W Syjonie Pan króluje",
+    "strony_pdf": [
+      31
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 24,
+    "tytul": "Bóg jest miłością! On mnie odkupił!",
+    "strony_pdf": [
+      32
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 25,
+    "tytul": "Przedwieczny Boże, Panie, Ojcze nasz",
+    "strony_pdf": [
+      32, 33
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 26,
+    "tytul": "Święty, święty, święty",
+    "strony_pdf": [
+      34
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 27,
+    "tytul": "Wielkiemu Bogu nieśmy cześć",
+    "strony_pdf": [
+      35
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 28,
+    "tytul": "Niech wszelkie stworzenie hymn wzniesie i pienie",
+    "strony_pdf": [
+      36, 37
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 29,
+    "tytul": "Alleluja, alleluja!",
+    "strony_pdf": [
+      37
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 30,
+    "tytul": "Pan dobry jest!",
+    "strony_pdf": [
+      38
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 31,
+    "tytul": "Daj chwałę Panu, o duszo moja",
+    "strony_pdf": [
+      39
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 32,
+    "tytul": "Święty, Święty, Święty Pan, Bóg Przedwieczny",
+    "strony_pdf": [
+      40
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 33,
+    "tytul": "Niebosiężne ich postacie Wielbią Boga",
+    "strony_pdf": [
+      41
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 34,
+    "tytul": "Czyż tron Twój, Panie, uwielbiony",
+    "strony_pdf": [
+      42, 43
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 35,
+    "tytul": "Gdybym języków miał tysiące",
+    "strony_pdf": [
+      43
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 36,
+    "tytul": "Dziś, Panie mój, dziękuję Ci",
+    "strony_pdf": [
+      44
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 37,
+    "tytul": "Mój Boże, dzięki składam Ci",
+    "strony_pdf": [
+      44, 45
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 38,
+    "tytul": "O jakże kocham Twój, Najświętszy Boże, Dom",
+    "strony_pdf": [
+      45
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 39,
+    "tytul": "Chwałę i cześć niechaj Zbawcy dziś głosi",
+    "strony_pdf": [
+      46
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 40,
+    "tytul": "Panie zbawienia, Boże życia mego",
+    "strony_pdf": [
+      47
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 41,
+    "tytul": "Panie Wszechmocny, Boże nasz",
+    "strony_pdf": [
+      48
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 42,
+    "tytul": "Gdy zacznę zastanawiać się Nad Twą potęgą",
+    "strony_pdf": [
+      49
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 43,
+    "tytul": "Wszechmocny Panie, wiekuisty Boże",
+    "strony_pdf": [
+      50
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 44,
+    "tytul": "Wszechmocny Boże, Ty prawicą Swą prowadzisz lud Swój",
+    "strony_pdf": [
+      51
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 45,
+    "tytul": "Niech będzie Najwyższemu cześć",
+    "strony_pdf": [
+      51
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 46,
+    "tytul": "Stworzenie całe Boga czci",
+    "strony_pdf": [
+      51
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 47,
+    "tytul": "Chwalcie Pana, cześć Mu oddawajcie",
+    "strony_pdf": [
+      52
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 48,
+    "tytul": "Wszystkie ludy, skłońcie głowę",
+    "strony_pdf": [
+      52
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 49,
+    "tytul": "Przed Tobą wszystko korzy się, Panie",
+    "strony_pdf": [
+      54
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 50,
+    "tytul": "Wszechwładny Stwórco świata",
+    "strony_pdf": [
+      56
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 51,
+    "tytul": "Boże Wszechmocny! Stwórco wszechświata",
+    "strony_pdf": [
+      57
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 52,
+    "tytul": "Wzleć duchu mój, by chwalić niebios Pana",
+    "strony_pdf": [
+      58
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 53,
+    "tytul": "Królowi wznieś pieśń",
+    "strony_pdf": [
+      59
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 54,
+    "tytul": "Boże na niebie, Panie mój",
+    "strony_pdf": [
+      60
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 55,
+    "tytul": "O Boże, Stwórco mój, Jak hojna ręka Twa!",
+    "strony_pdf": [
+      60, 61
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 56,
+    "tytul": "Radujcie, święci, się!",
+    "strony_pdf": [
+      61
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 57,
+    "tytul": "Przyjm, Boże, dziś cześć",
+    "strony_pdf": [
+      62
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 58,
+    "tytul": "Wielbijmy Boga wszelkich chwał",
+    "strony_pdf": [
+      62, 63
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 59,
+    "tytul": "Ojcze Niebieski, Boże Wszechmocny",
+    "strony_pdf": [
+      63
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 60,
+    "tytul": "Święty, święty, święty jest nasz Bóg!",
+    "strony_pdf": [
+      64
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 61,
+    "tytul": "Święty, święty, święty, Święty jest nasz Pan!",
+    "strony_pdf": [
+      65
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 62,
+    "tytul": "O Boże Duchu, Boże światła",
+    "strony_pdf": [
+      66
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 63,
+    "tytul": "Duchu łaski, Duchu mocy",
+    "strony_pdf": [
+      67
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 64,
+    "tytul": "Pociesza Święty Duch zgubionych pośród burz",
+    "strony_pdf": [
+      68
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 65,
+    "tytul": "O Boże, Duchu Święty, przyjdź",
+    "strony_pdf": [
+      68, 69
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 66,
+    "tytul": "Duchu Święty, Duchu Święty, w Swej istocie niepojęty",
+    "strony_pdf": [
+      69
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 67,
+    "tytul": "Jak szuka jeleń zdroju chłodzącego",
+    "strony_pdf": [
+      70
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 68,
+    "tytul": "Obietnicę Jezus dał Apostołom Swoim wraz",
+    "strony_pdf": [
+      70, 71
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 69,
+    "tytul": "Dopóki jesteś pośród nas",
+    "strony_pdf": [
+      71
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 70,
+    "tytul": "Słyszę, że Twym Duchem, Panie",
+    "strony_pdf": [
+      72
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 71,
+    "tytul": "Przybywaj, Duchu Boży, Tu, do zebranych nas",
+    "strony_pdf": [
+      73
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 72,
+    "tytul": "Duchu Święty, z Ciebie płynie światła prawdy jasny blask",
+    "strony_pdf": [
+      74
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 73,
+    "tytul": "Duchu Święty, światło Twe niech rozjaśni drogi me!",
+    "strony_pdf": [
+      74, 75
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 74,
+    "tytul": "O, Ojcze, Ducha ześlij nam",
+    "strony_pdf": [
+      75
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 75,
+    "tytul": "Duchu Święty, Ty nas wiedź",
+    "strony_pdf": [
+      76
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 76,
+    "tytul": "Jesteśmy tu przy wodzie życia",
+    "strony_pdf": [
+      77
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 77,
+    "tytul": "Badaj swą Biblię, badaj ją często",
+    "strony_pdf": [
+      78
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 78,
+    "tytul": "Słowo Boże doskonałe",
+    "strony_pdf": [
+      79
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 79,
+    "tytul": "Prawda o Biblii niechaj głośno zabrzmi",
+    "strony_pdf": [
+      80
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 80,
+    "tytul": "O Panie, wieczne Słowo Twe",
+    "strony_pdf": [
+      81
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 81,
+    "tytul": "Znam przeczysty i wspaniały szczęśliwości wieczny zdrój",
+    "strony_pdf": [
+      82, 83
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 82,
+    "tytul": "O Słowo prawdy Twej",
+    "strony_pdf": [
+      83
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 83,
+    "tytul": "Święte, drogie Boże Słowo",
+    "strony_pdf": [
+      84
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 84,
+    "tytul": "Przybywajcie z wszystkich stron",
+    "strony_pdf": [
+      85
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 85,
+    "tytul": "Nie porzucimy Biblii swej",
+    "strony_pdf": [
+      86, 87
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 86,
+    "tytul": "Zawsze czytać muszę",
+    "strony_pdf": [
+      87
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 87,
+    "tytul": "Ty, księgo Boża, światło ślesz",
+    "strony_pdf": [
+      88
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 88,
+    "tytul": "Pomnij, jak w przeszłości dawnej",
+    "strony_pdf": [
+      89
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 89,
+    "tytul": "Bóg zakon Swój niezmienny ludowi Swemu dał",
+    "strony_pdf": [
+      90, 91
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 90,
+    "tytul": "Ty, Boże, możesz mi rozkazać",
+    "strony_pdf": [
+      91
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 91,
+    "tytul": "O Boże, otwórz serce me",
+    "strony_pdf": [
+      92
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 92,
+    "tytul": "Pański dniu, ach, witaj mi",
+    "strony_pdf": [
+      93
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 93,
+    "tytul": "Sobotni dzień pokojem i ciszą błogą tchnie",
+    "strony_pdf": [
+      93
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 94,
+    "tytul": "Sobotni dzień jest błogi mi",
+    "strony_pdf": [
+      94, 95
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 95,
+    "tytul": "Bóg dla człowieka ma dar niecodzienny",
+    "strony_pdf": [
+      95
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 96,
+    "tytul": "O, święty, sobotni, pamiątkowy dniu",
+    "strony_pdf": [
+      96
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 97,
+    "tytul": "Jak błogo i mile jest nam",
+    "strony_pdf": [
+      97
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 98,
+    "tytul": "Poranek dnia Pańskiego zawitał do nas znów",
+    "strony_pdf": [
+      98
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 99,
+    "tytul": "Przy mej pracy lub w podróży",
+    "strony_pdf": [
+      99
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 100,
+    "tytul": "Bóg nam dał Swój sabat",
+    "strony_pdf": [
+      100, 101
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 101,
+    "tytul": "Jezu Chryste, Panie chwał",
+    "strony_pdf": [
+      101
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 102,
+    "tytul": "Święty dniu Pański",
+    "strony_pdf": [
+      102, 103
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 103,
+    "tytul": "W dzień Twój sobotni, o Zbawco mój miły",
+    "strony_pdf": [
+      103
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 104,
+    "tytul": "O, zostaw troski, znikomości",
+    "strony_pdf": [
+      104
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 105,
+    "tytul": "Niech strumienie płyną mi z źródła Twej świątobliwości",
+    "strony_pdf": [
+      105
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 106,
+    "tytul": "Włóż na siebie zbroję daną z nieba ci",
+    "strony_pdf": [
+      106
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 107,
+    "tytul": "Już wieczorny powiew wiatru śle zapach kwiatowych pól",
+    "strony_pdf": [
+      107
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 108,
+    "tytul": "Przybądź do nas, drogi Panie, gdy tu zebraliśmy się",
+    "strony_pdf": [
+      108
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 109,
+    "tytul": "O dniu nabożnych pień, serdecznie witaj mi!",
+    "strony_pdf": [
+      109
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 110,
+    "tytul": "Alleluja! Jakże wzniosły, święty ranek Pan nam dał!",
+    "strony_pdf": [
+      110
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 111,
+    "tytul": "O, jak się dziś radośnie uśmiecha niebo nam!",
+    "strony_pdf": [
+      111
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 112,
+    "tytul": "Ach, jak moje serce dziś raduje się",
+    "strony_pdf": [
+      112
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 113,
+    "tytul": "Bóg Stwórca, niebios Pan",
+    "strony_pdf": [
+      113
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 114,
+    "tytul": "Zaśpiewajmy nową pieśń dziś, w sobotni piękny dzień",
+    "strony_pdf": [
+      114
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 115,
+    "tytul": "Po tygodniu ciężkiej pracy",
+    "strony_pdf": [
+      115
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 116,
+    "tytul": "Me serce wita Pański dzień",
+    "strony_pdf": [
+      116
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 117,
+    "tytul": "Święty dniu, spoczynku Boga",
+    "strony_pdf": [
+      117
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 118,
+    "tytul": "Jak drogie są nam miejsca te, gdzie Bożych słów uczymy się",
+    "strony_pdf": [
+      118
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 119,
+    "tytul": "Cały długi tydzień ten Bóg pozwolił przeżyć mi",
+    "strony_pdf": [
+      119
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 120,
+    "tytul": "O Panie, dzisiaj w domu Twym",
+    "strony_pdf": [
+      120
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 121,
+    "tytul": "Sobotni czas radości już odszedł do przeszłości",
+    "strony_pdf": [
+      121
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 122,
+    "tytul": "W ten sobotni wieczór Pieśń swoją Ci ślę",
+    "strony_pdf": [
+      122
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 123,
+    "tytul": "Wielki Boże wiekuisty",
+    "strony_pdf": [
+      122,123
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 124,
+    "tytul": "Ustąpcie ziemskie troski z dusz",
+    "strony_pdf": [
+      123
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 125,
+    "tytul": "W bojaźni i czci Dziś me serce drży",
+    "strony_pdf": [
+      124
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 126,
+    "tytul": "Jak szybko minął piękny dzień sabatu!",
+    "strony_pdf": [
+      124, 125
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 127,
+    "tytul": "O Boże, Tyś jest chwałą mą",
+    "strony_pdf": [
+      125
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 128,
+    "tytul": "Bogu, Bogu, który jedynie jest mądry",
+    "strony_pdf": [
+      126
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 129,
+    "tytul": "Rozpuść nas, Panie, dziś z łaską Twą",
+    "strony_pdf": [
+      126
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 130,
+    "tytul": "Prowadź mnie sprawiedliwą drogą Swą",
+    "strony_pdf": [
+      127
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 131,
+    "tytul": "Błogo nam, błogo nam, bo nasz Pasterz wiedzie nas",
+    "strony_pdf": [
+      127
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 132,
+    "tytul": "O Panie, Jezu miły, Swą łaską wspieraj nas",
+    "strony_pdf": [
+      128
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 133,
+    "tytul": "Niech wszyscy, co wierzą, do Betlejem bieżą",
+    "strony_pdf": [
+      129
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 134,
+    "tytul": "Chwała Bogu, chwała w górze",
+    "strony_pdf": [
+      130, 131
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 135,
+    "tytul": "Raduj się, ziemio: idzie Pan!",
+    "strony_pdf": [
+      131
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 136,
+    "tytul": "Gdzież głos Twego jest herolda?",
+    "strony_pdf": [
+      132
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 137,
+    "tytul": "Jak mam powitać Ciebie?",
+    "strony_pdf": [
+      133
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 138,
+    "tytul": "Nim u betlejemskich staną bram",
+    "strony_pdf": [
+      134, 135
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 139,
+    "tytul": "Cicha noc, święta noc",
+    "strony_pdf": [
+      135
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 140,
+    "tytul": "Dopóki gwiazda znaczy szlak",
+    "strony_pdf": [
+      136
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 141,
+    "tytul": "Miasteczko małe, Betlejem",
+    "strony_pdf": [
+      137
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 142,
+    "tytul": "Daleko w stajence narodził raz się",
+    "strony_pdf": [
+      138
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 143,
+    "tytul": "W niebie zabrzmiała pieśń",
+    "strony_pdf": [
+      139
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 144,
+    "tytul": "Otwórzcie się szeroko, podwoje świątyń bram!",
+    "strony_pdf": [
+      140
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 145,
+    "tytul": "Wśród morskich fal, daleko, hen",
+    "strony_pdf": [
+      141
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 146,
+    "tytul": "Opowiedz mi o Jezusie",
+    "strony_pdf": [
+      142, 143
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 147,
+    "tytul": "Rozkwitła róża biała",
+    "strony_pdf": [
+      143
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 148,
+    "tytul": "Mistrzu, wichura szaleje",
+    "strony_pdf": [
+      144, 145
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 149,
+    "tytul": "Ptaszki mają swoje gniazda",
+    "strony_pdf": [
+      145
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 150,
+    "tytul": "O, Galileo z dawnych lat",
+    "strony_pdf": [
+      146
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 151,
+    "tytul": "O głowo poraniona",
+    "strony_pdf": [
+      147
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 152,
+    "tytul": "Tam na wzgórzu wśród skał stary krzyż kiedyś stał",
+    "strony_pdf": [
+      148, 149
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 153,
+    "tytul": "Przelałem Swoją krew",
+    "strony_pdf": [
+      149
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 154,
+    "tytul": "Gdy patrzę na cudowny krzyż",
+    "strony_pdf": [
+      150
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 155,
+    "tytul": "Spójrz, na Golgoty wzgórzu, tam",
+    "strony_pdf": [
+      151
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 156,
+    "tytul": "Tysiąckrotnie pozdrowiony bądź mi Jezu, Zbawco mój",
+    "strony_pdf": [
+      152
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 157,
+    "tytul": "Na Golgotę, duszo, śpiesz",
+    "strony_pdf": [
+      153
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 158,
+    "tytul": "Chrystus Pan opuścił niebios sławę",
+    "strony_pdf": [
+      154
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 159,
+    "tytul": "Jezus Chrystus zmartwychpowstał!",
+    "strony_pdf": [
+      155
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 160,
+    "tytul": "Porzucił grobu cień Jezus, mój Zbawca!",
+    "strony_pdf": [
+      156
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 161,
+    "tytul": "Do nieba wszedłeś, Chryste Panie",
+    "strony_pdf": [
+      157
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 162,
+    "tytul": "Ja wiem, że Zbawca żyje mój",
+    "strony_pdf": [
+      158, 159
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 163,
+    "tytul": "Zmartwychpowstał, zmartwychpowstał już nasz Pan!",
+    "strony_pdf": [
+      159
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 164,
+    "tytul": "Nasz Arcykapłan zbliża się",
+    "strony_pdf": [
+      160
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 165,
+    "tytul": "Jezu Zbawicielu, wszak Tyś za mnie zmarł",
+    "strony_pdf": [
+      161
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 166,
+    "tytul": "Z głębokiej nędzy, z grzechu dna",
+    "strony_pdf": [
+      162
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 167,
+    "tytul": "Patrz, jak twój Zbawca u tronu tam prosi",
+    "strony_pdf": [
+      163
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 168,
+    "tytul": "O Jezu, przyjmij od nas cześć",
+    "strony_pdf": [
+      164
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 169,
+    "tytul": "Gdy nas niebios Sędzia zważy",
+    "strony_pdf": [
+      165
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 170,
+    "tytul": "Tam w przybytku wiecznej chwały",
+    "strony_pdf": [
+      166, 167
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 171,
+    "tytul": "Niewinny Ty, Baranku Boży",
+    "strony_pdf": [
+      167
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 172,
+    "tytul": "Już zaczął się sąd, otwarto też księgi",
+    "strony_pdf": [
+      168, 169
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 173,
+    "tytul": "Pomyśl tylko, droga duszo",
+    "strony_pdf": [
+      169
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 174,
+    "tytul": "dziecię me!”",
+    "strony_pdf": [
+      170
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 175,
+    "tytul": "Już okrzyk przenikliwy ogarnia świata krąg",
+    "strony_pdf": [
+      171
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 176,
+    "tytul": "Zbawienia drogę do niebios drzwi",
+    "strony_pdf": [
+      172
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 177,
+    "tytul": "Wkrótce się czas łaski skończy",
+    "strony_pdf": [
+      173
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 178,
+    "tytul": "Zbudźcie się!” — tak ci wołają",
+    "strony_pdf": [
+      174, 175
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 179,
+    "tytul": "Panie, wysłuchać modłów chciej!",
+    "strony_pdf": [
+      175
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 180,
+    "tytul": "Wesel się bardzo, syjońska córko",
+    "strony_pdf": [
+      176, 177
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 181,
+    "tytul": "Dziedzicu niebios, dlaczego w uśpieniu spędzasz swój czas?",
+    "strony_pdf": [
+      177
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 183,
+    "tytul": "Nasz Pan przychodzi!",
+    "strony_pdf": [
+      179
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 184,
+    "tytul": "Nieznany jest dzień, w którym przyjdzie znów Pan",
+    "strony_pdf": [
+      180, 181
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 185,
+    "tytul": "Trąbcie wokoło, niech zew wszędzie brzmi",
+    "strony_pdf": [
+      181
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 186,
+    "tytul": "Wkrótce przyjdzie nasz Zbawca i Pan",
+    "strony_pdf": [
+      182
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 187,
+    "tytul": "Przyjdzie znowu Pan w obłokach",
+    "strony_pdf": [
+      183
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 188,
+    "tytul": "Znaki prorocze ostrzegły ten świat",
+    "strony_pdf": [
+      184
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 189,
+    "tytul": "Powstańcie chrześcijanie, gdy zbliża się wasz Król!",
+    "strony_pdf": [
+      185
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 190,
+    "tytul": "Jak sen mijają życia dnie",
+    "strony_pdf": [
+      186
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 191,
+    "tytul": "Być może nad ranem, gdy jutrznia zabłyśnie",
+    "strony_pdf": [
+      187
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 192,
+    "tytul": "Kiedyż, kiedyż ujrzę Pana?",
+    "strony_pdf": [
+      188, 189
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 193,
+    "tytul": "Przyjdźże do nas w blasku chwały",
+    "strony_pdf": [
+      189
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 194,
+    "tytul": "Wkrótce nasz Pan przyjdzie z góry",
+    "strony_pdf": [
+      190, 191
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 195,
+    "tytul": "W modlitwach trwamy w dzień",
+    "strony_pdf": [
+      191
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 196,
+    "tytul": "Miej odwagę, stadko małe",
+    "strony_pdf": [
+      192, 193
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 197,
+    "tytul": "Jak wspaniały dzień to będzie",
+    "strony_pdf": [
+      193
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 198,
+    "tytul": "Pan przyjdzie wnet!",
+    "strony_pdf": [
+      194, 195
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 199,
+    "tytul": "My Go ujrzymy, jak przychodzi w chwale!",
+    "strony_pdf": [
+      195
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 200,
+    "tytul": "Burze straszne w krąg szaleją",
+    "strony_pdf": [
+      196
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 201,
+    "tytul": "O, Synu Boży, przyjdź już wnet",
+    "strony_pdf": [
+      197
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 202,
+    "tytul": "Ocknijcie się, uśpieni, zapalcie lampy swe!",
+    "strony_pdf": [
+      198
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 203,
+    "tytul": "Pan przychodzi! Wnet ustaną narzekania",
+    "strony_pdf": [
+      199
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 204,
+    "tytul": "Pełen szczęścia dzień to będzie",
+    "strony_pdf": [
+      200
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 205,
+    "tytul": "Dniu radości, dniu nadziei",
+    "strony_pdf": [
+      201
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 206,
+    "tytul": "Gdy głos trąby się odezwie",
+    "strony_pdf": [
+      202
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 207,
+    "tytul": "Tu, na ziemi mam dziś mieszkanie",
+    "strony_pdf": [
+      203
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 208,
+    "tytul": "Zabrzmi głos anielskiej trąby",
+    "strony_pdf": [
+      204
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 209,
+    "tytul": "Czeka nas wiecznej radości kraj",
+    "strony_pdf": [
+      205
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 210,
+    "tytul": "Czytywałem o mieście Salemie",
+    "strony_pdf": [
+      206
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 211,
+    "tytul": "Ujrzysz Pana, jak przychodzi!",
+    "strony_pdf": [
+      207
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 212,
+    "tytul": "Już nadchodzi ten dzień, w którym Pan objawi się",
+    "strony_pdf": [
+      208
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 213,
+    "tytul": "Zniknie ciemność, gdy Jezus zjawi się!",
+    "strony_pdf": [
+      209
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 214,
+    "tytul": "Zaśpiewajmy hymn, niech rozproszy trwogi cień",
+    "strony_pdf": [
+      210
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 215,
+    "tytul": "Obietnicę nam nasz Jezus dał",
+    "strony_pdf": [
+      211
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 216,
+    "tytul": "Królu niebios, któż imienia Twego zgłębi treść?",
+    "strony_pdf": [
+      212
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 217,
+    "tytul": "Ujrzę Króla chwał",
+    "strony_pdf": [
+      213
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 218,
+    "tytul": "W Syjonie Pan króluje",
+    "strony_pdf": [
+      214
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 219,
+    "tytul": "O, duszo, tyś taka strudzona",
+    "strony_pdf": [
+      215
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 220,
+    "tytul": "Czy masz miejsce dla Jezusa?",
+    "strony_pdf": [
+      216
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 221,
+    "tytul": "Znam strumień, co płynie wśród dolin i wzgórz",
+    "strony_pdf": [
+      217
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 222,
+    "tytul": "Czy pojmujesz człeku?",
+    "strony_pdf": [
+      218
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 223,
+    "tytul": "O, gdybyś ty Jezusa znał",
+    "strony_pdf": [
+      219
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 224,
+    "tytul": "Głośmy radośnie wszyscy wraz: Bóg kocha nas!",
+    "strony_pdf": [
+      220
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 225,
+    "tytul": "Do ciebie, człeku, zbliżam się",
+    "strony_pdf": [
+      221
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 226,
+    "tytul": "Zgubionych owiec Pasterz nasz drogi",
+    "strony_pdf": [
+      222
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 227,
+    "tytul": "Przyjdź do Jezusa, przyjdź póki czas",
+    "strony_pdf": [
+      223
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 228,
+    "tytul": "Wodzem naszym, bracia, Chrystus Pan jest sam",
+    "strony_pdf": [
+      224
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 229,
+    "tytul": "Czy zbawienny strumień ci znan",
+    "strony_pdf": [
+      225
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 230,
+    "tytul": "Już pora, bracie, się przebudzić",
+    "strony_pdf": [
+      226
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 231,
+    "tytul": "Grzeszniku, podążaj do krzyża",
+    "strony_pdf": [
+      227
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 232,
+    "tytul": "Chciałbyś swych grzechów przekleństwa się zbyć?",
+    "strony_pdf": [
+      228
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 233,
+    "tytul": "Jezus serdecznie dziś jeszcze cię wzywa",
+    "strony_pdf": [
+      229
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 234,
+    "tytul": "Ostatni zew jeszcze rozlega się wciąż",
+    "strony_pdf": [
+      230
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 235,
+    "tytul": "Za ciebiem stoczył bój",
+    "strony_pdf": [
+      231
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 236,
+    "tytul": "O Słowo najpiękniejsze",
+    "strony_pdf": [
+      232
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 237,
+    "tytul": "Prócz liści nic!",
+    "strony_pdf": [
+      233
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 238,
+    "tytul": "Błogo w tym życiu przemija dzień",
+    "strony_pdf": [
+      234
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 239,
+    "tytul": "Spojrzyj na Jezusa, duszo, pośpiesz Doń!",
+    "strony_pdf": [
+      235
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 240,
+    "tytul": "Pan Jezus do serca twojego chce wejść",
+    "strony_pdf": [
+      236
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 241,
+    "tytul": "Jezus, Lekarz nad lekarzy",
+    "strony_pdf": [
+      237
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 242,
+    "tytul": "O grzeszniku, patrz jak marne, jak nieszczęsne życie twe!",
+    "strony_pdf": [
+      238
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 243,
+    "tytul": "Idź, łzy otrzyj krwawe",
+    "strony_pdf": [
+      239
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 244,
+    "tytul": "O, ugnij mnie jak zboża łan",
+    "strony_pdf": [
+      240
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 245,
+    "tytul": "Przychodzę, jakim jestem dziś",
+    "strony_pdf": [
+      241
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 246,
+    "tytul": "O, pokutujmy, bo czas krótki mamy",
+    "strony_pdf": [
+      241
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 247,
+    "tytul": "Raz syn marnotrawny opuścił swój dom",
+    "strony_pdf": [
+      242
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 248,
+    "tytul": "Tu serce me! Mój Jezu, przyjąć chciej",
+    "strony_pdf": [
+      243
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 249,
+    "tytul": "Blisko zbawienia, prawie że już",
+    "strony_pdf": [
+      244
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 250,
+    "tytul": "Skało wieczna, Jezu mój",
+    "strony_pdf": [
+      245
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 251,
+    "tytul": "Panie, zsyłasz łaski deszcze",
+    "strony_pdf": [
+      245
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 252,
+    "tytul": "W Swej litości, łaskawości, jakim jestem, przyjmij mnie",
+    "strony_pdf": [
+      246
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 253,
+    "tytul": "Nie omijaj mnie, o Zbawco",
+    "strony_pdf": [
+      247
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 254,
+    "tytul": "Pod krzyżem, świadom winy swojej",
+    "strony_pdf": [
+      248
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 255,
+    "tytul": "Kto wiary spojrzenie skieruje na krzyż",
+    "strony_pdf": [
+      249
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 256,
+    "tytul": "Przyjdź, o mój Zbawco, przyjdź",
+    "strony_pdf": [
+      250
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 257,
+    "tytul": "Słyszałem Zbawcy wdzięczny głos",
+    "strony_pdf": [
+      251
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 258,
+    "tytul": "Jest życie w spojrzeniu na Zbawcy krzyż",
+    "strony_pdf": [
+      252
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 259,
+    "tytul": "I czemu wciąż czekasz, człowieku?",
+    "strony_pdf": [
+      253
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 260,
+    "tytul": "O Jezu, Stróżu duszy",
+    "strony_pdf": [
+      254
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 261,
+    "tytul": "Nic mnie dziś nie może zmóc",
+    "strony_pdf": [
+      255
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 262,
+    "tytul": "Bóg Syna dał, by mnie wybawić",
+    "strony_pdf": [
+      256
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 263,
+    "tytul": "Chrystus stoi u serca drzwi: Wpuścić Go, czy nie?",
+    "strony_pdf": [
+      257
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 264,
+    "tytul": "Kiedy żyłem w grzechach swych",
+    "strony_pdf": [
+      258
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 265,
+    "tytul": "Przy Tobie, Jezu, życie me",
+    "strony_pdf": [
+      259
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 266,
+    "tytul": "Zbawco, prowadź nas jak pasterz trzodę",
+    "strony_pdf": [
+      260
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 267,
+    "tytul": "Otwórz me oczy, chcę widzieć Jezusa",
+    "strony_pdf": [
+      261
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 268,
+    "tytul": "Gdybym Cię nie miał, Jezu mój kochany",
+    "strony_pdf": [
+      261
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 269,
+    "tytul": "O Panie, na Twój głos Do Ciebie zbliżam się",
+    "strony_pdf": [
+      262
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 270,
+    "tytul": "Albowiem tak Bóg świat umiłował",
+    "strony_pdf": [
+      263
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 271,
+    "tytul": "W Chrystusie się jednoczy świat",
+    "strony_pdf": [
+      263
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 272,
+    "tytul": "Gdym nędzny, pełen grzechów, w swą zgubę prosto brnął",
+    "strony_pdf": [
+      264
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 273,
+    "tytul": "W mym sercu miłość Zbawcy dusz promieniem niebios lśni",
+    "strony_pdf": [
+      265
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 274,
+    "tytul": "Jak błogo zbawionym być Twą, Chryste, krwią!",
+    "strony_pdf": [
+      266
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 275,
+    "tytul": "Jak cudnie się blask słońca lśni na szczycie srebrnej fali",
+    "strony_pdf": [
+      267
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 276,
+    "tytul": "Wysławiajmy Zbawiciela, On ożywia słabych, mdłych",
+    "strony_pdf": [
+      268
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 277,
+    "tytul": "Cudowna Boża łaska ta zbawiła z grzechów mnie",
+    "strony_pdf": [
+      269
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 278,
+    "tytul": "Jak dobry Zbawca musi być",
+    "strony_pdf": [
+      270
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 279,
+    "tytul": "Co mam uczynić dla Zbawcy mego",
+    "strony_pdf": [
+      271
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 280,
+    "tytul": "Zaśpiewajmy pochwalny i wdzięczny nasz hymn",
+    "strony_pdf": [
+      272
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 281,
+    "tytul": "Cóżbym miał bez Ciebie, Drogi Jezu mój?",
+    "strony_pdf": [
+      273
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 282,
+    "tytul": "Znam miłość Jezusa wspaniałą",
+    "strony_pdf": [
+      274
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 283,
+    "tytul": "U nóg Jezusa jestem tuż",
+    "strony_pdf": [
+      275
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 284,
+    "tytul": "Cudnej zmiany w mym sercu dokonał mój Bóg",
+    "strony_pdf": [
+      276
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 285,
+    "tytul": "Tylko Ty, Jezu, jeden moje serce znasz",
+    "strony_pdf": [
+      277
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 286,
+    "tytul": "Ja mam piosenkę od Jezusa",
+    "strony_pdf": [
+      278
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 287,
+    "tytul": "Jezus grzechy me zmył",
+    "strony_pdf": [
+      279
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 288,
+    "tytul": "Radosną pieśń chwały w sercu mam",
+    "strony_pdf": [
+      280
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 289,
+    "tytul": "Kocha mnie Pan",
+    "strony_pdf": [
+      281
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 290,
+    "tytul": "O, Synu Boży, o, Zbawco świata",
+    "strony_pdf": [
+      282
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 291,
+    "tytul": "O, cudowny jest mój Zbawiciel",
+    "strony_pdf": [
+      283
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 292,
+    "tytul": "Chcę śpiewać o miłości Jezusa w każdy czas!",
+    "strony_pdf": [
+      284
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 293,
+    "tytul": "Jest w kroplach deszczu Twoja łza",
+    "strony_pdf": [
+      285
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 294,
+    "tytul": "Tak lubię opowiadać o rzeczach w górze tam",
+    "strony_pdf": [
+      286
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 295,
+    "tytul": "Ja kocham Cię, Jezu, nad cały ten świat!",
+    "strony_pdf": [
+      287
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 296,
+    "tytul": "Wszechmocny jest mój Bóg i Pan",
+    "strony_pdf": [
+      288
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 297,
+    "tytul": "Kto w tym burzliwym życiu Nam może pokój dać?",
+    "strony_pdf": [
+      289
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 298,
+    "tytul": "Umrzeć z Jezusem, On już za mnie zmarł",
+    "strony_pdf": [
+      290
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 299,
+    "tytul": "Chcę Cię poznać, Zbawicielu",
+    "strony_pdf": [
+      291
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 300,
+    "tytul": "Nic, tylko śpiewać mogę memu Panu",
+    "strony_pdf": [
+      292
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 301,
+    "tytul": "Poranna Gwiazdo, Jezu nasz",
+    "strony_pdf": [
+      293
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 302,
+    "tytul": "Cudowne imię ma",
+    "strony_pdf": [
+      294
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 303,
+    "tytul": "Wszystko potrafię w Tym, który mnie wzmacnia",
+    "strony_pdf": [
+      295
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 304,
+    "tytul": "Choćby dzień w moim życiu był pełen trosk i zła",
+    "strony_pdf": [
+      296
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 305,
+    "tytul": "Choć nie znam drogi swej, Pan mój ją zna",
+    "strony_pdf": [
+      297
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 306,
+    "tytul": "Bez Niego nic bym nie zdziałał",
+    "strony_pdf": [
+      298
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 307,
+    "tytul": "Chcę kochać Ciebie, Synu Boży",
+    "strony_pdf": [
+      299
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 308,
+    "tytul": "Gdy w ciemnościach bez Pana błądziłem",
+    "strony_pdf": [
+      300
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 309,
+    "tytul": "Niechaj piękno Jezusa się we mnie lśni",
+    "strony_pdf": [
+      301
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 310,
+    "tytul": "Czy znasz to imię, w którym jest zbawienie",
+    "strony_pdf": [
+      302
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 311,
+    "tytul": "Tylko Tobie, Panie Jezu, całym sercem ufać chcę",
+    "strony_pdf": [
+      303
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 312,
+    "tytul": "Ja kocham mego Zbawcę",
+    "strony_pdf": [
+      304
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 313,
+    "tytul": "O miłości, Boski darze",
+    "strony_pdf": [
+      306
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 314,
+    "tytul": "Jak słodko imię Jezus brzmi!",
+    "strony_pdf": [
+      307
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 315,
+    "tytul": "Uwielbiam miłość niepojętą",
+    "strony_pdf": [
+      308
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 316,
+    "tytul": "O, błoga pewność, Jezus jest mój!",
+    "strony_pdf": [
+      309
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 317,
+    "tytul": "Znam imię nad imiona",
+    "strony_pdf": [
+      310
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 318,
+    "tytul": "O, najdroższy Jezu mój",
+    "strony_pdf": [
+      311
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 319,
+    "tytul": "Światło słońca się rozlewa na szeroki, piękny świat",
+    "strony_pdf": [
+      312
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 320,
+    "tytul": "Jak brzmi pięknie imię Jezus",
+    "strony_pdf": [
+      313
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 321,
+    "tytul": "Panie wiesz, że ja Ciebie kocham",
+    "strony_pdf": [
+      314
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 322,
+    "tytul": "Radośnie Tobie śpiewa, O Zbawco, serce me!",
+    "strony_pdf": [
+      315
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 323,
+    "tytul": "Jezu, ma radości",
+    "strony_pdf": [
+      316
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 324,
+    "tytul": "Pieśń dziękczynienia brzmi",
+    "strony_pdf": [
+      317
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 325,
+    "tytul": "Ach, potrzebuję Cię, Łaskawy Panie mój!",
+    "strony_pdf": [
+      318
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 326,
+    "tytul": "Cóż bym miał bez Ciebie, Zbawco?",
+    "strony_pdf": [
+      319
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 327,
+    "tytul": "Hymn wdzięczności płynie z duszy",
+    "strony_pdf": [
+      320
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 328,
+    "tytul": "O Miłości, coś raczyła na Swój obraz stworzyć mnie",
+    "strony_pdf": [
+      321
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 329,
+    "tytul": "Serce Zbawiciela wciąż miłością tchnie",
+    "strony_pdf": [
+      322
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 330,
+    "tytul": "Chcę blisko być z mym Jezusem",
+    "strony_pdf": [
+      323
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 331,
+    "tytul": "Pod skrzydłem Twym moja dusza spoczywa",
+    "strony_pdf": [
+      324
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 332,
+    "tytul": "Chociaż świat porywa, wabi",
+    "strony_pdf": [
+      325
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 333,
+    "tytul": "Nie mogę pojąć, jak Tyś, święty Bóg",
+    "strony_pdf": [
+      326
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 334,
+    "tytul": "Chcę z Tobą chodzić, Boże mój",
+    "strony_pdf": [
+      327
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 335,
+    "tytul": "Warownym grodem jest nasz Bóg",
+    "strony_pdf": [
+      328
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 336,
+    "tytul": "Pod Twą obronę, Ojcze na niebie",
+    "strony_pdf": [
+      329
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 337,
+    "tytul": "Z moim drogim Zbawicielem kroczę poprzez życie",
+    "strony_pdf": [
+      330
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 338,
+    "tytul": "Co złożę Zbawicielowi?",
+    "strony_pdf": [
+      331
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 339,
+    "tytul": "Jezu, prowadź mnie, Twe dziecię",
+    "strony_pdf": [
+      332
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 340,
+    "tytul": "Gdy przykry ci jest życia znój",
+    "strony_pdf": [
+      333
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 341,
+    "tytul": "W objęcia Jezusowe z ufnością rzucam się",
+    "strony_pdf": [
+      334
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 342,
+    "tytul": "Naucz nas dziś, Panie, woli Twej!",
+    "strony_pdf": [
+      335
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 343,
+    "tytul": "Zbawco, wiedź owieczki Swoje",
+    "strony_pdf": [
+      336
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 344,
+    "tytul": "Kto los swój złożył w ręce Boga",
+    "strony_pdf": [
+      337
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 345,
+    "tytul": "Zbawco, prowadź zawsze mnie",
+    "strony_pdf": [
+      338
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 346,
+    "tytul": "W Tobie, Panie, moja ufność",
+    "strony_pdf": [
+      339
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 347,
+    "tytul": "Gdy się burze życia srożą",
+    "strony_pdf": [
+      340
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 348,
+    "tytul": "Błogosławieni, żyjący w pokorze",
+    "strony_pdf": [
+      341
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 349,
+    "tytul": "Pan nie sprawi mi zawodu!",
+    "strony_pdf": [
+      342
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 350,
+    "tytul": "Za rękę weź mnie, Panie, i prowadź sam",
+    "strony_pdf": [
+      343
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 351,
+    "tytul": "O nie! Nikt z ludzi już nie zdoła od prawdy Bożej odwieść nas",
+    "strony_pdf": [
+      344
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 352,
+    "tytul": "Do Ciebie, Boże mój, przybliżam się",
+    "strony_pdf": [
+      345
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 353,
+    "tytul": "Czy twój Zbawca może zaufać ci?",
+    "strony_pdf": [
+      346
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 354,
+    "tytul": "Gdy cię mocno krzyż przygniata, patrz ufnie wzwyż!",
+    "strony_pdf": [
+      347
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 355,
+    "tytul": "O drogi Panie słysz mój głos",
+    "strony_pdf": [
+      348
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 356,
+    "tytul": "Pan wiedzie mnie!",
+    "strony_pdf": [
+      349
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 357,
+    "tytul": "Przy każdej pracy mojej ja szukam rady Twojej",
+    "strony_pdf": [
+      350
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 358,
+    "tytul": "W ślad za Tobą, Zbawicielu",
+    "strony_pdf": [
+      351
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 359,
+    "tytul": "Gdy pokój niebieski Bóg w duszę mi wlał",
+    "strony_pdf": [
+      352
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 360,
+    "tytul": "Chcę bliżej Ciebie być, O Boże mój!",
+    "strony_pdf": [
+      353
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 361,
+    "tytul": "Wszystko Tobie dziś oddaję",
+    "strony_pdf": [
+      354
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 362,
+    "tytul": "Do Pana pójdź, grzeszniku, dziś",
+    "strony_pdf": [
+      355
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 363,
+    "tytul": "W świętej, głębokiej ciszy do mnie się, Panie, skłoń",
+    "strony_pdf": [
+      356
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 364,
+    "tytul": "Twoim być, o Zbawco, naucz mnie",
+    "strony_pdf": [
+      357
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 365,
+    "tytul": "Codziennie rano wznoszę głos",
+    "strony_pdf": [
+      357
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 366,
+    "tytul": "Chcemy, o Chryste, do śmierci być Twoi",
+    "strony_pdf": [
+      358
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 367,
+    "tytul": "Głębiej, o głębiej, ukorzyć się chcę",
+    "strony_pdf": [
+      359
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 368,
+    "tytul": "Chodzić wciąż z Panem, jaki raj!",
+    "strony_pdf": [
+      360
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 369,
+    "tytul": "Masz dwie drogi do wyboru",
+    "strony_pdf": [
+      361
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 370,
+    "tytul": "Jeżeli chcesz radosnym być",
+    "strony_pdf": [
+      362
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 371,
+    "tytul": "Polecaj drogi swoje i życia swego los",
+    "strony_pdf": [
+      363
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 372,
+    "tytul": "Łódź moja szybko płynie",
+    "strony_pdf": [
+      364
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 373,
+    "tytul": "Z mym Jezusem dzień po dniu wędruję",
+    "strony_pdf": [
+      365
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 374,
+    "tytul": "Przez życie łatwiej iść",
+    "strony_pdf": [
+      366
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 375,
+    "tytul": "Prowadź, prowadź mnie sam!",
+    "strony_pdf": [
+      367
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 376,
+    "tytul": "Z mym Jezusem mogę wszędzie śmiało iść",
+    "strony_pdf": [
+      368
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 377,
+    "tytul": "Ja dążę wciąż do Ciebie, drogi Panie",
+    "strony_pdf": [
+      369
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 378,
+    "tytul": "Było pusto i ciemno na mej drodze",
+    "strony_pdf": [
+      370
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 379,
+    "tytul": "Życie ziemskie pełne jest trosk",
+    "strony_pdf": [
+      371
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 380,
+    "tytul": "Milcz, duszo ma, gdyż Pan jest stróżem twym",
+    "strony_pdf": [
+      372
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 381,
+    "tytul": "O, Panie, dzisiaj me wołanie do Ciebie z zaufaniem ślę!",
+    "strony_pdf": [
+      373
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 382,
+    "tytul": "Bóg Abrahama znał, więc dobrze zna i mnie",
+    "strony_pdf": [
+      374
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 383,
+    "tytul": "Chcę, by Jezus wciąż ze mną szedł!",
+    "strony_pdf": [
+      375
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 384,
+    "tytul": "Módl się, mój bracie, z poranku",
+    "strony_pdf": [
+      376
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 385,
+    "tytul": "Nim wyszedłeś dzisiaj z domu, czy modliłeś się?",
+    "strony_pdf": [
+      377
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 386,
+    "tytul": "Wielki Boże, Ty sam serce moje oczyść od plam",
+    "strony_pdf": [
+      378
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 387,
+    "tytul": "Łagodny, cichy serca głos modlitwy mojej",
+    "strony_pdf": [
+      379
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 388,
+    "tytul": "Łaskawy Ojcze, wszystkich nas Przyjaźnią z Sobą zwiąż",
+    "strony_pdf": [
+      380
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 389,
+    "tytul": "W modlitwie wznoszę oczy moje",
+    "strony_pdf": [
+      381
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 390,
+    "tytul": "Ja do Ciebie, Ojcze w niebie, wznoszę korne modły swe",
+    "strony_pdf": [
+      382
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 391,
+    "tytul": "Bliżej, o Jezu, wznieś mnie i tul",
+    "strony_pdf": [
+      383
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 392,
+    "tytul": "Jakże wzniosła jest ta chwila",
+    "strony_pdf": [
+      384
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 393,
+    "tytul": "Dobry mój Boże, wiekuisty Panie",
+    "strony_pdf": [
+      385
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 394,
+    "tytul": "Ludu Boży, czuwaj, bądź gotowy",
+    "strony_pdf": [
+      386
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 395,
+    "tytul": "Gdy Abrahama Bóg przychodzi z ciszą snów",
+    "strony_pdf": [
+      387
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 396,
+    "tytul": "Przed tronem łaski Twej uniżam się",
+    "strony_pdf": [
+      388
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 397,
+    "tytul": "Jeśli ustaniesz, mój bracie",
+    "strony_pdf": [
+      389
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 398,
+    "tytul": "O, wzywaj Mnie wśród bólu, wśród udręki!",
+    "strony_pdf": [
+      390
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 399,
+    "tytul": "Na wieki mam ufność w Bogu mym",
+    "strony_pdf": [
+      391
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 400,
+    "tytul": "Ucz mnie modlić się, Zbawco mój drogi",
+    "strony_pdf": [
+      392
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 401,
+    "tytul": "Boże Święty, objaw się",
+    "strony_pdf": [
+      393
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 402,
+    "tytul": "Wszystko powiedz Jezusowi",
+    "strony_pdf": [
+      394
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 403,
+    "tytul": "Ten wzniosły, cichy modlitw czas",
+    "strony_pdf": [
+      395
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 404,
+    "tytul": "O, Jezu, zostań z nami",
+    "strony_pdf": [
+      396
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 405,
+    "tytul": "Zajmij umysł mój I myśli moje",
+    "strony_pdf": [
+      396
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 406,
+    "tytul": "Wierzyć mnie, Panie, ucz Modlić się, ucz!",
+    "strony_pdf": [
+      397
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 407,
+    "tytul": "Toruj, Jezu, sam drogę życia nam!",
+    "strony_pdf": [
+      398
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 408,
+    "tytul": "Ucz mnie, Panie, modlić się!",
+    "strony_pdf": [
+      399
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 409,
+    "tytul": "Z niedoli wielkiej, z udręczenia",
+    "strony_pdf": [
+      399
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 410,
+    "tytul": "Moc potężną w Swym działaniu",
+    "strony_pdf": [
+      400
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 411,
+    "tytul": "Święta miłość Chrystusowa niech połączy nas!",
+    "strony_pdf": [
+      401
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 412,
+    "tytul": "Nas miłość uszczęśliwia",
+    "strony_pdf": [
+      402
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 413,
+    "tytul": "Miłość Bożą w sercu swym dzisiaj mam!",
+    "strony_pdf": [
+      403
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 414,
+    "tytul": "Stale wierz, i w noc, i w dzień",
+    "strony_pdf": [
+      404
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 415,
+    "tytul": "Choćbym posiadł mądrość",
+    "strony_pdf": [
+      405
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 416,
+    "tytul": "Ufaj, duszo moja, Bóg z tobą jest",
+    "strony_pdf": [
+      406
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 417,
+    "tytul": "wolę",
+    "strony_pdf": [
+      407
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 418,
+    "tytul": "Czasami słyszę dźwięki, cudownie w uszach brzmią",
+    "strony_pdf": [
+      408
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 419,
+    "tytul": "Dziś naucz mnie kochać",
+    "strony_pdf": [
+      409
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 420,
+    "tytul": "O nadziejo, światło w ciemnej nocy!",
+    "strony_pdf": [
+      410
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 421,
+    "tytul": "Otwórz me oczy, Panie mój",
+    "strony_pdf": [
+      411
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 422,
+    "tytul": "Bądź Ty ze mną nieustannie!",
+    "strony_pdf": [
+      412
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 423,
+    "tytul": "Idźmy naprzód z Jezusem",
+    "strony_pdf": [
+      414
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 424,
+    "tytul": "Jakże często słabnie wiary naszej wzrok",
+    "strony_pdf": [
+      415
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 425,
+    "tytul": "Znam Przewodnika w mej pielgrzymce",
+    "strony_pdf": [
+      416
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 426,
+    "tytul": "Przyjaciela mam, co pociesza mnie",
+    "strony_pdf": [
+      417
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 427,
+    "tytul": "Gdy twoja droga trudna jest",
+    "strony_pdf": [
+      418
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 428,
+    "tytul": "O, prowadź, Królu wieczny",
+    "strony_pdf": [
+      419
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 429,
+    "tytul": "Umarłem ja! Z Nim położony w grobie",
+    "strony_pdf": [
+      420
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 430,
+    "tytul": "Ku niebu zdążam wzwyż",
+    "strony_pdf": [
+      421
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 431,
+    "tytul": "Dzień po dniu i w każdej nowej chwili",
+    "strony_pdf": [
+      422
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 432,
+    "tytul": "To wcale nie tak wielki trud zbawienie posiąść tu",
+    "strony_pdf": [
+      423
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 433,
+    "tytul": "Powiedzcie mi, bracia i siostry",
+    "strony_pdf": [
+      424
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 434,
+    "tytul": "Pan",
+    "strony_pdf": [
+      425
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 435,
+    "tytul": "Ja wędruję każdy dzień z Jezusem",
+    "strony_pdf": [
+      426
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 436,
+    "tytul": "Patrz, jak w obcej ziemi tam Daniel sławny był",
+    "strony_pdf": [
+      427
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 437,
+    "tytul": "O bracie, zbudź się!",
+    "strony_pdf": [
+      428
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 438,
+    "tytul": "Słyszę, jak mnie wzywa Jezus",
+    "strony_pdf": [
+      429
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 439,
+    "tytul": "Dokąd to, wędrowcze, śpieszysz?",
+    "strony_pdf": [
+      430
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 440,
+    "tytul": "Na morzu życia, w spienionych odmętach",
+    "strony_pdf": [
+      431
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 441,
+    "tytul": "Mała łódka drży na morzu",
+    "strony_pdf": [
+      432
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 442,
+    "tytul": "Mnie do nieba dążyć trzeba",
+    "strony_pdf": [
+      433
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 443,
+    "tytul": "Płyną, płyną nasze lata",
+    "strony_pdf": [
+      434
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 444,
+    "tytul": "Choć burza huczy wkoło nas, my nie lękamy się!",
+    "strony_pdf": [
+      435
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 445,
+    "tytul": "Dziś pragnę bliżej Boga być",
+    "strony_pdf": [
+      436
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 446,
+    "tytul": "W cieniu krzyża brzemię swoje",
+    "strony_pdf": [
+      437
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 447,
+    "tytul": "Mą drogę znasz, choć ja jej nie znam wcale",
+    "strony_pdf": [
+      437
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 448,
+    "tytul": "Nie ulegaj żądzom, gdyż to żmii jad",
+    "strony_pdf": [
+      438
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 449,
+    "tytul": "Patrz, jak strumyk spada z góry",
+    "strony_pdf": [
+      439
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 450,
+    "tytul": "Próżne żale i łzy",
+    "strony_pdf": [
+      440
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 451,
+    "tytul": "Liczne obietnice, które daje Bóg",
+    "strony_pdf": [
+      441
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 452,
+    "tytul": "Baranek Boży przyszedł na tę ziemię",
+    "strony_pdf": [
+      442
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 453,
+    "tytul": "Jeszcze trochę łez i potu",
+    "strony_pdf": [
+      443
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 454,
+    "tytul": "Już się nie bój więcej, z tobą Jam, twój Bóg!",
+    "strony_pdf": [
+      444
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 455,
+    "tytul": "Nie lękaj się wśród życia dróg",
+    "strony_pdf": [
+      445
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 456,
+    "tytul": "Kto tu zwycięży",
+    "strony_pdf": [
+      446
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 457,
+    "tytul": "Dlaczego w twym oku tak często lśni łza?",
+    "strony_pdf": [
+      447
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 458,
+    "tytul": "Gdy byłem w ogrodzie raz sam",
+    "strony_pdf": [
+      448
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 459,
+    "tytul": "Czy możesz radośnie na ziemi żyć?",
+    "strony_pdf": [
+      449
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 460,
+    "tytul": "Gdyś strudzony, gdy ustają siły",
+    "strony_pdf": [
+      450
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 461,
+    "tytul": "Rzućmy trwogę, z nami jest nasz Bóg",
+    "strony_pdf": [
+      451
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 462,
+    "tytul": "Dlaczego ciężko wzdychasz tak",
+    "strony_pdf": [
+      452
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 463,
+    "tytul": "Jezus Słońcem moim",
+    "strony_pdf": [
+      453
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 464,
+    "tytul": "Zatacza obóz anioł Pański",
+    "strony_pdf": [
+      454
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 465,
+    "tytul": "Boże miłosierdzie spływa na ten świat",
+    "strony_pdf": [
+      455
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 466,
+    "tytul": "W obcym kraju, w borach, błądzisz, synu mój",
+    "strony_pdf": [
+      456
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 467,
+    "tytul": "Niech łaska Twoja, Panie, nas cieszy w każdy czas",
+    "strony_pdf": [
+      457
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 468,
+    "tytul": "Powracamy do rodzinnych stron",
+    "strony_pdf": [
+      458
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 469,
+    "tytul": "Panie, jestem Twój!",
+    "strony_pdf": [
+      459
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 470,
+    "tytul": "Jak słodko dziś brzmi w naszych uszach dobra wieść",
+    "strony_pdf": [
+      460
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 471,
+    "tytul": "Gdy z grzechem zakończysz swe boje",
+    "strony_pdf": [
+      461
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 472,
+    "tytul": "Cudne, wspaniałe jest niebo",
+    "strony_pdf": [
+      462
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 473,
+    "tytul": "Ucichnie śpiew, umilknie gra",
+    "strony_pdf": [
+      463
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 474,
+    "tytul": "Pójdźmy, śpiewajmy razem o swej Ojczyźnie tam",
+    "strony_pdf": [
+      464
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 475,
+    "tytul": "Bez nadziei każdy dzień, w sercu lęk i trwoga",
+    "strony_pdf": [
+      465
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 476,
+    "tytul": "Czy nie tęsknisz do łask zdroju?",
+    "strony_pdf": [
+      466
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 477,
+    "tytul": "Pięknyś ty, wdzięcznyś ty, Niebios kraju mój!",
+    "strony_pdf": [
+      467
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 478,
+    "tytul": "Jak będzie nam, gdy tu po ciężkim boju",
+    "strony_pdf": [
+      468
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 479,
+    "tytul": "Gdy słońce zajdzie nad naszą ziemią",
+    "strony_pdf": [
+      469
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 480,
+    "tytul": "Śnię o kraju, co tam W górze cudownie lśni",
+    "strony_pdf": [
+      470
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 481,
+    "tytul": "Chcę z Jezusem moim być",
+    "strony_pdf": [
+      471
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 482,
+    "tytul": "Kto ze mną chce iść w górny kraj",
+    "strony_pdf": [
+      472
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 483,
+    "tytul": "O miasto, twój z jaspisu mur i z pereł bramy twe!",
+    "strony_pdf": [
+      474
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 484,
+    "tytul": "Kto wskaże mi drogę do nieba wzgórz?",
+    "strony_pdf": [
+      475
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 485,
+    "tytul": "Do domu chcę, do domu Ojca mego",
+    "strony_pdf": [
+      476
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 486,
+    "tytul": "Choć bogactwa nie mam",
+    "strony_pdf": [
+      478
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 487,
+    "tytul": "Im bliżej dosięgam końca dni",
+    "strony_pdf": [
+      480
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 488,
+    "tytul": "Znam kraj, gdzie radość wieczna trwa",
+    "strony_pdf": [
+      481
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 489,
+    "tytul": "W mojej Ojczyźnie, tam, gdzie wieczne życie",
+    "strony_pdf": [
+      482
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 490,
+    "tytul": "Głośno rozbrzmiewa dziś nasza pieśń",
+    "strony_pdf": [
+      484
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 491,
+    "tytul": "Śpiewaj o miłości Bożej",
+    "strony_pdf": [
+      485
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 492,
+    "tytul": "Z Barankowego tronu",
+    "strony_pdf": [
+      486
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 493,
+    "tytul": "Tam w górę do nieba",
+    "strony_pdf": [
+      487
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 494,
+    "tytul": "O Panie mój, ja tęsknię wciąż do Ciebie",
+    "strony_pdf": [
+      488
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 495,
+    "tytul": "Jam stęskniony",
+    "strony_pdf": [
+      489
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 496,
+    "tytul": "Spokój po walce, słońce po mgłach",
+    "strony_pdf": [
+      489
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 497,
+    "tytul": "Wspaniałe pałace na ziemi tej są",
+    "strony_pdf": [
+      490
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 498,
+    "tytul": "Prosto z nieba się wywodzi ta najtrwalsza, mocna nić",
+    "strony_pdf": [
+      491
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 499,
+    "tytul": "Ja, o Panie, i mój dom służyć chcemy Ci w szczerości",
+    "strony_pdf": [
+      492
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 500,
+    "tytul": "Do Ciebie, Panie, wznoszę modły swe",
+    "strony_pdf": [
+      493
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 501,
+    "tytul": "Szczęśliwy dom, gdzie radzi Cię witają",
+    "strony_pdf": [
+      494
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 502,
+    "tytul": "Szczęśliwy dom, gdzie mieszka Bóg",
+    "strony_pdf": [
+      495
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 503,
+    "tytul": "W ziemskiej życia tu pielgrzymce",
+    "strony_pdf": [
+      496
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 504,
+    "tytul": "Rozliczne dary zsyłasz, Panie",
+    "strony_pdf": [
+      497
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 505,
+    "tytul": "Boże mocny, Boże wielki",
+    "strony_pdf": [
+      498
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 506,
+    "tytul": "O Zbawco, strzeż me drogie dzieci!",
+    "strony_pdf": [
+      499
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 507,
+    "tytul": "O szczęścia łzy dla dzieci modlitwa ta",
+    "strony_pdf": [
+      500
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 508,
+    "tytul": "Tak, jak wiosna kwiat przynosi",
+    "strony_pdf": [
+      501
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 509,
+    "tytul": "Matko droga, dzisiaj pieśnią moją hołd składam tobie",
+    "strony_pdf": [
+      502
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 510,
+    "tytul": "Pan Jezus także matkę miał",
+    "strony_pdf": [
+      503
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 511,
+    "tytul": "Wasze serca, wasze dłonie",
+    "strony_pdf": [
+      504
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 512,
+    "tytul": "O, spójrz nasz wielki Boże!",
+    "strony_pdf": [
+      505
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 513,
+    "tytul": "O, Jezu, przyjdź, jak obiecałeś",
+    "strony_pdf": [
+      506
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 514,
+    "tytul": "Wielka Miłości, ludzkość chce Cię poznać",
+    "strony_pdf": [
+      507
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 515,
+    "tytul": "Gdzie pójdziesz ty, tam pójdę ja",
+    "strony_pdf": [
+      508
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 516,
+    "tytul": "Pobłogosław, Panie nasz, ślub ten",
+    "strony_pdf": [
+      508
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 517,
+    "tytul": "Panie Boże, Ojcze nasz",
+    "strony_pdf": [
+      509
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 518,
+    "tytul": "Błogosław, Boże, parze tej",
+    "strony_pdf": [
+      510
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 519,
+    "tytul": "Oto dzieci Twe, o Panie",
+    "strony_pdf": [
+      511
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 520,
+    "tytul": "Błogosław, Panie, to ich ślubowanie",
+    "strony_pdf": [
+      511
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 521,
+    "tytul": "Z dwóch serc, o Panie, jedno stwórz",
+    "strony_pdf": [
+      512
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 522,
+    "tytul": "Jeżeli nie rozumiesz dziś",
+    "strony_pdf": [
+      513
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 523,
+    "tytul": "O Jezu, gdy nam ciężki los wyciska z oczu gorzkie łzy",
+    "strony_pdf": [
+      514
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 524,
+    "tytul": "Ludu mój i zborze, mała garstko ty",
+    "strony_pdf": [
+      515
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 525,
+    "tytul": "Czy wy wiecie, że jesteście świątynią?",
+    "strony_pdf": [
+      516
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 526,
+    "tytul": "Jak pięknie, gdy na ziemi wśród braci jedność trwa",
+    "strony_pdf": [
+      517
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 527,
+    "tytul": "Budujmy na Skale wiecznych łask",
+    "strony_pdf": [
+      518
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 528,
+    "tytul": "Jesteśmy sługami Chrystusa",
+    "strony_pdf": [
+      519
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 529,
+    "tytul": "Serca razem połączone",
+    "strony_pdf": [
+      520
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 530,
+    "tytul": "Stańmy bracia wraz",
+    "strony_pdf": [
+      521
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 531,
+    "tytul": "Czy jesteś radością dla innych?",
+    "strony_pdf": [
+      522
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 532,
+    "tytul": "O, nie czekaj, aż nadejdzie wielkich czynów dzień",
+    "strony_pdf": [
+      523
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 533,
+    "tytul": "Czy nie słyszysz, jak Pan woła",
+    "strony_pdf": [
+      524
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 534,
+    "tytul": "Wśród fal życia rozhukanych",
+    "strony_pdf": [
+      525
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 535,
+    "tytul": "Zbudź, Panie, ducha ojców wiary",
+    "strony_pdf": [
+      526
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 536,
+    "tytul": "Panu dziś życie swe w służbę oddać chciej",
+    "strony_pdf": [
+      527
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 537,
+    "tytul": "Posłuchajcie wszyscy, jak Pan woła",
+    "strony_pdf": [
+      528
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 538,
+    "tytul": "Wszędzie plony dojrzewają",
+    "strony_pdf": [
+      529
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 539,
+    "tytul": "Chrystusa sługo, dzień żniwa jest tuż",
+    "strony_pdf": [
+      530
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 540,
+    "tytul": "Dusz rybakami uczynię was",
+    "strony_pdf": [
+      531
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 541,
+    "tytul": "Więcej dla Zbawcy pragnę czynnym być",
+    "strony_pdf": [
+      532
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 542,
+    "tytul": "Wielu troski gniotą dziś na ziemi tej",
+    "strony_pdf": [
+      534
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 543,
+    "tytul": "I na morzu, i na ziemi anioł z księgą w ręce stał",
+    "strony_pdf": [
+      536
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 544,
+    "tytul": "Jak latarnia morska świeci",
+    "strony_pdf": [
+      537
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 545,
+    "tytul": "Siej wcześniej, nim wzejdzie jutrznia dnia",
+    "strony_pdf": [
+      538
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 546,
+    "tytul": "O Jezu, Twą jest sprawa ta",
+    "strony_pdf": [
+      540
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 547,
+    "tytul": "Ach, gdzież są ci żeńcy od świata żniw",
+    "strony_pdf": [
+      541
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 548,
+    "tytul": "Kto ze łzami sieje Pańskich słów nasienie",
+    "strony_pdf": [
+      542
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 549,
+    "tytul": "Nie chcę z niczym, bez owocu",
+    "strony_pdf": [
+      543
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 550,
+    "tytul": "Na glebę twardą, górską padło ziarno",
+    "strony_pdf": [
+      544
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 551,
+    "tytul": "Śmiało podnieśmy chorągiew zwycięską",
+    "strony_pdf": [
+      545
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 552,
+    "tytul": "Jest tak wiele pracy świętej Dla Jezusa",
+    "strony_pdf": [
+      546
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 553,
+    "tytul": "Pracuj, bo noc nadejdzie!",
+    "strony_pdf": [
+      547
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 554,
+    "tytul": "Praca dla Jezusa oczekuje cię",
+    "strony_pdf": [
+      548
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 555,
+    "tytul": "Mów do mnie, Panie",
+    "strony_pdf": [
+      549
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 556,
+    "tytul": "Pan dziś do pracy wzywa nas",
+    "strony_pdf": [
+      550
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 557,
+    "tytul": "Przyprowadźcie dziś do Zbawcy Tych, co",
+    "strony_pdf": [
+      551
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 558,
+    "tytul": "Gdy twój bliźni płacze, Ach, nie mijaj go!",
+    "strony_pdf": [
+      552
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 559,
+    "tytul": "Wyjdźcie na drogi”, Zbawca zwie",
+    "strony_pdf": [
+      553
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 560,
+    "tytul": "Po całej ziemi tej brzmi trójanielska wieść",
+    "strony_pdf": [
+      554
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 561,
+    "tytul": "Głośno zatrąbcie, stróżowie Syjonu",
+    "strony_pdf": [
+      555
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 562,
+    "tytul": "Choć oliwy w dzbanie mało",
+    "strony_pdf": [
+      556
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 563,
+    "tytul": "Dziś przynoszę swoje dary",
+    "strony_pdf": [
+      557
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 564,
+    "tytul": "Drobne piasku ziarnka",
+    "strony_pdf": [
+      557
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 565,
+    "tytul": "Dary i ofiary znieście, Serca mi oddajcie swe!",
+    "strony_pdf": [
+      558
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 566,
+    "tytul": "Tyś, Ojcze Święty, Wielki Boże",
+    "strony_pdf": [
+      559
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 567,
+    "tytul": "Bijcie w dzwony niebios, wszyscy cieszcie się",
+    "strony_pdf": [
+      560
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 568,
+    "tytul": "Na krzyżu dokonało się To, co od grzechu zbawia mnie",
+    "strony_pdf": [
+      561
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 569,
+    "tytul": "Stoję, Jezu, dziś nad wodą",
+    "strony_pdf": [
+      562
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 570,
+    "tytul": "Jest jeszcze miejsce w Twoim sercu",
+    "strony_pdf": [
+      563
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 571,
+    "tytul": "Dziś w uroczysty, wzniosły czas",
+    "strony_pdf": [
+      564
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 572,
+    "tytul": "Na kolanach będziemy łamać chleb",
+    "strony_pdf": [
+      565
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 573,
+    "tytul": "Dla świata chleb złamany został",
+    "strony_pdf": [
+      565
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 574,
+    "tytul": "Za Tobą, Jezu, tęsknię wciąż",
+    "strony_pdf": [
+      566
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 575,
+    "tytul": "Zbliżmy się do Chrystusa stołu",
+    "strony_pdf": [
+      567
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 576,
+    "tytul": "O, Zbawco, dziękujemy Ci",
+    "strony_pdf": [
+      567
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 577,
+    "tytul": "Chwała Tobie, drogi Zbawco",
+    "strony_pdf": [
+      568
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 578,
+    "tytul": "Tyś, Panie Jezu, zlecił Nam w posłuszeństwie żyć",
+    "strony_pdf": [
+      569
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 579,
+    "tytul": "Gdy zbliżał się wieczoru czas",
+    "strony_pdf": [
+      569
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 580,
+    "tytul": "Chrystusowa garstko dusz",
+    "strony_pdf": [
+      570
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 581,
+    "tytul": "O, Zbawco nasz drogi!",
+    "strony_pdf": [
+      571
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 582,
+    "tytul": "Na niebie i na ziemi obecny, Panie nasz",
+    "strony_pdf": [
+      572
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 583,
+    "tytul": "Rozkoszy pełne miejsce znam",
+    "strony_pdf": [
+      573
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 584,
+    "tytul": "Boże, który rządzisz w górze",
+    "strony_pdf": [
+      574
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 585,
+    "tytul": "Ten cały świat dał nam nasz Bóg",
+    "strony_pdf": [
+      575
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 586,
+    "tytul": "Piękne dni życia naszego",
+    "strony_pdf": [
+      576
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 587,
+    "tytul": "Służmy Panu w dniach młodości",
+    "strony_pdf": [
+      577
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 588,
+    "tytul": "Pańska młodzież w Zbawcy ślad",
+    "strony_pdf": [
+      578
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 589,
+    "tytul": "Mój Jezus mnie na wieki miłuje",
+    "strony_pdf": [
+      579
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 590,
+    "tytul": "Dokądże tak szybko, o chłopcze mój?",
+    "strony_pdf": [
+      580
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 591,
+    "tytul": "O, nie dajmy strwonić żadnego dnia",
+    "strony_pdf": [
+      581
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 592,
+    "tytul": "Naprzód, Boża drużyno!",
+    "strony_pdf": [
+      582
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 593,
+    "tytul": "My chcemy służyć Bogu tu za młodych życia dni",
+    "strony_pdf": [
+      583
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 594,
+    "tytul": "Należymy do Jezusa",
+    "strony_pdf": [
+      584
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 595,
+    "tytul": "Każdy promień słońca",
+    "strony_pdf": [
+      585
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 596,
+    "tytul": "My tworzymy tu rodzinę",
+    "strony_pdf": [
+      586
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 597,
+    "tytul": "O młodzieży, chciej docenić wielką miłość Pana chwał",
+    "strony_pdf": [
+      587
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 598,
+    "tytul": "To, co najlepsze, daj Panu",
+    "strony_pdf": [
+      588
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 599,
+    "tytul": "Młodzieży droga, Bóg ciebie wzywa",
+    "strony_pdf": [
+      590
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 600,
+    "tytul": "Na świecie mnóstwo pokus",
+    "strony_pdf": [
+      591
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 601,
+    "tytul": "Młodość, życia dar cudowny",
+    "strony_pdf": [
+      592
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 602,
+    "tytul": "Najpiękniejsze dni młodości",
+    "strony_pdf": [
+      593
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 603,
+    "tytul": "Słuchaj młodzieży, kwitnąca nadziejo przyszłości!",
+    "strony_pdf": [
+      594
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 604,
+    "tytul": "O, Jezu, obiecałem w Twej służbie wiernie trwać",
+    "strony_pdf": [
+      595
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 605,
+    "tytul": "Niechaj w sercach radość płonie",
+    "strony_pdf": [
+      596
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 606,
+    "tytul": "Małe dzieci, chwalcie Zbawcę",
+    "strony_pdf": [
+      597
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 607,
+    "tytul": "Dzwoni dzwon z ptaszkiem w ton",
+    "strony_pdf": [
+      598
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 608,
+    "tytul": "Przyjacielu małych dzieci, bliski bądź i mnie",
+    "strony_pdf": [
+      598
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 609,
+    "tytul": "Ziemia, niebo, pole, las, i powietrze czyste wraz",
+    "strony_pdf": [
+      599
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 610,
+    "tytul": "Gdy patrzę na zielone, piękne drzewa",
+    "strony_pdf": [
+      599
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 611,
+    "tytul": "Znam owieczkę, gdzie jest, gdzie?",
+    "strony_pdf": [
+      600
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 612,
+    "tytul": "Czy wiesz, kto cię tak miłuje",
+    "strony_pdf": [
+      601
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 613,
+    "tytul": "O, drogi Zbawco z niebios bram!",
+    "strony_pdf": [
+      602
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 614,
+    "tytul": "Gdy nasz Zbawca, gdy nasz Zbawca Jak Król zjawi się",
+    "strony_pdf": [
+      603
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 615,
+    "tytul": "Wiem, że Jezus kocha mnie",
+    "strony_pdf": [
+      604
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 616,
+    "tytul": "Pan Jezus chce ze mnie zrobić promyczek złoty Swój",
+    "strony_pdf": [
+      605
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 617,
+    "tytul": "Gdy me oczy zwracam w krąg, tu na twory Twe",
+    "strony_pdf": [
+      606
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 618,
+    "tytul": "Jezus, dobry Pasterz, otrze każdą łzę",
+    "strony_pdf": [
+      607
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 619,
+    "tytul": "Znam kosztowną księgę ksiąg!",
+    "strony_pdf": [
+      608
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 620,
+    "tytul": "Miej słoneczko w twym sercu",
+    "strony_pdf": [
+      609
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 621,
+    "tytul": "Każdy człowiek, duży, mały, dzieckiem Bożym jest",
+    "strony_pdf": [
+      610
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 622,
+    "tytul": "Jezus kocha małe dzieci, kocha mnie!",
+    "strony_pdf": [
+      611
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 623,
+    "tytul": "Ile razy w niebo Twe Późną nocą patrzę się",
+    "strony_pdf": [
+      611
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 624,
+    "tytul": "Czy wiesz, że kwiatki modlą się też?",
+    "strony_pdf": [
+      612
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 625,
+    "tytul": "Pragnę naśladować Cię",
+    "strony_pdf": [
+      613
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 626,
+    "tytul": "Jak maleńka świeczka rozjaśnia mrok",
+    "strony_pdf": [
+      613
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 627,
+    "tytul": "Wróbelki małe kocha Bóg",
+    "strony_pdf": [
+      614
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 628,
+    "tytul": "Ojcze, prowadź krok dziecinny",
+    "strony_pdf": [
+      615
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 629,
+    "tytul": "Hej, młode życie nasze Bogu niesiemy w dań",
+    "strony_pdf": [
+      616
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 630,
+    "tytul": "To takie proste jest",
+    "strony_pdf": [
+      617
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 631,
+    "tytul": "Do miasta Jeruzalem pięknych bram",
+    "strony_pdf": [
+      618
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 632,
+    "tytul": "Czy wiesz, ile gwiazdek świeci tam na niebie",
+    "strony_pdf": [
+      619
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 633,
+    "tytul": "Jakże wielką radość mam, że Pasterza swego znam",
+    "strony_pdf": [
+      620
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 634,
+    "tytul": "Nam śpiew upiększa życie",
+    "strony_pdf": [
+      621
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 635,
+    "tytul": "Mój Ojciec ma w niebiosach dom",
+    "strony_pdf": [
+      622
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 636,
+    "tytul": "Gdy Jezus był taki jak ja",
+    "strony_pdf": [
+      623
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 637,
+    "tytul": "Jezus cicho puka rano",
+    "strony_pdf": [
+      624
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 638,
+    "tytul": "Nastrój znowu harfę swoją",
+    "strony_pdf": [
+      624
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 639,
+    "tytul": "Kiedy ranne wstają zorze",
+    "strony_pdf": [
+      625
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 640,
+    "tytul": "Rano wstając mą chwałę, cześć, chcę Ci, mój Zbawicielu nieść",
+    "strony_pdf": [
+      626
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 641,
+    "tytul": "Ranną pieśnią witajmy świat!",
+    "strony_pdf": [
+      627
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 642,
+    "tytul": "Wstań, serce me",
+    "strony_pdf": [
+      627
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 643,
+    "tytul": "Witaj nam poranku miły",
+    "strony_pdf": [
+      628
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 644,
+    "tytul": "Kiedy słonko z rana wyjdzie spoza gór",
+    "strony_pdf": [
+      629
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 645,
+    "tytul": "Złote słońce opromienia całą ziemię wzdłuż i wszerz",
+    "strony_pdf": [
+      630
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 646,
+    "tytul": "Gdy tylko świt rumieńcem swym zapłonie",
+    "strony_pdf": [
+      631
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 647,
+    "tytul": "Gdy cienie już otulą ziemię",
+    "strony_pdf": [
+      632
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 648,
+    "tytul": "W ofierze pierwsze myśli me",
+    "strony_pdf": [
+      633
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 649,
+    "tytul": "Już przygasa światło dnia",
+    "strony_pdf": [
+      633
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 650,
+    "tytul": "Gdym dzisiaj zranił czyjeś serce mdłe",
+    "strony_pdf": [
+      634
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 651,
+    "tytul": "Dzień się już nachyla, noc nadchodzi znów",
+    "strony_pdf": [
+      635
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 652,
+    "tytul": "Panie niebios oraz ziemi",
+    "strony_pdf": [
+      635
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 653,
+    "tytul": "Stój przy mnie, bo już wieczór zbliża się",
+    "strony_pdf": [
+      636
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 654,
+    "tytul": "O, Panie, zostań ze mną!",
+    "strony_pdf": [
+      637
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 655,
+    "tytul": "Witaj cichy, witaj mi wieczorze",
+    "strony_pdf": [
+      638
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 656,
+    "tytul": "Już ostatni za górami promień słońca zgasł",
+    "strony_pdf": [
+      639
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 657,
+    "tytul": "O, jakże wieczór przyjemny",
+    "strony_pdf": [
+      640
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 658,
+    "tytul": "Czyż mógłbym spać spokojnie",
+    "strony_pdf": [
+      641
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 659,
+    "tytul": "Gdy wieczorem gwiazd miriady iskrzą się na niebios tle",
+    "strony_pdf": [
+      642
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 660,
+    "tytul": "Pozostań z nami na tę noc",
+    "strony_pdf": [
+      643
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 661,
+    "tytul": "Na Twoim zasnę łonie, Jezusie mój",
+    "strony_pdf": [
+      644
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 662,
+    "tytul": "Już odchodzi cicho dzień",
+    "strony_pdf": [
+      645
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 663,
+    "tytul": "Po przepracowanym dniu, znużon kładę się do snu",
+    "strony_pdf": [
+      646
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 664,
+    "tytul": "Wszystkie nasze dzienne sprawy",
+    "strony_pdf": [
+      646
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 665,
+    "tytul": "To Ojca mego świat!",
+    "strony_pdf": [
+      647
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 666,
+    "tytul": "Ze wszystkich pór najlepszy jest cudownej wiosny czas",
+    "strony_pdf": [
+      648
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 667,
+    "tytul": "Cudowny jest wiosenny czas",
+    "strony_pdf": [
+      649
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 668,
+    "tytul": "Jak cudownie, gdy słońce wieczorem",
+    "strony_pdf": [
+      650
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 669,
+    "tytul": "Znów nadeszła smutna pora",
+    "strony_pdf": [
+      651
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 670,
+    "tytul": "Wyjdź, spojrzyj na cudowny świat",
+    "strony_pdf": [
+      652
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 671,
+    "tytul": "Wszechmocny Bóg ma w mocy czas",
+    "strony_pdf": [
+      653
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 672,
+    "tytul": "Kiedy w słońcu z rana znów zaszumi las",
+    "strony_pdf": [
+      654
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 673,
+    "tytul": "Dziękuję Ci, o Panie mój, żeś piękny stworzył świat",
+    "strony_pdf": [
+      655
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 674,
+    "tytul": "Lśniący strumyczek tak szybko z gór mknie",
+    "strony_pdf": [
+      656
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 675,
+    "tytul": "Dziękczynny Stwórcy wznieśmy śpiew",
+    "strony_pdf": [
+      657
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 676,
+    "tytul": "Szeroki, wielki widnokrąg",
+    "strony_pdf": [
+      658
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 677,
+    "tytul": "Stworzycielu, chwała Ci",
+    "strony_pdf": [
+      659
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 678,
+    "tytul": "Już nastał pożegnania smutny czas",
+    "strony_pdf": [
+      660
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 679,
+    "tytul": "Oto nadchodzi twój, Syjonie, ranek",
+    "strony_pdf": [
+      661
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 680,
+    "tytul": "Czy się jeszcze raz ujrzymy",
+    "strony_pdf": [
+      662
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 681,
+    "tytul": "Z Bogiem, z Bogiem, aż się zejdziem znów!",
+    "strony_pdf": [
+      663
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 682,
+    "tytul": "Mój Boże, wiem, że czyha śmierć",
+    "strony_pdf": [
+      664
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 683,
+    "tytul": "W Panu zasnąłeś, błoga noc",
+    "strony_pdf": [
+      665
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 684,
+    "tytul": "Wielu śpi, lecz nie na zawsze",
+    "strony_pdf": [
+      665
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 685,
+    "tytul": "Śpij już spokojnie w miejscu spoczynku",
+    "strony_pdf": [
+      666
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 686,
+    "tytul": "Zasnąłeś w Bogu, błoga noc",
+    "strony_pdf": [
+      667
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 687,
+    "tytul": "Nad grobem tu stoimy wraz",
+    "strony_pdf": [
+      668
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 688,
+    "tytul": "W Bogu zasnąłeś: spokojna noc",
+    "strony_pdf": [
+      669
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 689,
+    "tytul": "Już znowu jeden rok przeminął!",
+    "strony_pdf": [
+      670
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 690,
+    "tytul": "Dziś się cieszmy wszyscy razem!",
+    "strony_pdf": [
+      671
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 691,
+    "tytul": "Do Ciebie wznosi się dusz naszych dziękczynienie",
+    "strony_pdf": [
+      672
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 692,
+    "tytul": "Choć nie wiem, co mi przyniesie rok",
+    "strony_pdf": [
+      673
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 693,
+    "tytul": "Panie Syjonu, garstka sług u Twoich się spotyka stóp",
+    "strony_pdf": [
+      674
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 694,
+    "tytul": "Boże, coś Polskę",
+    "strony_pdf": [
+      675
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 695,
+    "tytul": "O, przyjmij dary te",
+    "strony_pdf": [
+      675
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 696,
+    "tytul": "Już znowu jeden dobry rok przeminął",
+    "strony_pdf": [
+      676
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 697,
+    "tytul": "Niech Bóg Cię obdarza ciszą",
+    "strony_pdf": [
+      677
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 698,
+    "tytul": "Niech Pan cię błogosławi",
+    "strony_pdf": [
+      678
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 699,
+    "tytul": "O, nie smuć się, lecz walcz z niedolą",
+    "strony_pdf": [
+      679
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 700,
+    "tytul": "Allelu, allelu, allelu, alleluja, Pan blisko jest",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": false
+  },
+  {
+    "nr_piesni": 701,
+    "tytul": "Bogaty w każdy cud, bogaty słowem ust",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 702,
+    "tytul": "Panie, któż jak Ty?",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 703,
+    "tytul": "Bóg dobry jest, Jego łaska trwać będzie na wieki",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 704,
+    "tytul": "Tam, gdzie życie jak sen",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 705,
+    "tytul": "Przyjdź, Panie, otwórz me serce",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 706,
+    "tytul": "Wszystko w dłoniach Twoich Panie",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 707,
+    "tytul": "Tak jak za czasów Eliasza",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 708,
+    "tytul": "Dotknij mnie Panie dziś dotykiem Twym",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 709,
+    "tytul": "Kiedy nadszedł czas, ten cudowny czas",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 710,
+    "tytul": "Gdy droga ma zbyt trudna jest",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 711,
+    "tytul": "Gdy zbieramy się, niech Święty Duch w nas działa",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 712,
+    "tytul": "Dzięki Ci za krzyż Twój",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 713,
+    "tytul": "Jesteś drogą mą",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 714,
+    "tytul": "Jest jedno ciało",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 715,
+    "tytul": "Jezu, Zbawco mój",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 716,
+    "tytul": "Jezus najwyższej godzien chwały",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 717,
+    "tytul": "Lepszy jeden dzień w przedsionkach Twych",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 718,
+    "tytul": "Mój Jezu, mój Zbawco, nie ma nikogo jak Ty",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 719,
+    "tytul": "Mów do mnie, Panie",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 720,
+    "tytul": "Śpiewajmy Mu, dziękujmy Mu",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 721,
+    "tytul": "Kilka ciepłych słów",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 722,
+    "tytul": "Niechaj słowa moich ust",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 723,
+    "tytul": "Największym skarbem, jaki w życiu mam",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 724,
+    "tytul": "Panie mój",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 725,
+    "tytul": "Nie chcę zbyt wysoko sięgać, Panie",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 726,
+    "tytul": "Przez całe życie prowadzisz",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 727,
+    "tytul": "Każdy pragnie zrozumienia",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 728,
+    "tytul": "Panie, chwalę imię Twe",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 729,
+    "tytul": "Panie, my Twoje dzieci",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 730,
+    "tytul": "Przed Tobą stoję tu dziś",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 731,
+    "tytul": "Tyś za mnie zmarł",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 732,
+    "tytul": "Pójdę za Tobą, słuchając Ciebie",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 733,
+    "tytul": "Większy od królów, od wszystkich sił",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 734,
+    "tytul": "Przed tronem Twym",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 735,
+    "tytul": "Światłości Pan",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 736,
+    "tytul": "Przyjaciela mam, co pociesza mnie",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 737,
+    "tytul": "Gdy z tęsknoty moje serce pęka",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 738,
+    "tytul": "Przyjdź, teraz jest czas, by wielbić",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 739,
+    "tytul": "To jest mym pragnieniem",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 740,
+    "tytul": "Zaśpiewam pieśń, wdzięczności pieśń",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 741,
+    "tytul": "W cichym miejscu mego serca",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 742,
+    "tytul": "Ukryj mnie",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 743,
+    "tytul": "Panie, u Twych stóp",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 744,
+    "tytul": "Jezu, w Tobie jest mój dom",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 745,
+    "tytul": "Pragnę Pana czcić na wieki",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 746,
+    "tytul": "W cieniu Twoich rąk",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 747,
+    "tytul": "Wstanę",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 748,
+    "tytul": "Uwielbiam Ciebie",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 749,
+    "tytul": "Wyznaję Tobie Panie, że słabym jest",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  },
+  {
+    "nr_piesni": 750,
+    "tytul": "Nie ma zbyt trudnych spraw",
+    "strony_pdf": [
+      680
+    ],
+    "interpolated": true
+  }
+]
