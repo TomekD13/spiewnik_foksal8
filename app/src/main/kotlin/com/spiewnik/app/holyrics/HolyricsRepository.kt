@@ -50,12 +50,13 @@ class HolyricsRepository {
     }
 
     private fun parsePlaylist(json: String): List<Int> {
-        val data = JSONObject(json).optJSONArray("data") ?: return emptyList()
+        val root = JSONObject(json)
+        if (root.optString("status") != "ok") return emptyList()
+        val data = root.optJSONArray("data") ?: return emptyList()
         val numbers = mutableListOf<Int>()
         for (i in 0 until data.length()) {
             val item = data.optJSONObject(i) ?: continue
-            if (item.optString("type") != "song") continue
-            val number = item.optString("name").trim().toIntOrNull() ?: continue
+            val number = item.optString("title").trim().toIntOrNull() ?: continue
             numbers.add(number)
         }
         return numbers
