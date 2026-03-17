@@ -36,6 +36,29 @@ Kopia tworzona jest tylko raz (sprawdzenie `exists()`). Plik cache jest automaty
 
 ---
 
+## Migotanie ekranu przy renderowaniu PDF
+
+**Problem:** Ekran migota czarnym przy zmianie strony lub szybkiej nawigacji.
+
+**Przyczyna 1 — emulator:** Emulator Androida potrzebuje dużo RAM (4–8 GB wolnych). Na maszynie z ograniczoną pamięcią renderowanie bitmap w 2× rozdzielczości powoduje zacinanie i flashowanie. Na fizycznym tablecie z 8 GB RAM problemu nie ma.
+
+**Przyczyna 2 — równoległe joby renderowania:** Przy szybkiej nawigacji każde kliknięcie ▶ uruchamia nową coroutine renderującą. Jeśli poprzednia jeszcze nie skończyła, obie działają jednocześnie i nadpisują bitmapę w losowej kolejności — efekt: migotanie i wyświetlanie złej strony.
+
+**Rozwiązanie:** Przed każdym nowym renderowaniem anuluj poprzedni job:
+```kotlin
+private var renderJob: Job? = null
+
+// w renderPages():
+renderJob?.cancel()
+renderJob = lifecycleScope.launch {
+    val bmp = withContext(Dispatchers.IO) { pdfCache.renderPage(...) }
+    if (!isActive) return@launch  // sprawdź czy job nadal aktywny
+    imageView.setImageBitmap(bmp)
+}
+```
+
+---
+
 ## Splash screen — installSplashScreen() musi być przed super.onCreate()
 
 **Problem:** Splash screen nie pojawia się lub aplikacja crashuje przy starcie.

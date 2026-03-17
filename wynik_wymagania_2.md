@@ -66,6 +66,12 @@
 | `gradle/libs.versions.toml` | Usunięto zduplikowany wpis `coroutines`; dodano `fragment-ktx 1.8.1` |
 | `app/build.gradle.kts` | Dodano `implementation(libs.fragment.ktx)` — wymagane przez `activityViewModels()` w `SettingsFragment` |
 
+## Optymalizacja renderowania
+
+| Plik | Zmiana |
+|------|--------|
+| `MainActivity.kt` | Dodano `renderJob: Job?` — każdy nowy render anuluje poprzedni (`renderJob?.cancel()`), zapobiegając nadpisywaniu bitmap przy szybkiej nawigacji i migotaniu ekranu |
+
 ## Logo i splash screen
 
 | Plik | Zmiana |
