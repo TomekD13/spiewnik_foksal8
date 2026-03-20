@@ -1,6 +1,7 @@
 package com.spiewnik.app
 
 import android.animation.ValueAnimator
+import android.content.Context
 import android.annotation.SuppressLint
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -16,6 +17,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.GestureDetector
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -114,12 +116,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setupKeyboardFocus() {
-        val focusListener = View.OnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) exitImmersiveMode() else enterImmersiveMode()
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        listOf(binding.etNumber, binding.actvTitle).forEach { field ->
+            // Exit immersive on first touch so system doesn't intercept the tap
+            field.setOnTouchListener { _, event ->
+                if (event.action == MotionEvent.ACTION_DOWN) exitImmersiveMode()
+                false
+            }
+            field.setOnFocusChangeListener { v, hasFocus ->
+                if (hasFocus) {
+                    exitImmersiveMode()
+                    v.post { imm.showSoftInput(v, InputMethodManager.SHOW_IMPLICIT) }
+                } else {
+                    imm.hideSoftInputFromWindow(v.windowToken, 0)
+                    enterImmersiveMode()
+                }
+            }
         }
-        binding.etNumber.onFocusChangeListener = focusListener
-        binding.actvTitle.onFocusChangeListener = focusListener
     }
 
     @Suppress("DEPRECATION")
