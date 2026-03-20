@@ -120,18 +120,23 @@ class MainActivity : AppCompatActivity() {
     private fun setupKeyboardFocus() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         listOf(binding.etNumber, binding.actvTitle).forEach { field ->
-            // Exit immersive on first touch so system doesn't intercept the tap
-            field.setOnTouchListener { _, event ->
-                if (event.action == MotionEvent.ACTION_DOWN) exitImmersiveMode()
+            field.setOnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_UP) {
+                    exitImmersiveMode()
+                    window.setSoftInputMode(
+                        WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE or
+                        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+                    )
+                    v.requestFocus()
+                    v.postDelayed({ imm.showSoftInput(v, InputMethodManager.SHOW_FORCED) }, 200)
+                }
                 false
             }
             field.setOnFocusChangeListener { v, hasFocus ->
-                if (hasFocus) {
-                    exitImmersiveMode()
-                    v.post { imm.showSoftInput(v, InputMethodManager.SHOW_IMPLICIT) }
-                } else {
+                if (!hasFocus) {
                     imm.hideSoftInputFromWindow(v.windowToken, 0)
-                    enterImmersiveMode()
+                    window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                    v.postDelayed({ enterImmersiveMode() }, 500)
                 }
             }
         }
