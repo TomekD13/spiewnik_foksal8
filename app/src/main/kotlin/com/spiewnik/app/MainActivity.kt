@@ -55,12 +55,7 @@ class MainActivity : AppCompatActivity() {
 
         // Keep screen on + fullscreen immersive
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        @Suppress("DEPRECATION")
-        window.decorView.systemUiVisibility = (
-            View.SYSTEM_UI_FLAG_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-            )
+        enterImmersiveMode()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -101,6 +96,8 @@ class MainActivity : AppCompatActivity() {
             binding.actvTitle.text.clear()
         }
 
+        setupKeyboardFocus()
+
         binding.btnNavMode.setOnClickListener { viewModel.cycleNavMode() }
 
         binding.btnSettings.setOnClickListener {
@@ -115,6 +112,28 @@ class MainActivity : AppCompatActivity() {
                 viewModel.fetchHolyricsPlaylist()
             }
         }
+    }
+
+    private fun setupKeyboardFocus() {
+        val focusListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) exitImmersiveMode() else enterImmersiveMode()
+        }
+        binding.etNumber.onFocusChangeListener = focusListener
+        binding.actvTitle.onFocusChangeListener = focusListener
+    }
+
+    @Suppress("DEPRECATION")
+    private fun enterImmersiveMode() {
+        window.decorView.systemUiVisibility = (
+            View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            )
+    }
+
+    @Suppress("DEPRECATION")
+    private fun exitImmersiveMode() {
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
     }
 
     private fun setupInputRowToggle() {
@@ -366,6 +385,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         val rightIdx = state.rightPdfIndex
+
+        // If right page will be shown but ivRight has no size yet (was GONE), trigger re-render after layout
+        if (rightIdx != null && binding.ivRight.width == 0) {
+            binding.ivRight.visibility = View.VISIBLE
+            binding.ivRight.post { renderPages(viewModel.state.value ?: return@post) }
+            return
+        }
+
         val leftW = binding.ivLeft.width
         val leftH = binding.ivLeft.height
         val rightW = binding.ivRight.width
@@ -396,12 +423,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun prefetchNeighbours(state: UiState) {
-        val pages = state.allPageNumbers
         val w = binding.ivLeft.width.takeIf { it > 0 } ?: return
         val h = binding.ivLeft.height.takeIf { it > 0 } ?: return
-        val neighbours = listOf(state.spreadStart - 1, state.spreadStart + 2)
-        for (idx in neighbours) {
-            val pageNum = pages.getOrNull(idx) ?: continue
+        val pagesToPrefetch: List<Int> = when (state.navMode) {
+            NavMode.SONG -> listOfNotNull(
+                state.songPages.getOrNull(state.songPageIndex - 1),
+                state.songPages.getOrNull(state.songPageIndex + 2)
+            )
+            else -> {
+                val p = state.currentPdfPage
+                listOf(p - 1, p + 2).filter { it in 1..state.totalPdfPages }
+            }
+        }
+        for (pageNum in pagesToPrefetch) {
             withContext(Dispatchers.IO) {
                 viewModel.pdfCache.renderPage(pageNum - 1, w, h)
             }

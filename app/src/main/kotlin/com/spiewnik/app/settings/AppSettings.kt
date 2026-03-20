@@ -10,6 +10,7 @@ class AppSettings(context: Context) {
         private const val PREF_FILE = "spiewnik_prefs"
         private const val KEY_LAST_SONG = "last_song_number"
         private const val KEY_LAST_PAGE_INDEX = "last_page_index"
+        private const val KEY_LAST_PDF_PAGE = "last_pdf_page"
         private const val KEY_NAV_MODE = "nav_mode"
         private const val KEY_HOLYRICS_IP = "holyrics_ip"
         private const val KEY_HOLYRICS_TOKEN = "holyrics_token"
@@ -22,6 +23,10 @@ class AppSettings(context: Context) {
     var lastPageIndex: Int
         get() = prefs.getInt(KEY_LAST_PAGE_INDEX, 0)
         set(value) = prefs.edit().putInt(KEY_LAST_PAGE_INDEX, value).apply()
+
+    var lastPdfPage: Int
+        get() = prefs.getInt(KEY_LAST_PDF_PAGE, 1)
+        set(value) = prefs.edit().putInt(KEY_LAST_PDF_PAGE, value).apply()
 
     var navMode: String
         get() = prefs.getString(KEY_NAV_MODE, "SPREAD") ?: "SPREAD"

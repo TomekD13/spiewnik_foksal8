@@ -1,7 +1,6 @@
 package com.spiewnik.app
 
 import android.app.Application
-import android.content.res.Configuration
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -39,29 +38,38 @@ sealed class LoadState {
 
 /**
  * Immutable UI state.
- * [allPageNumbers] are 1-based page numbers from piesni.json.
- * [spreadStart] is the index into [allPageNumbers] for the current left/single page.
- * [hasPrevSong] / [hasNextSong] drive the disabled state of navigation arrows.
+ *
+ * SONG mode:   shows song pages from strony_pdf (1 or 2). Arrows jump prev/next song.
+ * SPREAD mode: shows N and N+1 from all PDF pages. Arrows move by 1 page.
+ * PAGE mode:   shows single page N from all PDF pages. Arrows move by 1 page.
+ *
+ * [songPages] / [songPageIndex] — used in SONG mode only.
+ * [currentPdfPage] / [totalPdfPages] — used in SPREAD and PAGE modes.
  */
 data class UiState(
     val song: Song? = null,
-    val allPageNumbers: List<Int> = emptyList(),
-    val spreadStart: Int = 0,
     val navMode: NavMode = NavMode.SPREAD,
     val hasPrevSong: Boolean = false,
-    val hasNextSong: Boolean = false
+    val hasNextSong: Boolean = false,
+    // SONG mode
+    val songPages: List<Int> = emptyList(),
+    val songPageIndex: Int = 0,
+    // SPREAD / PAGE mode
+    val currentPdfPage: Int = 1,
+    val totalPdfPages: Int = 0,
 ) {
-    /** 1-based page number shown on the left (or single page in portrait). */
-    val leftPageNumber: Int? get() = allPageNumbers.getOrNull(spreadStart)
+    val leftPageNumber: Int? get() = when (navMode) {
+        NavMode.SONG -> songPages.getOrNull(songPageIndex)
+        else         -> currentPdfPage.takeIf { totalPdfPages > 0 && it in 1..totalPdfPages }
+    }
 
-    /** 1-based page number shown on the right; null in portrait or single-page songs. */
-    val rightPageNumber: Int? get() =
-        if (allPageNumbers.size > spreadStart + 1) allPageNumbers[spreadStart + 1] else null
+    val rightPageNumber: Int? get() = when (navMode) {
+        NavMode.SPREAD -> (currentPdfPage + 1).takeIf { it <= totalPdfPages }
+        NavMode.SONG   -> songPages.getOrNull(songPageIndex + 1)
+        NavMode.PAGE   -> null
+    }
 
-    /** 0-based index for PdfRenderer */
-    val leftPdfIndex: Int? get() = leftPageNumber?.minus(1)
-
-    /** 0-based index for PdfRenderer */
+    val leftPdfIndex: Int?  get() = leftPageNumber?.minus(1)
     val rightPdfIndex: Int? get() = rightPageNumber?.minus(1)
 
     val displayPages: String get() {
@@ -70,21 +78,14 @@ data class UiState(
         return if (r != null) "str. $l–$r" else "str. $l"
     }
 
-    val canGoLeft: Boolean get() {
-        if (song == null) return false
-        return when (navMode) {
-            NavMode.SONG -> hasPrevSong
-            else         -> spreadStart > 0 || hasPrevSong
-        }
+    val canGoLeft: Boolean get() = when (navMode) {
+        NavMode.SONG -> hasPrevSong
+        else         -> totalPdfPages > 0 && currentPdfPage > 1
     }
 
-    val canGoRight: Boolean get() {
-        if (song == null) return false
-        val lastIdx = allPageNumbers.size - 1
-        return when (navMode) {
-            NavMode.SONG -> hasNextSong
-            else         -> spreadStart < lastIdx || hasNextSong
-        }
+    val canGoRight: Boolean get() = when (navMode) {
+        NavMode.SONG -> hasNextSong
+        else         -> totalPdfPages > 0 && currentPdfPage < totalPdfPages
     }
 }
 
@@ -99,6 +100,8 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
     val settings = AppSettings(application)
     val holyricsRepository = HolyricsRepository()
 
+    private var totalPdfPages = 0
+
     private val _state = MutableLiveData(UiState())
     val state: LiveData<UiState> = _state
 
@@ -111,7 +114,6 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
     private val _loadState = MutableLiveData<LoadState>(LoadState.Loading)
     val loadState: LiveData<LoadState> = _loadState
 
-    /** Single-fire toast message. Observer must call clearToast() after consuming. */
     private val _toastEvent = MutableLiveData<String?>()
     val toastEvent: LiveData<String?> = _toastEvent
 
@@ -135,6 +137,7 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
                 return@launch
             }
 
+            totalPdfPages = pdfCache.pageCount
             _loadState.postValue(LoadState.Ready)
 
             val savedNavMode = try {
@@ -143,7 +146,24 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
                 NavMode.SPREAD
             }
 
-            openSong(settings.lastSongNumber, savedNavMode, settings.lastPageIndex)
+            when (savedNavMode) {
+                NavMode.SONG -> openSong(settings.lastSongNumber, savedNavMode, settings.lastPageIndex)
+                else -> {
+                    val page = settings.lastPdfPage.coerceIn(1, totalPdfPages)
+                    val song = songs.find { page in it.pages }
+                    val hasPrev = song?.let { repository.previousSong(it.number) != null } ?: false
+                    val hasNext = song?.let { repository.nextSong(it.number) != null } ?: false
+                    _state.postValue(UiState(
+                        song = song,
+                        navMode = savedNavMode,
+                        currentPdfPage = page,
+                        totalPdfPages = totalPdfPages,
+                        hasPrevSong = hasPrev,
+                        hasNextSong = hasNext,
+                        songPages = song?.pages?.filter { it in 1..totalPdfPages } ?: emptyList(),
+                    ))
+                }
+            }
         }
     }
 
@@ -162,61 +182,43 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
                 return@launch
             }
 
-            val pdfPageCount = pdfCache.pageCount
-            val validPages = song.pages.filter { it >= 1 && it <= pdfPageCount }
+            val validPages = song.pages.filter { it >= 1 && it <= totalPdfPages }
             if (validPages.isEmpty()) {
                 _toastEvent.postValue("Brak strony w śpiewniku")
                 return@launch
             }
 
             val clampedIndex = pageIndex.coerceIn(0, validPages.size - 1)
+            val firstPage = validPages[clampedIndex]
 
             settings.lastSongNumber = number
             settings.lastPageIndex = clampedIndex
+            if (currentNavMode != NavMode.SONG) settings.lastPdfPage = firstPage
 
             val hasPrev = repository.previousSong(number) != null
             val hasNext = repository.nextSong(number) != null
 
-            _state.postValue(
-                UiState(
-                    song = song,
-                    allPageNumbers = validPages,
-                    spreadStart = clampedIndex,
-                    navMode = currentNavMode,
-                    hasPrevSong = hasPrev,
-                    hasNextSong = hasNext
-                )
-            )
+            _state.postValue(UiState(
+                song = song,
+                navMode = currentNavMode,
+                hasPrevSong = hasPrev,
+                hasNextSong = hasNext,
+                songPages = validPages,
+                songPageIndex = clampedIndex,
+                currentPdfPage = firstPage,
+                totalPdfPages = totalPdfPages,
+            ))
         }
     }
 
     fun navigateLeft() {
         val s = _state.value ?: return
-        val isPortrait = getApplication<Application>()
-            .resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-
         when (s.navMode) {
-            NavMode.SPREAD -> {
-                if (isPortrait) {
-                    s.song?.let { goToPrevSong(it.number, s.navMode) }
-                } else if (s.spreadStart >= 2) {
-                    val newIdx = s.spreadStart - 2
-                    settings.lastPageIndex = newIdx
-                    _state.value = s.copy(spreadStart = newIdx)
-                } else if (s.spreadStart == 1) {
-                    settings.lastPageIndex = 0
-                    _state.value = s.copy(spreadStart = 0)
-                } else {
-                    s.song?.let { goToPrevSong(it.number, s.navMode) }
-                }
-            }
-            NavMode.PAGE -> {
-                if (s.spreadStart > 0) {
-                    val newIdx = s.spreadStart - 1
-                    settings.lastPageIndex = newIdx
-                    _state.value = s.copy(spreadStart = newIdx)
-                } else {
-                    s.song?.let { goToPrevSong(it.number, s.navMode) }
+            NavMode.SPREAD, NavMode.PAGE -> {
+                val newPage = (s.currentPdfPage - 1).coerceAtLeast(1)
+                if (newPage != s.currentPdfPage) {
+                    settings.lastPdfPage = newPage
+                    _state.value = s.copy(currentPdfPage = newPage)
                 }
             }
             NavMode.SONG -> s.song?.let { goToPrevSong(it.number, s.navMode) }
@@ -225,32 +227,12 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
 
     fun navigateRight() {
         val s = _state.value ?: return
-        val lastIdx = s.allPageNumbers.size - 1
-        val isPortrait = getApplication<Application>()
-            .resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-
         when (s.navMode) {
-            NavMode.SPREAD -> {
-                if (isPortrait) {
-                    s.song?.let { goToNextSong(it.number, s.navMode) }
-                } else if (s.spreadStart + 2 <= lastIdx) {
-                    val newIdx = s.spreadStart + 2
-                    settings.lastPageIndex = newIdx
-                    _state.value = s.copy(spreadStart = newIdx)
-                } else if (s.spreadStart < lastIdx) {
-                    settings.lastPageIndex = lastIdx
-                    _state.value = s.copy(spreadStart = lastIdx)
-                } else {
-                    s.song?.let { goToNextSong(it.number, s.navMode) }
-                }
-            }
-            NavMode.PAGE -> {
-                if (s.spreadStart < lastIdx) {
-                    val newIdx = s.spreadStart + 1
-                    settings.lastPageIndex = newIdx
-                    _state.value = s.copy(spreadStart = newIdx)
-                } else {
-                    s.song?.let { goToNextSong(it.number, s.navMode) }
+            NavMode.SPREAD, NavMode.PAGE -> {
+                val newPage = (s.currentPdfPage + 1).coerceAtMost(s.totalPdfPages)
+                if (newPage != s.currentPdfPage) {
+                    settings.lastPdfPage = newPage
+                    _state.value = s.copy(currentPdfPage = newPage)
                 }
             }
             NavMode.SONG -> s.song?.let { goToNextSong(it.number, s.navMode) }
@@ -259,7 +241,7 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
 
     fun setNavMode(mode: NavMode) {
         settings.navMode = mode.name
-        _state.value = _state.value?.copy(navMode = mode)
+        _state.value = _state.value?.copy(navMode = mode, totalPdfPages = totalPdfPages)
     }
 
     fun cycleNavMode() {
