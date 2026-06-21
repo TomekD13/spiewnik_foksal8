@@ -1,7 +1,6 @@
 package com.spiewnik.app.holyrics
 
 import android.util.Log
-import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -40,7 +39,7 @@ class HolyricsRepository {
             val body = connection.inputStream.bufferedReader().use { it.readText() }
             connection.disconnect()
 
-            val numbers = parsePlaylist(body)
+            val numbers = HolyricsParser.parsePlaylist(body)
             Log.i(TAG, "Holyrics playlist: $numbers")
             Result.success(numbers)
         } catch (e: Exception) {
@@ -75,33 +74,12 @@ class HolyricsRepository {
             val body = connection.inputStream.bufferedReader().use { it.readText() }
             connection.disconnect()
 
-            val number = parseCurrentSong(body)
+            val number = HolyricsParser.parseCurrentSong(body)
             Log.i(TAG, "Holyrics current song: $number")
             Result.success(number)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to fetch Holyrics current presentation", e)
             Result.failure(e)
         }
-    }
-
-    private fun parseCurrentSong(json: String): Int? {
-        val root = JSONObject(json)
-        if (root.optString("status") != "ok") return null
-        val data = root.optJSONObject("data") ?: return null
-        if (data.optString("type") != "song") return null
-        return data.optString("name").trim().toIntOrNull()
-    }
-
-    private fun parsePlaylist(json: String): List<Int> {
-        val root = JSONObject(json)
-        if (root.optString("status") != "ok") return emptyList()
-        val data = root.optJSONArray("data") ?: return emptyList()
-        val numbers = mutableListOf<Int>()
-        for (i in 0 until data.length()) {
-            val item = data.optJSONObject(i) ?: continue
-            val number = item.optString("title").trim().toIntOrNull() ?: continue
-            numbers.add(number)
-        }
-        return numbers
     }
 }

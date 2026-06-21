@@ -500,8 +500,9 @@ class MainActivity : AppCompatActivity() {
     // ── UI update helpers ─────────────────────────────────────────────────────
 
     private fun updateTopBar(state: UiState) {
-        if (state.song != null) {
-            binding.tvSongInfo.text = getString(R.string.song_info_format, state.song.number, state.song.title)
+        val song = state.song
+        if (song != null) {
+            binding.tvSongInfo.text = getString(R.string.song_info_format, song.number, song.title)
             binding.tvPageInfo.text = state.displayPages
         } else {
             binding.tvSongInfo.text = getString(R.string.app_name)

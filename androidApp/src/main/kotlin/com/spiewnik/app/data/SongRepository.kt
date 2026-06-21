@@ -2,9 +2,12 @@ package com.spiewnik.app.data
 
 import android.content.Context
 import android.util.Log
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.spiewnik.core.SongCatalog
 
+/**
+ * Android-side loader: reads piesni.json from assets and delegates all parsing/search
+ * to the shared [SongCatalog] in :core (same logic as the desktop app).
+ */
 class SongRepository(private val context: Context) {
 
     companion object {
@@ -12,44 +15,28 @@ class SongRepository(private val context: Context) {
         private const val SONGS_FILE = "piesni.json"
     }
 
-    private var cachedSongs: List<Song>? = null
+    private var cachedCatalog: SongCatalog? = null
 
-    /**
-     * Loads and returns all songs sorted by number.
-     * Throws on IO or JSON parse errors so callers can handle them.
-     */
-    fun loadSongs(): List<Song> {
-        cachedSongs?.let { return it }
+    private fun catalog(): SongCatalog {
+        cachedCatalog?.let { return it }
         val json = context.assets.open(SONGS_FILE)
             .bufferedReader(Charsets.UTF_8)
             .use { it.readText() }
-        val type = object : TypeToken<List<Song>>() {}.type
-        val songs: List<Song> = Gson().fromJson(json, type)
-        val sorted = songs.sortedBy { it.number }
-        cachedSongs = sorted
-        Log.i(TAG, "Loaded ${sorted.size} songs")
-        return sorted
+        val catalog = SongCatalog.fromJson(json)
+        cachedCatalog = catalog
+        Log.i(TAG, "Loaded ${catalog.songs.size} songs")
+        return catalog
     }
 
-    fun findByNumber(number: Int): Song? = loadSongs().find { it.number == number }
+    fun loadSongs(): List<Song> = catalog().songs
 
-    fun searchByTitle(query: String): List<Song> {
-        if (query.isBlank()) return emptyList()
-        val lower = query.lowercase()
-        return loadSongs().filter { it.title.lowercase().contains(lower) }
-    }
+    fun findByNumber(number: Int): Song? = catalog().findByNumber(number)
 
-    fun allSongs(): List<Song> = loadSongs()
+    fun searchByTitle(query: String): List<Song> = catalog().searchByTitle(query)
 
-    fun previousSong(currentNumber: Int): Song? {
-        val songs = loadSongs()
-        val idx = songs.indexOfFirst { it.number == currentNumber }
-        return if (idx > 0) songs[idx - 1] else null
-    }
+    fun allSongs(): List<Song> = catalog().songs
 
-    fun nextSong(currentNumber: Int): Song? {
-        val songs = loadSongs()
-        val idx = songs.indexOfFirst { it.number == currentNumber }
-        return if (idx in 0 until songs.size - 1) songs[idx + 1] else null
-    }
+    fun previousSong(currentNumber: Int): Song? = catalog().previousSong(currentNumber)
+
+    fun nextSong(currentNumber: Int): Song? = catalog().nextSong(currentNumber)
 }
