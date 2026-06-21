@@ -12,6 +12,9 @@ import com.spiewnik.app.holyrics.HolyricsRepository
 import com.spiewnik.app.pdf.PdfPageCache
 import com.spiewnik.app.settings.AppSettings
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 enum class NavMode {
@@ -93,6 +96,7 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
 
     companion object {
         private const val TAG = "SongViewModel"
+        private const val AUTO_FOLLOW_INTERVAL_MS = 2000L
     }
 
     val repository = SongRepository(application)
@@ -281,6 +285,43 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
                     _toastEvent.postValue("Holyrics niedostępny")
                 }
         }
+    }
+
+    // ── Auto-follow Holyrics ───────────────────────────────────────────────────
+    private var autoFollowJob: Job? = null
+
+    /**
+     * Starts polling Holyrics' current presentation and auto-opens the song shown on
+     * the projector. No-op if the setting is off or IP/token are missing. Holyrics
+     * always wins: whatever is on screen there becomes the open song here.
+     */
+    fun startHolyricsAutoFollow() {
+        if (!settings.holyricsAutoFollow) return
+        if (settings.holyricsIp.isBlank() || settings.holyricsToken.isBlank()) return
+        if (autoFollowJob?.isActive == true) return
+        autoFollowJob = viewModelScope.launch(Dispatchers.IO) {
+            var lastSeen: Int? = null   // last number reported by Holyrics — act once per change
+            while (isActive) {
+                val ip = settings.holyricsIp
+                val token = settings.holyricsToken
+                holyricsRepository.fetchCurrentSong(ip, token)
+                    .onSuccess { number ->
+                        _currentHolyricsSong.postValue(number)
+                        // React only when Holyrics switches to a new song that isn't already open.
+                        // Acting once per change avoids toast spam for numbers absent from piesni.json.
+                        if (number != null && number != lastSeen && number != _state.value?.song?.number) {
+                            openSong(number)
+                        }
+                        lastSeen = number
+                    }
+                delay(AUTO_FOLLOW_INTERVAL_MS)
+            }
+        }
+    }
+
+    fun stopHolyricsAutoFollow() {
+        autoFollowJob?.cancel()
+        autoFollowJob = null
     }
 
     /**

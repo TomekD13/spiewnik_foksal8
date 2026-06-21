@@ -158,6 +158,35 @@
             android:text="@string/holyrics_save"
             android:textSize="15sp"
             app:backgroundTint="@color/accent_secondary"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Auto-follow toggle -->
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/swAutoFollow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/holyrics_auto_follow"
+            android:textSize="15sp"
+            android:textColor="@color/bar_text"
+            app:thumbTint="@color/accent"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/nav_button"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Help / user manual -->
+        <Button
+            android:id="@+id/btnHelp"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="@string/help_button"
+            android:textSize="15sp"
+            app:backgroundTint="@color/accent_secondary"
             android:layout_marginBottom="16dp" />
 
         <!-- Divider -->

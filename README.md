@@ -91,8 +91,11 @@ Dwa niezależne mechanizmy zwiększające obszar nut:
 
 ## 4. Wybór pieśni i wyszukiwanie
 
-- Wpisanie numeru N + „Idź"/Enter, lub wybór z autocomplete po tytule.
-- Autocomplete: podpowiedzi od 1 znaku, case-insensitive, obsługa polskich znaków.
+- Wpisanie numeru N + „Idź"/Enter, lub wybór z pola tytułu.
+- **Pole tytułu = wyszukiwarka i spis treści:** dotknięcie pustego pola pokazuje pełną listę
+  pieśni (`nr. tytuł`); wpisywanie filtruje po numerze lub tytule (case-insensitive, polskie znaki).
+  Dotknięcie pozycji otwiera pieśń.
+- Po akcji „Idź"/wyborze pieśni klawiatura jest chowana.
 - Po wybraniu: ustaw pieśń, załaduj `strony_pdf`, reset indeksu stron i pan.
 - `strony_pdf` puste → Toast „Brak strony w śpiewniku"; nieznany numer → Toast „Nie znaleziono pieśni o numerze N".
 
@@ -126,6 +129,9 @@ Tablet i Holyrics muszą być w tej samej sieci WiFi; numery pieśni muszą być
 - Każdy wiersz: `"<nr>. <tytuł>"`. Kliknięcie → `openSong(nr)` i zamknięcie popupu.
 - **Aktualnie wyświetlana pieśń** (z Holyrics) jest podświetlona: prefiks **▶**, tło akcentowe,
   pogrubienie, oraz auto-scroll do tego wiersza.
+- **Auto-follow** (opcja w ustawieniach): gdy włączona, aplikacja co ~2 s odpytuje
+  `GetCurrentPresentation` i sama otwiera pieśń wyświetlaną na rzutniku (Holyrics zawsze wygrywa).
+  Polling tylko na pierwszym planie; `data:null` (nic na rzutniku) nie zmienia pieśni.
 
 ### 6.2 API Holyrics
 | | |
@@ -159,7 +165,8 @@ Błąd pobrania aktualnej pieśni jest tylko logowany (info drugorzędne, bez To
 ## 7. Ustawienia, pamięć stanu, błędy
 
 **Ustawienia (⚙):** tryb nawigacji (Rozkładówka/Strona/Pieśń), reset ostatniej pozycji
-(wraca do pieśni 1, nie rusza trybu), IP/token Holyrics, informacje o aplikacji.
+(wraca do pieśni 1, nie rusza trybu), IP/token Holyrics, przełącznik auto-follow Holyrics,
+**Instrukcja obsługi** (dialog z opisem nawigacji i konfiguracji Holyrics), informacje o aplikacji.
 Orientacją zarządza system — brak opcji w aplikacji.
 
 **SharedPreferences** ([`AppSettings.kt`](app/src/main/kotlin/com/spiewnik/app/settings/AppSettings.kt)):
@@ -231,6 +238,10 @@ com.spiewnik.app/
 ```
 Release jest podpisywany **stałym kluczem** `app/sideload.jks` (klucz tylko do sideloadu,
 hasło publiczne — nie Play Store), dzięki czemu aktualizacje instalują się „w miejsce".
+
+**Wersjonowanie:** `versionCode`/`versionName` pochodzą z numeru buildu CI
+(`-PbuildNumber=<n>` → `versionName 1.0.<n>`). Build lokalny bez tego parametru ma wersję
+`1.0.0-dev`. Wersja jest widoczna w ustawieniach (Informacje o aplikacji).
 
 ### CI / pobranie gotowego APK
 Push na `main` uruchamia GitHub Actions ([`.github/workflows/build-apk.yml`](.github/workflows/build-apk.yml)),

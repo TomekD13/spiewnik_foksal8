@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
@@ -61,6 +62,21 @@ class SettingsFragment : DialogFragment() {
             viewModel.settings.holyricsIp = binding.etHolyricsIp.text.toString().trim()
             viewModel.settings.holyricsToken = binding.etHolyricsToken.text.toString().trim()
             viewModel.showToast(getString(R.string.holyrics_saved))
+        }
+
+        // Auto-follow Holyrics toggle
+        binding.swAutoFollow.isChecked = viewModel.settings.holyricsAutoFollow
+        binding.swAutoFollow.setOnCheckedChangeListener { _, checked ->
+            viewModel.settings.holyricsAutoFollow = checked
+            if (checked) viewModel.startHolyricsAutoFollow() else viewModel.stopHolyricsAutoFollow()
+        }
+
+        binding.btnHelp.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setTitle(R.string.help_title)
+                .setMessage(R.string.help_text)
+                .setPositiveButton(R.string.settings_close, null)
+                .show()
         }
 
         binding.tvAppInfo.text = "${getString(R.string.settings_version)} ${BuildConfig.VERSION_NAME}"

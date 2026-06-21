@@ -14,6 +14,7 @@ class AppSettings(context: Context) {
         private const val KEY_NAV_MODE = "nav_mode"
         private const val KEY_HOLYRICS_IP = "holyrics_ip"
         private const val KEY_HOLYRICS_TOKEN = "holyrics_token"
+        private const val KEY_HOLYRICS_AUTO_FOLLOW = "holyrics_auto_follow"
     }
 
     var lastSongNumber: Int
@@ -39,6 +40,10 @@ class AppSettings(context: Context) {
     var holyricsToken: String
         get() = prefs.getString(KEY_HOLYRICS_TOKEN, "") ?: ""
         set(value) = prefs.edit().putString(KEY_HOLYRICS_TOKEN, value).apply()
+
+    var holyricsAutoFollow: Boolean
+        get() = prefs.getBoolean(KEY_HOLYRICS_AUTO_FOLLOW, false)
+        set(value) = prefs.edit().putBoolean(KEY_HOLYRICS_AUTO_FOLLOW, value).apply()
 
     fun resetPosition() {
         prefs.edit()

@@ -78,14 +78,30 @@ class MainActivity : AppCompatActivity() {
         observeHolyricsCurrentSong()
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Poll Holyrics only while in the foreground (no-op if the setting is off)
+        viewModel.startHolyricsAutoFollow()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.stopHolyricsAutoFollow()
+    }
+
     // ── Input & search ────────────────────────────────────────────────────────
 
     private fun setupInput() {
-        binding.btnGo.setOnClickListener { openSongFromInput() }
+        binding.btnGo.setOnClickListener {
+            openSongFromInput()
+            hideKeyboard(binding.etNumber)
+        }
 
         binding.etNumber.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_DONE) {
-                openSongFromInput(); true
+                openSongFromInput()
+                hideKeyboard(binding.etNumber)
+                true
             } else false
         }
 
@@ -102,6 +118,14 @@ class MainActivity : AppCompatActivity() {
             binding.etNumber.setText(number.toString())
             viewModel.openSong(number)
             binding.actvTitle.text.clear()
+            hideKeyboard(binding.actvTitle)
+        }
+
+        // Pressing "done" on the title keyboard just hides it (selection happens by tapping a row)
+        binding.actvTitle.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                hideKeyboard(binding.actvTitle); true
+            } else false
         }
 
         setupKeyboardFocus()
@@ -144,9 +168,18 @@ class MainActivity : AppCompatActivity() {
                     imm.hideSoftInputFromWindow(v.windowToken, 0)
                     window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
                     v.postDelayed({ enterImmersiveMode() }, 500)
+                } else if (v === binding.actvTitle && binding.actvTitle.text.isEmpty()) {
+                    // Empty title field acts as the table of contents: show the full list
+                    v.postDelayed({ binding.actvTitle.showDropDown() }, 250)
                 }
             }
         }
+    }
+
+    private fun hideKeyboard(view: View) {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+        view.clearFocus()
     }
 
     @Suppress("DEPRECATION")

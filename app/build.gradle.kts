@@ -11,8 +11,14 @@ android {
         applicationId = "com.spiewnik.app"
         minSdk = 28
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+
+        // Wersja pochodzi z numeru buildu CI (-PbuildNumber lub env BUILD_NUMBER).
+        // Lokalny build bez CI -> wersja "1.0.0-dev".
+        val buildNumber = (project.findProperty("buildNumber") as String?)?.toIntOrNull()
+            ?: System.getenv("BUILD_NUMBER")?.toIntOrNull()
+            ?: 0
+        versionCode = if (buildNumber > 0) buildNumber else 1
+        versionName = if (buildNumber > 0) "1.0.$buildNumber" else "1.0.0-dev"
     }
 
     signingConfigs {
