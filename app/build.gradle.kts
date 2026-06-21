@@ -16,13 +16,14 @@ android {
     }
 
     signingConfigs {
-        // Sign release with the local debug keystore so the APK installs by tapping
-        // on a real device (no Play Store / no testOnly flag). Fine for sideloading.
+        // Stable keystore committed to the repo so every build (local + CI) shares one
+        // signature — updates install in place, no uninstall needed. Sideload only:
+        // this is NOT a Play Store key, the password is intentionally public.
         create("sideload") {
-            storeFile = file("${System.getProperty("user.home")}/.android/debug.keystore")
-            storePassword = "android"
-            keyAlias = "androiddebugkey"
-            keyPassword = "android"
+            storeFile = file("sideload.jks")
+            storePassword = "spiewnik123"
+            keyAlias = "spiewnik"
+            keyPassword = "spiewnik123"
         }
     }
 

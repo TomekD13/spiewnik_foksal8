@@ -16,6 +16,8 @@ app/release/
 # Keystore (never commit)
 *.jks
 *.keystore
+# ...except the public sideload keystore (stable signature for tap-install builds)
+!app/sideload.jks
 
 # PDF crop artifacts (original preserved in git history; backup is redundant)
 Spiewnik_original.pdf
