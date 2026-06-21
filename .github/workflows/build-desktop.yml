@@ -1,0 +1,30 @@
+name: Build Windows app
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build desktop distributable (app-image with bundled JRE)
+        run: ./gradlew :desktopApp:createDistributable --console=plain
+
+      - name: Upload Windows app as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: spiewnik-windows
+          path: desktopApp/build/compose/binaries/main/app/
+          retention-days: 30

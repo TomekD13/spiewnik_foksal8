@@ -1,14 +1,15 @@
 # Śpiewnik KADS Foksal 8
 
-Aplikacja na Androida (tablet) do błyskawicznego otwierania nut ze śpiewnika w PDF
+Aplikacja na Androida (tablet - androidApp) oraz na Windows (desktopApp) do błyskawicznego otwierania nut ze śpiewnika w PDF
 podczas gry. Organista wpisuje numer pieśni (lub szuka po tytule), a aplikacja
 wyświetla właściwe strony — domyślnie jako rozkładówkę (2 strony obok siebie).
 
 Działa w pełni **offline**.
 
-> Ten plik jest jedynym, kanonicznym opisem działania aplikacji. Wcześniejsze pliki
-> `wymagania*.md` / `wynik_*.md` zostały skonsolidowane tutaj. Pułapki i wskazówki
-> implementacyjne są w [`dodatkowe_uwagi.md`](dodatkowe_uwagi.md).
+> Ten plik opisuje działanie aplikacji (głównie wersji Android). Repo jest **monorepo**:
+> aplikacja Android (`:androidApp`) i Windows (`:desktopApp`) ze wspólną logiką (`:core`).
+> Strukturę, build i zasady rozbudowy opisuje [`docs/MONOREPO.md`](docs/MONOREPO.md).
+> Pułapki implementacyjne: [`dodatkowe_uwagi.md`](dodatkowe_uwagi.md).
 
 ---
 
@@ -29,12 +30,13 @@ Działa w pełni **offline**.
 
 ## 2. Źródła danych
 
-### 2.1 PDF — `app/src/main/assets/Spiewnik.pdf`
+### 2.1 PDF — `shared-assets/Spiewnik.pdf`
 ~28 MB, 692 strony. **Marginesy są przycięte** (patrz [sekcja 8](#8-przycinanie-marginesów-pdf)),
-żeby nuty były jak największe. Renderowany natywnym `PdfRenderer`.
+żeby nuty były jak największe. Android renderuje natywnym `PdfRenderer`, Windows — PDFBox.
+Plik leży w `shared-assets/` (wspólny dla obu apek).
 
-### 2.2 Mapowanie pieśni — `app/src/main/assets/piesni.json`
-UTF-8, ~700 rekordów, posortowane rosnąco po `nr_piesni`. Schemat (model [`Song.kt`](app/src/main/kotlin/com/spiewnik/app/data/Song.kt)):
+### 2.2 Mapowanie pieśni — `shared-assets/piesni.json`
+UTF-8, ~700 rekordów, posortowane rosnąco po `nr_piesni`. Schemat (model [`Song.kt`](core/src/main/kotlin/com/spiewnik/app/data/Song.kt) w `:core`):
 
 ```json
 {
@@ -47,7 +49,7 @@ UTF-8, ~700 rekordów, posortowane rosnąco po `nr_piesni`. Schemat (model [`Son
 
 - `strony_pdf` — strony PDF liczone **od 1**; pieśń ma 1 lub 2 strony.
 - `interpolated` — flaga informacyjna (strony szacowane); wczytywana, nie zmienia zachowania.
-- Konwersja na indeks `PdfRenderer` (0-based): `pdfIndex = jsonPage - 1` ([`PageConverter.kt`](app/src/main/kotlin/com/spiewnik/app/utils/PageConverter.kt)).
+- Konwersja na indeks `PdfRenderer` (0-based): `pdfIndex = jsonPage - 1` ([`PageConverter.kt`](core/src/main/kotlin/com/spiewnik/app/utils/PageConverter.kt) w `:core`).
 
 ---
 
@@ -141,7 +143,7 @@ Tablet i Holyrics muszą być w tej samej sieci WiFi; numery pieśni muszą być
 | Playlista | `…/api/GetLyricsPlaylist?token=<token>` → numer w polu **`title`** |
 | Aktualna pieśń | `…/api/GetCurrentPresentation?token=<token>` → numer w polu **`data.name`** przy `data.type=="song"` (`data: null` gdy nic nie wyświetlane) |
 
-Parser: [`HolyricsRepository.kt`](app/src/main/kotlin/com/spiewnik/app/holyrics/HolyricsRepository.kt)
+Parser: [`HolyricsRepository.kt`](androidApp/src/main/kotlin/com/spiewnik/app/holyrics/HolyricsRepository.kt)
 (`HttpURLConnection`, timeouty 3 s, pomija pozycje bez numeru).
 
 ### 6.3 Konfiguracja
@@ -169,14 +171,14 @@ Błąd pobrania aktualnej pieśni jest tylko logowany (info drugorzędne, bez To
 **Instrukcja obsługi** (dialog z opisem nawigacji i konfiguracji Holyrics), informacje o aplikacji.
 Orientacją zarządza system — brak opcji w aplikacji.
 
-**SharedPreferences** ([`AppSettings.kt`](app/src/main/kotlin/com/spiewnik/app/settings/AppSettings.kt)):
+**SharedPreferences** ([`AppSettings.kt`](androidApp/src/main/kotlin/com/spiewnik/app/settings/AppSettings.kt)):
 `last_song_number` (1), `last_page_index` (0), `last_pdf_page` (1), `nav_mode` (SPREAD),
 `holyrics_ip` (""), `holyrics_token` (""). Przy starcie powrót do ostatniej pieśni.
 
 **Błędy:** komunikaty przejściowe jako Toast; błędy krytyczne (brak/niepoprawny PDF lub JSON)
 jako baner. Wszystkie wyjątki logowane do Logcat, bez crasha.
 
-**Rendering / cache** ([`PdfPageCache.kt`](app/src/main/kotlin/com/spiewnik/app/pdf/PdfPageCache.kt)):
+**Rendering / cache** ([`PdfPageCache.kt`](androidApp/src/main/kotlin/com/spiewnik/app/pdf/PdfPageCache.kt)):
 renderowane tylko widoczne strony, LRU cache bitmap (1/6 RAM), klucz `"pageIndex:WxH"`.
 PDF kopiowany do `cacheDir` przed otwarciem (`PdfRenderer` wymaga FD od offsetu 0).
 
@@ -228,16 +230,21 @@ com.spiewnik.app/
 
 ## 10. Build i instalacja
 
+> Pełny opis struktury monorepo i build obu apek (Android + Windows): [`docs/MONOREPO.md`](docs/MONOREPO.md).
+
 ### Wymagania
-- Android Studio / JDK 17 (JBR). PDF i `piesni.json` są już w `app/src/main/assets/`.
+- JDK 17 (JBR z Android Studio wystarcza do buildu/testów; **instalator Windows** wymaga
+  pełnego JDK z `jpackage` — JBR go nie ma, ale CI/temurin tak). PDF i `piesni.json` są w `shared-assets/`.
 
 ### Build lokalny
 ```bash
-./gradlew assembleRelease   # podpisany, instalowalny APK -> app/build/outputs/apk/release/app-release.apk
-./gradlew assembleDebug     # wersja debug
+./gradlew :androidApp:assembleRelease -PbuildNumber=<n>   # podpisany APK -> androidApp/build/outputs/apk/release/app-release.apk
+./gradlew :androidApp:assembleDebug                       # wersja debug
+./gradlew :desktopApp:run                                 # uruchom apkę Windows
+./gradlew test                                            # testy wszystkich modułów
 ```
-Release jest podpisywany **stałym kluczem** `app/sideload.jks` (klucz tylko do sideloadu,
-hasło publiczne — nie Play Store), dzięki czemu aktualizacje instalują się „w miejsce".
+Release Androida jest podpisywany **stałym kluczem** `androidApp/sideload.jks` (klucz tylko do
+sideloadu, hasło publiczne — nie Play Store), dzięki czemu aktualizacje instalują się „w miejsce".
 
 **Wersjonowanie:** `versionCode`/`versionName` pochodzą z numeru buildu CI
 (`-PbuildNumber=<n>` → `versionName 1.0.<n>`). Build lokalny bez tego parametru ma wersję

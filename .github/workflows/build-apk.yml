@@ -25,14 +25,17 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Run all tests (core + android + desktop) — red test blocks the release
+        run: ./gradlew test
+
       - name: Build release APK (signed, installable by tapping)
-        run: ./gradlew assembleRelease -PbuildNumber=${{ github.run_number }}
+        run: ./gradlew :androidApp:assembleRelease -PbuildNumber=${{ github.run_number }}
 
       - name: Upload APK as artifact
         uses: actions/upload-artifact@v4
         with:
           name: spiewnik-release
-          path: app/build/outputs/apk/release/app-release.apk
+          path: androidApp/build/outputs/apk/release/app-release.apk
           retention-days: 30
 
       - name: Create Release
@@ -40,7 +43,7 @@ jobs:
         with:
           tag_name: build-${{ github.run_number }}
           name: "Śpiewnik build #${{ github.run_number }}"
-          files: app/build/outputs/apk/release/app-release.apk
+          files: androidApp/build/outputs/apk/release/app-release.apk
           generate_release_notes: false
           body: |
             Automatyczny build z gałęzi main (release, podpisany stałym kluczem sideload — instalowalny przez kliknięcie).

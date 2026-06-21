@@ -9,9 +9,10 @@ captures/
 .externalNativeBuild/
 .cxx/
 
-# Android
-app/build/
-app/release/
+# Android / modules
+androidApp/build/
+desktopApp/build/
+core/build/
 
 # Keystore (never commit)
 *.jks

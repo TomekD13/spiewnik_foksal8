@@ -13,4 +13,6 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Spiewnik"
-include(":app")
+include(":core")
+include(":androidApp")
+include(":desktopApp")

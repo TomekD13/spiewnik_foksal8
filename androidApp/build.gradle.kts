@@ -57,9 +57,18 @@ android {
     androidResources {
         noCompress += "pdf"
     }
+
+    // piesni.json + Spiewnik.pdf live in the shared-assets/ folder (single source of
+    // truth for both apps) and are picked up here as an extra assets source dir.
+    sourceSets {
+        getByName("main") {
+            assets.srcDirs("src/main/assets", "../shared-assets")
+        }
+    }
 }
 
 dependencies {
+    implementation(project(":core"))
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
