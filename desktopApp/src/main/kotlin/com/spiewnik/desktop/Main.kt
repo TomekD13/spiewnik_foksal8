@@ -2,8 +2,10 @@ package com.spiewnik.desktop
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,10 +16,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.darkColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -135,6 +141,9 @@ fun App() {
     val songbook = remember { Songbook.load() }
     val ctrl = remember { SongbookController(songbook.catalog, songbook.pageCount).also { it.openSong(1) } }
     var input by remember { mutableStateOf("") }
+    var showToc by remember { mutableStateOf(false) }
+    var tocQuery by remember { mutableStateOf("") }
+    var barsVisible by remember { mutableStateOf(true) }
 
     fun go() {
         input.toIntOrNull()?.let { ctrl.openSong(it) }
@@ -142,23 +151,34 @@ fun App() {
     }
 
     MaterialTheme(colors = darkColors(primary = accent, background = bgColor, surface = barColor)) {
-        Column(Modifier.fillMaxSize().background(bgColor)) {
-            TopBar(ctrl)
-            SpreadArea(ctrl, songbook, Modifier.weight(1f))
-            NumpadBar(
-                input = input,
-                onDigit = { d -> if (input.length < 4) input += d },
-                onBackspace = { input = input.dropLast(1) },
-                onGo = { go() },
-                onNavMode = { ctrl.cycleNavMode() },
-                navModeLabel = ctrl.state.navMode.label(),
-            )
+        Box(Modifier.fillMaxSize()) {
+            Column(Modifier.fillMaxSize().background(bgColor)) {
+                if (barsVisible) TopBar(ctrl, onOpenToc = { tocQuery = ""; showToc = true })
+                SpreadArea(ctrl, songbook, Modifier.weight(1f), onToggleBars = { barsVisible = !barsVisible })
+                if (barsVisible) NumpadBar(
+                    input = input,
+                    onDigit = { d -> if (input.length < 4) input += d },
+                    onBackspace = { input = input.dropLast(1) },
+                    onGo = { go() },
+                    onNavMode = { ctrl.cycleNavMode() },
+                    navModeLabel = ctrl.state.navMode.label(),
+                )
+            }
+            if (showToc) {
+                TocOverlay(
+                    catalog = songbook.catalog,
+                    query = tocQuery,
+                    onQuery = { tocQuery = it },
+                    onPick = { number -> ctrl.openSong(number); showToc = false },
+                    onClose = { showToc = false },
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun TopBar(ctrl: SongbookController) {
+private fun TopBar(ctrl: SongbookController, onOpenToc: () -> Unit) {
     val s = ctrl.state
     val song = s.song
     Row(
@@ -170,16 +190,153 @@ private fun TopBar(ctrl: SongbookController) {
             color = textColor, fontSize = 20.sp, fontWeight = FontWeight.Bold,
             modifier = Modifier.weight(1f)
         )
+        Button(onClick = onOpenToc, colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0E639C))) {
+            Text("Spis treści", color = Color.White)
+        }
+        Spacer(Modifier.width(16.dp))
         Text(s.displayPages, color = textColor, fontSize = 18.sp)
     }
 }
 
 @Composable
-private fun SpreadArea(ctrl: SongbookController, songbook: Songbook, modifier: Modifier) {
+private fun TocOverlay(
+    catalog: SongCatalog,
+    query: String,
+    onQuery: (String) -> Unit,
+    onPick: (Int) -> Unit,
+    onClose: () -> Unit,
+) {
+    val filtered = remember(query) {
+        val q = query.foldPl()
+        if (q.isBlank()) catalog.songs
+        else catalog.songs.filter {
+            it.number.toString().contains(q) || it.title.foldPl().contains(q)
+        }
+    }
+    Box(Modifier.fillMaxSize().background(Color(0xCC000000)), contentAlignment = Alignment.Center) {
+        Column(Modifier.fillMaxSize(0.9f).background(barColor).padding(12.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                OutlinedTextField(
+                    value = query,
+                    onValueChange = onQuery,
+                    singleLine = true,
+                    label = { Text("Szukaj numeru lub tytułu", color = textColor) },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        textColor = Color.White,
+                        cursorColor = accent,
+                        focusedBorderColor = accent,
+                        unfocusedBorderColor = Color(0xFF555555),
+                    ),
+                    modifier = Modifier.weight(1f)
+                )
+                Spacer(Modifier.width(8.dp))
+                Button(
+                    onClick = onClose,
+                    modifier = Modifier.height(56.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = accent)
+                ) { Text("Zamknij", color = Color.White) }
+            }
+            Spacer(Modifier.height(8.dp))
+            LazyColumn(Modifier.weight(1f).fillMaxWidth()) {
+                items(filtered) { song ->
+                    Text(
+                        "${song.number}. ${song.title}",
+                        color = textColor, fontSize = 18.sp,
+                        modifier = Modifier.fillMaxWidth().clickable { onPick(song.number) }.padding(14.dp)
+                    )
+                }
+            }
+            Spacer(Modifier.height(8.dp))
+            // On-screen keyboard for touch use (Compose Desktop doesn't pop the OS keyboard)
+            MiniKeyboard(
+                onKey = { c -> onQuery(query + c) },
+                onBackspace = { onQuery(query.dropLast(1)) },
+                onSpace = { onQuery("$query ") },
+                onClear = { onQuery("") },
+            )
+        }
+    }
+}
+
+@Composable
+private fun MiniKeyboard(
+    onKey: (Char) -> Unit,
+    onBackspace: () -> Unit,
+    onSpace: () -> Unit,
+    onClear: () -> Unit,
+) {
+    Row(
+        Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(24.dp),
+        verticalAlignment = Alignment.Top
+    ) {
+        // ── Digit pad (left) ──
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            listOf("123", "456", "789").forEach { row ->
+                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                    row.forEach { c -> MiniKey(c.toString()) { onKey(c) } }
+                }
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                MiniKey("⌫") { onBackspace() }
+                MiniKey("0") { onKey('0') }
+                MiniKey("C") { onClear() }
+            }
+        }
+
+        // ── Letters (right, fills the rest of the bar) ──
+        Column(
+            Modifier.weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            listOf("qwertyuiop", "asdfghjkl", "zxcvbnm").forEach { row ->
+                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                    row.forEach { c -> MiniKey(c.toString()) { onKey(c) } }
+                }
+            }
+            Button(
+                onClick = onSpace,
+                modifier = Modifier.height(48.dp).fillMaxWidth(0.6f),
+                contentPadding = PaddingValues(0.dp),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF3A3D41))
+            ) { Text("spacja", color = Color.White) }
+        }
+    }
+}
+
+@Composable
+private fun MiniKey(label: String, onClick: () -> Unit) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier.size(48.dp),
+        contentPadding = PaddingValues(0.dp),
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF3A3D41))
+    ) {
+        Text(label, color = Color.White, fontSize = 16.sp)
+    }
+}
+
+/** Lowercase + strip Polish diacritics so "blogoslaw" matches "Błogosław". */
+private fun String.foldPl(): String {
+    val stripped = java.text.Normalizer.normalize(this, java.text.Normalizer.Form.NFD)
+        .replace("\\p{M}".toRegex(), "")
+    return stripped.replace('ł', 'l').replace('Ł', 'L').lowercase()
+}
+
+@Composable
+private fun SpreadArea(ctrl: SongbookController, songbook: Songbook, modifier: Modifier, onToggleBars: () -> Unit) {
     val s = ctrl.state
     Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         ArrowButton("◀", enabled = s.canGoLeft) { ctrl.navigateLeft() }
-        Box(Modifier.weight(1f).fillMaxHeight().padding(8.dp), contentAlignment = Alignment.Center) {
+        // Tapping the page area toggles the bars (fullscreen notes), like on Android.
+        Box(
+            Modifier.weight(1f).fillMaxHeight().padding(8.dp).clickable { onToggleBars() },
+            contentAlignment = Alignment.Center
+        ) {
             Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 s.leftPageNumber?.let { page ->
                     Image(
