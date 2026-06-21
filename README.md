@@ -92,9 +92,9 @@ Dwa niezależne mechanizmy zwiększające obszar nut:
 ## 4. Wybór pieśni i wyszukiwanie
 
 - Wpisanie numeru N + „Idź"/Enter, lub wybór z pola tytułu.
-- **Pole tytułu = wyszukiwarka i spis treści:** dotknięcie pustego pola pokazuje pełną listę
-  pieśni (`nr. tytuł`); wpisywanie filtruje po numerze lub tytule (case-insensitive, polskie znaki).
-  Dotknięcie pozycji otwiera pieśń.
+- **Pole tytułu = spis treści:** dotknięcie otwiera wybierak — duża, przewijalna lista wszystkich
+  pieśni (`nr. tytuł`) z polem szukania u góry; wpisywanie filtruje po numerze lub tytule
+  (case-insensitive, polskie znaki). Dotknięcie pozycji otwiera pieśń.
 - Po akcji „Idź"/wyborze pieśni klawiatura jest chowana.
 - Po wybraniu: ustaw pieśń, załaduj `strony_pdf`, reset indeksu stron i pan.
 - `strony_pdf` puste → Toast „Brak strony w śpiewniku"; nieznany numer → Toast „Nie znaleziono pieśni o numerze N".

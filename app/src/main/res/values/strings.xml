@@ -2,7 +2,8 @@
 <resources>
     <string name="app_name">Śpiewnik</string>
     <string name="hint_number">Nr pieśni</string>
-    <string name="hint_search">Szukaj po tytule…</string>
+    <string name="hint_search">Spis treści / szukaj…</string>
+    <string name="toc_search_hint">Wpisz numer lub tytuł…</string>
     <string name="btn_go">Idź</string>
     <string name="btn_settings">⚙</string>
     <string name="btn_select">Wybierz</string>

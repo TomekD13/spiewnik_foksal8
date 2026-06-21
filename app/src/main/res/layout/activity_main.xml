@@ -94,7 +94,7 @@
             android:layout_height="match_parent"
             android:hint="@string/hint_number"
             android:inputType="number"
-            android:imeOptions="actionGo"
+            android:imeOptions="actionGo|flagNoExtractUi"
             android:maxLength="4"
             android:textSize="22sp"
             android:textAlignment="center"
@@ -111,17 +111,17 @@
             android:textSize="18sp"
             app:backgroundTint="@color/accent" />
 
-        <!-- Title search -->
-        <AutoCompleteTextView
+        <!-- Title search / table of contents — opens the song picker dialog -->
+        <TextView
             android:id="@+id/actvTitle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_marginStart="12dp"
+            android:gravity="center_vertical"
             android:hint="@string/hint_search"
-            android:inputType="text"
+            android:textColorHint="@color/nav_button_text_disabled"
             android:textSize="16sp"
-            android:completionThreshold="1"
             android:background="@drawable/input_background"
             android:paddingStart="8dp"
             android:paddingEnd="8dp" />

@@ -20,9 +20,13 @@ import android.view.GestureDetector
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.ListView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import com.spiewnik.app.databinding.ActivityMainBinding
 import com.spiewnik.app.ui.settings.SettingsFragment
@@ -105,28 +109,8 @@ class MainActivity : AppCompatActivity() {
             } else false
         }
 
-        viewModel.allSongs.observe(this) { songs ->
-            val items = songs.map { "${it.number}. ${it.title}" }
-            binding.actvTitle.setAdapter(
-                ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items)
-            )
-        }
-
-        binding.actvTitle.setOnItemClickListener { parent, _, position, _ ->
-            val selected = parent.getItemAtPosition(position) as? String ?: return@setOnItemClickListener
-            val number = selected.substringBefore(".").trim().toIntOrNull() ?: return@setOnItemClickListener
-            binding.etNumber.setText(number.toString())
-            viewModel.openSong(number)
-            binding.actvTitle.text.clear()
-            hideKeyboard(binding.actvTitle)
-        }
-
-        // Pressing "done" on the title keyboard just hides it (selection happens by tapping a row)
-        binding.actvTitle.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                hideKeyboard(binding.actvTitle); true
-            } else false
-        }
+        // Title field acts as a button that opens the searchable table of contents
+        binding.actvTitle.setOnClickListener { showSongListDialog() }
 
         setupKeyboardFocus()
 
@@ -150,7 +134,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     private fun setupKeyboardFocus() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        listOf(binding.etNumber, binding.actvTitle).forEach { field ->
+        listOf(binding.etNumber).forEach { field ->
             field.setOnTouchListener { v, event ->
                 if (event.action == MotionEvent.ACTION_UP) {
                     exitImmersiveMode()
@@ -168,12 +152,40 @@ class MainActivity : AppCompatActivity() {
                     imm.hideSoftInputFromWindow(v.windowToken, 0)
                     window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
                     v.postDelayed({ enterImmersiveMode() }, 500)
-                } else if (v === binding.actvTitle && binding.actvTitle.text.isEmpty()) {
-                    // Empty title field acts as the table of contents: show the full list
-                    v.postDelayed({ binding.actvTitle.showDropDown() }, 250)
                 }
             }
         }
+    }
+
+    /**
+     * Searchable table of contents: full scrollable list of songs ("nr. tytuł"),
+     * filtered live as you type. Tapping a row opens the song.
+     */
+    private fun showSongListDialog() {
+        val songs = viewModel.allSongs.value ?: return
+        val labels = songs.map { "${it.number}. ${it.title}" }
+        val view = layoutInflater.inflate(R.layout.dialog_song_list, null)
+        val search = view.findViewById<EditText>(R.id.etSongSearch)
+        val list = view.findViewById<ListView>(R.id.lvSongs)
+        val adapter = ArrayAdapter(this, R.layout.item_song, ArrayList(labels))
+        list.adapter = adapter
+
+        val dialog = AlertDialog.Builder(this).setView(view).create()
+        search.doAfterTextChanged { adapter.filter.filter(it?.toString() ?: "") }
+        list.setOnItemClickListener { _, _, position, _ ->
+            val selected = adapter.getItem(position) ?: return@setOnItemClickListener
+            selected.substringBefore(".").trim().toIntOrNull()?.let { number ->
+                binding.etNumber.setText(number.toString())
+                viewModel.openSong(number)
+            }
+            dialog.dismiss()
+        }
+        dialog.setOnDismissListener { enterImmersiveMode() }
+        dialog.show()
+        dialog.window?.setLayout(
+            (resources.displayMetrics.widthPixels * 0.7f).toInt(),
+            (resources.displayMetrics.heightPixels * 0.9f).toInt()
+        )
     }
 
     private fun hideKeyboard(view: View) {

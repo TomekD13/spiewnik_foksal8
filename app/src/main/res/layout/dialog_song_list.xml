@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bar_background"
+    android:padding="12dp">
+
+    <EditText
+        android:id="@+id/etSongSearch"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:hint="@string/toc_search_hint"
+        android:inputType="text"
+        android:imeOptions="actionSearch|flagNoExtractUi"
+        android:textSize="18sp"
+        android:textColor="@color/bar_text"
+        android:background="@drawable/input_background"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp" />
+
+    <ListView
+        android:id="@+id/lvSongs"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
+        android:divider="@color/nav_button"
+        android:dividerHeight="1dp" />
+
+</LinearLayout>
