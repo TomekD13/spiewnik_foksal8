@@ -43,5 +43,8 @@ jobs:
           files: app/build/outputs/apk/release/app-release.apk
           generate_release_notes: false
           body: |
-            Automatyczny build z gałęzi main (release, podpisany kluczem debug — instalowalny przez kliknięcie).
+            Automatyczny build z gałęzi main (release, podpisany stałym kluczem sideload — instalowalny przez kliknięcie).
+
+            ⚠️ Jeśli masz zainstalowaną starszą wersję podpisaną innym kluczem (build #6 lub starszy), najpierw ją odinstaluj — inaczej Android zablokuje instalację (konflikt podpisów). Od tej wersji aktualizacje instalują się już w miejscu.
+
             Commit: ${{ github.sha }}

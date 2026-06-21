@@ -13,8 +13,8 @@ Regula:
 import fitz, json, numpy as np, shutil, os
 from collections import defaultdict
 
-SRC = "app/src/main/assets/Spiewnik.pdf"
-BAK = "Spiewnik_original.pdf"   # poza assetami - nie trafi do APK
+ASSET = "app/src/main/assets/Spiewnik.pdf"
+BAK = "Spiewnik_original.pdf"   # pristine original (poza assetami - nie trafi do APK)
 OUT = "app/src/main/assets/Spiewnik.pdf"
 
 DPI = 150
@@ -22,6 +22,7 @@ THRESH = 245
 sy = DPI / 72.0
 sx = DPI / 72.0
 PAD = 8.0
+TOP_PAD = 8.0             # bufor nad pierwsza trescia (tytul/pieciolinia)
 BOT_PAD = 8.0
 FLOOR_W = 376.0
 GAP_SEP_PT = 6.0          # bialy odstep >= 6pt = separator stopki
@@ -29,11 +30,13 @@ FOOTER_CLEAR_PT = 2.0     # ile pt nad stopka tniemy (wersja 3)
 
 
 def main():
+    # Zawsze czytaj z pristine oryginalu, zapisuj do assetu (idempotentne).
     if not os.path.exists(BAK):
-        shutil.copy2(SRC, BAK)
+        shutil.copy2(ASSET, BAK)
         print("Kopia zapasowa:", BAK)
     else:
-        print("Kopia zapasowa juz istnieje:", BAK)
+        print("Zrodlo (oryginal):", BAK)
+    SRC = BAK
 
     songs = json.load(open("app/src/main/assets/piesni.json", encoding="utf-8"))
     page2np = defaultdict(list)
@@ -69,10 +72,12 @@ def main():
         ci = np.where(cols)[0]
         x0 = max(pr.x0, pr.x0 + ci[0] / sx - PAD)
         x1 = min(pr.x1, pr.x0 + (ci[-1] + 1) / sx + PAD)
-        y0 = pr.y0  # gora bez cropu
 
-        # --- detekcja stopki / dolu nut ---
+        # --- gora: do pierwszej tresci (tytul lub pieciolinia) + bufor ---
+        # Strona czesto zaczyna sie kontynuacja poprzedniej piesni, wiec tniemy
+        # tylko bialy margines nad pierwszym atramentem - nigdy w tresc.
         ink = np.where(rows)[0]
+        y0 = pr.y0 + max(0.0, ink[0] / sy - TOP_PAD)
         i = ink[-1]
         top = i
         white = 0
