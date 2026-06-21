@@ -22,13 +22,16 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.darkColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,7 +47,13 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.spiewnik.app.NavMode
 import com.spiewnik.app.UiState
+import com.spiewnik.app.holyrics.HolyricsClient
 import com.spiewnik.core.SongCatalog
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.rendering.PDFRenderer
 
@@ -140,20 +149,68 @@ private val textColor = Color(0xFFD4D4D4)
 fun App() {
     val songbook = remember { Songbook.load() }
     val ctrl = remember { SongbookController(songbook.catalog, songbook.pageCount).also { it.openSong(1) } }
+    val settings = remember { DesktopSettings() }
+    val client = remember { HolyricsClient(HttpUrlTransport()) }
+    val scope = rememberCoroutineScope()
+
     var input by remember { mutableStateOf("") }
     var showToc by remember { mutableStateOf(false) }
     var tocQuery by remember { mutableStateOf("") }
     var barsVisible by remember { mutableStateOf(true) }
+
+    var ip by remember { mutableStateOf(settings.holyricsIp) }
+    var token by remember { mutableStateOf(settings.holyricsToken) }
+    var autoFollow by remember { mutableStateOf(settings.autoFollow) }
+    var showHolyrics by remember { mutableStateOf(false) }
+    var showSettings by remember { mutableStateOf(false) }
+    var playlist by remember { mutableStateOf<List<Int>>(emptyList()) }
+    var currentSong by remember { mutableStateOf<Int?>(null) }
+    var status by remember { mutableStateOf<String?>(null) }
 
     fun go() {
         input.toIntOrNull()?.let { ctrl.openSong(it) }
         input = ""
     }
 
+    fun openHolyrics() {
+        showHolyrics = true
+        if (ip.isBlank() || token.isBlank()) { status = "Uzupełnij IP i token w ustawieniach"; return }
+        scope.launch {
+            withContext(Dispatchers.IO) { client.fetchPlaylist(ip, token) }
+                .onSuccess { nums ->
+                    if (nums.isEmpty()) status = "Playlista Holyrics jest pusta"
+                    else { playlist = nums; status = null }
+                }
+                .onFailure { status = "Holyrics niedostępny" }
+            withContext(Dispatchers.IO) { client.fetchCurrentSong(ip, token) }.onSuccess { currentSong = it }
+        }
+    }
+
+    // Auto-follow: poll the current presentation; Holyrics always wins (act once per change).
+    LaunchedEffect(autoFollow, ip, token) {
+        if (!autoFollow || ip.isBlank() || token.isBlank()) return@LaunchedEffect
+        var lastSeen: Int? = null
+        while (isActive) {
+            withContext(Dispatchers.IO) { client.fetchCurrentSong(ip, token) }.onSuccess { number ->
+                currentSong = number
+                if (number != null && number != lastSeen && number != ctrl.state.song?.number) ctrl.openSong(number)
+                lastSeen = number
+            }
+            delay(2000)
+        }
+    }
+
+    LaunchedEffect(status) { if (status != null) { delay(2500); status = null } }
+
     MaterialTheme(colors = darkColors(primary = accent, background = bgColor, surface = barColor)) {
         Box(Modifier.fillMaxSize()) {
             Column(Modifier.fillMaxSize().background(bgColor)) {
-                if (barsVisible) TopBar(ctrl, onOpenToc = { tocQuery = ""; showToc = true })
+                if (barsVisible) TopBar(
+                    ctrl,
+                    onOpenToc = { tocQuery = ""; showToc = true },
+                    onOpenHolyrics = { openHolyrics() },
+                    onOpenSettings = { showSettings = true },
+                )
                 SpreadArea(ctrl, songbook, Modifier.weight(1f), onToggleBars = { barsVisible = !barsVisible })
                 if (barsVisible) NumpadBar(
                     input = input,
@@ -164,37 +221,64 @@ fun App() {
                     navModeLabel = ctrl.state.navMode.label(),
                 )
             }
-            if (showToc) {
-                TocOverlay(
-                    catalog = songbook.catalog,
-                    query = tocQuery,
-                    onQuery = { tocQuery = it },
-                    onPick = { number -> ctrl.openSong(number); showToc = false },
-                    onClose = { showToc = false },
-                )
-            }
+            if (showToc) TocOverlay(
+                catalog = songbook.catalog,
+                query = tocQuery,
+                onQuery = { tocQuery = it },
+                onPick = { number -> ctrl.openSong(number); showToc = false },
+                onClose = { showToc = false },
+            )
+            if (showHolyrics) HolyricsOverlay(
+                playlist = playlist,
+                current = currentSong,
+                catalog = songbook.catalog,
+                onPick = { number -> ctrl.openSong(number); showHolyrics = false },
+                onClose = { showHolyrics = false },
+            )
+            if (showSettings) SettingsOverlay(
+                ip = ip,
+                token = token,
+                autoFollow = autoFollow,
+                onIp = { ip = it; settings.holyricsIp = it },
+                onToken = { token = it; settings.holyricsToken = it },
+                onAutoFollow = { autoFollow = it; settings.autoFollow = it },
+                onClose = { showSettings = false },
+            )
+            status?.let { StatusBanner(it) }
         }
     }
 }
 
 @Composable
-private fun TopBar(ctrl: SongbookController, onOpenToc: () -> Unit) {
+private fun TopBar(
+    ctrl: SongbookController,
+    onOpenToc: () -> Unit,
+    onOpenHolyrics: () -> Unit,
+    onOpenSettings: () -> Unit,
+) {
     val s = ctrl.state
     val song = s.song
     Row(
         Modifier.fillMaxWidth().background(barColor).padding(horizontal = 16.dp, vertical = 10.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
             text = if (song != null) "${song.number}. ${song.title}" else "Śpiewnik",
             color = textColor, fontSize = 20.sp, fontWeight = FontWeight.Bold,
             modifier = Modifier.weight(1f)
         )
-        Button(onClick = onOpenToc, colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0E639C))) {
-            Text("Spis treści", color = Color.White)
-        }
-        Spacer(Modifier.width(16.dp))
         Text(s.displayPages, color = textColor, fontSize = 18.sp)
+        BarButton("Spis treści", Color(0xFF0E639C), onOpenToc)
+        BarButton("Holyrics", Color(0xFF6A0DAD), onOpenHolyrics)
+        BarButton("⚙", Color(0xFF3A3D41), onOpenSettings)
+    }
+}
+
+@Composable
+private fun BarButton(label: String, color: Color, onClick: () -> Unit) {
+    Button(onClick = onClick, colors = ButtonDefaults.buttonColors(backgroundColor = color)) {
+        Text(label, color = Color.White)
     }
 }
 
@@ -418,6 +502,107 @@ private fun KeyButton(label: String, onClick: () -> Unit) {
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF3A3D41))
     ) {
         Text(label, color = Color.White, fontSize = 20.sp)
+    }
+}
+
+@Composable
+private fun HolyricsOverlay(
+    playlist: List<Int>,
+    current: Int?,
+    catalog: SongCatalog,
+    onPick: (Int) -> Unit,
+    onClose: () -> Unit,
+) {
+    Box(Modifier.fillMaxSize().background(Color(0xCC000000)), contentAlignment = Alignment.Center) {
+        Column(Modifier.fillMaxSize(0.6f).background(barColor).padding(12.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    "Playlista Holyrics", color = Color.White, fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f)
+                )
+                Button(onClick = onClose, colors = ButtonDefaults.buttonColors(backgroundColor = accent)) {
+                    Text("Zamknij", color = Color.White)
+                }
+            }
+            Spacer(Modifier.height(8.dp))
+            if (playlist.isEmpty()) {
+                Text("Brak playlisty — sprawdź ustawienia Holyrics.", color = textColor, modifier = Modifier.padding(8.dp))
+            } else {
+                LazyColumn(Modifier.weight(1f).fillMaxWidth()) {
+                    items(playlist) { number ->
+                        val title = catalog.findByNumber(number)?.title
+                        val isCurrent = number == current
+                        Text(
+                            text = (if (isCurrent) "▶ " else "") + (if (title != null) "$number. $title" else "$number"),
+                            color = if (isCurrent) Color.White else textColor,
+                            fontSize = 18.sp,
+                            fontWeight = if (isCurrent) FontWeight.Bold else FontWeight.Normal,
+                            modifier = Modifier.fillMaxWidth()
+                                .background(if (isCurrent) accent else Color.Transparent)
+                                .clickable { onPick(number) }
+                                .padding(14.dp)
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SettingsOverlay(
+    ip: String,
+    token: String,
+    autoFollow: Boolean,
+    onIp: (String) -> Unit,
+    onToken: (String) -> Unit,
+    onAutoFollow: (Boolean) -> Unit,
+    onClose: () -> Unit,
+) {
+    val tfColors = TextFieldDefaults.outlinedTextFieldColors(
+        textColor = Color.White, cursorColor = accent,
+        focusedBorderColor = accent, unfocusedBorderColor = Color(0xFF555555),
+    )
+    Box(Modifier.fillMaxSize().background(Color(0xCC000000)), contentAlignment = Alignment.Center) {
+        Column(
+            Modifier.fillMaxWidth(0.6f).background(barColor).padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text("Ustawienia Holyrics", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            OutlinedTextField(
+                value = ip, onValueChange = onIp, singleLine = true,
+                label = { Text("Adres IP komputera z Holyrics", color = textColor) },
+                colors = tfColors, modifier = Modifier.fillMaxWidth()
+            )
+            OutlinedTextField(
+                value = token, onValueChange = onToken, singleLine = true,
+                label = { Text("Token API", color = textColor) },
+                colors = tfColors, modifier = Modifier.fillMaxWidth()
+            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text("Automatycznie zmieniaj pieśń razem z Holyrics", color = textColor, modifier = Modifier.weight(1f))
+                Switch(checked = autoFollow, onCheckedChange = onAutoFollow)
+            }
+            Text(
+                "W Holyrics włącz API: GetLyricsPlaylist + GetCurrentPresentation (Narzędzia → API). Ta sama sieć WiFi.",
+                color = Color(0xFF9CDCFE), fontSize = 13.sp
+            )
+            Button(
+                onClick = onClose,
+                colors = ButtonDefaults.buttonColors(backgroundColor = accent),
+                modifier = Modifier.fillMaxWidth()
+            ) { Text("Zamknij", color = Color.White) }
+        }
+    }
+}
+
+@Composable
+private fun StatusBanner(message: String) {
+    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
+        Text(
+            message, color = Color.White, fontSize = 16.sp,
+            modifier = Modifier.padding(24.dp).background(Color(0xEE333333)).padding(horizontal = 20.dp, vertical = 12.dp)
+        )
     }
 }
 
