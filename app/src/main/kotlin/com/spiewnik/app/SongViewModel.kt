@@ -108,6 +108,10 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
     private val _holyricsPlaylist = MutableLiveData<List<Int>>(emptyList())
     val holyricsPlaylist: LiveData<List<Int>> = _holyricsPlaylist
 
+    // Song currently shown on screen in Holyrics (null = nothing/non-song presented)
+    private val _currentHolyricsSong = MutableLiveData<Int?>(null)
+    val currentHolyricsSong: LiveData<Int?> = _currentHolyricsSong
+
     private val _allSongs = MutableLiveData<List<Song>>(emptyList())
     val allSongs: LiveData<List<Song>> = _allSongs
 
@@ -275,6 +279,26 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
                 .onFailure { e ->
                     Log.e(TAG, "Holyrics fetchPlaylist failure", e)
                     _toastEvent.postValue("Holyrics niedostępny")
+                }
+        }
+    }
+
+    /**
+     * Fetches the song currently shown on screen in Holyrics, to highlight it in the popup.
+     * Secondary info — failures are logged but not surfaced as a toast.
+     */
+    fun fetchHolyricsCurrentSong() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val ip = settings.holyricsIp
+            val token = settings.holyricsToken
+            if (ip.isBlank() || token.isBlank()) return@launch
+            holyricsRepository.fetchCurrentSong(ip, token)
+                .onSuccess { number ->
+                    Log.i(TAG, "Holyrics current song: $number")
+                    _currentHolyricsSong.postValue(number)
+                }
+                .onFailure { e ->
+                    Log.e(TAG, "Holyrics fetchCurrentSong failure", e)
                 }
         }
     }

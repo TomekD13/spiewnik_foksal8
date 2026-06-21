@@ -22,17 +22,29 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Generate debug keystore (used to sign the sideload release)
+        run: |
+          mkdir -p ~/.android
+          if [ ! -f ~/.android/debug.keystore ]; then
+            keytool -genkeypair -v \
+              -keystore ~/.android/debug.keystore \
+              -storepass android -keypass android \
+              -alias androiddebugkey \
+              -keyalg RSA -keysize 2048 -validity 10000 \
+              -dname "CN=Android Debug,O=Android,C=US"
+          fi
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build debug APK
-        run: ./gradlew assembleDebug
+      - name: Build release APK (signed, installable by tapping)
+        run: ./gradlew assembleRelease
 
       - name: Upload APK as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: spiewnik-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: spiewnik-release
+          path: app/build/outputs/apk/release/app-release.apk
           retention-days: 30
 
       - name: Create Release
@@ -40,8 +52,8 @@ jobs:
         with:
           tag_name: build-${{ github.run_number }}
           name: "Śpiewnik build #${{ github.run_number }}"
-          files: app/build/outputs/apk/debug/app-debug.apk
+          files: app/build/outputs/apk/release/app-release.apk
           generate_release_notes: false
           body: |
-            Automatyczny build z gałęzi main.
+            Automatyczny build z gałęzi main (release, podpisany kluczem debug — instalowalny przez kliknięcie).
             Commit: ${{ github.sha }}

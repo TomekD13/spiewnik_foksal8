@@ -49,6 +49,49 @@ class HolyricsRepository {
         }
     }
 
+    /**
+     * Fetches the song currently shown on screen in Holyrics (GetCurrentPresentation).
+     * Returns the song number (Int) on success, or null when nothing — or a non-song —
+     * is being presented. The number lives in data.name (e.g. {"data":{"type":"song","name":"1"}}).
+     */
+    fun fetchCurrentSong(ip: String, token: String): Result<Int?> {
+        return try {
+            val url = URL("http://$ip:$PORT/api/GetCurrentPresentation?token=$token")
+            val connection = (url.openConnection() as HttpURLConnection).apply {
+                requestMethod = "POST"
+                connectTimeout = CONNECT_TIMEOUT_MS
+                readTimeout = READ_TIMEOUT_MS
+                setRequestProperty("Content-Type", "application/json")
+                doOutput = true
+                outputStream.write("{}".toByteArray())
+            }
+
+            val responseCode = connection.responseCode
+            if (responseCode != HttpURLConnection.HTTP_OK) {
+                Log.w(TAG, "Holyrics GetCurrentPresentation returned HTTP $responseCode")
+                return Result.failure(Exception("HTTP $responseCode"))
+            }
+
+            val body = connection.inputStream.bufferedReader().use { it.readText() }
+            connection.disconnect()
+
+            val number = parseCurrentSong(body)
+            Log.i(TAG, "Holyrics current song: $number")
+            Result.success(number)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to fetch Holyrics current presentation", e)
+            Result.failure(e)
+        }
+    }
+
+    private fun parseCurrentSong(json: String): Int? {
+        val root = JSONObject(json)
+        if (root.optString("status") != "ok") return null
+        val data = root.optJSONObject("data") ?: return null
+        if (data.optString("type") != "song") return null
+        return data.optString("name").trim().toIntOrNull()
+    }
+
     private fun parsePlaylist(json: String): List<Int> {
         val root = JSONObject(json)
         if (root.optString("status") != "ok") return emptyList()

@@ -16,3 +16,8 @@ app/release/
 # Keystore (never commit)
 *.jks
 *.keystore
+
+# PDF crop artifacts (original preserved in git history; backup is redundant)
+Spiewnik_original.pdf
+*.pdf.tmp
+crop_preview/

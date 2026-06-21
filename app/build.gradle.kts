@@ -15,9 +15,21 @@ android {
         versionName = "1.0"
     }
 
+    signingConfigs {
+        // Sign release with the local debug keystore so the APK installs by tapping
+        // on a real device (no Play Store / no testOnly flag). Fine for sideloading.
+        create("sideload") {
+            storeFile = file("${System.getProperty("user.home")}/.android/debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("sideload")
         }
     }
 

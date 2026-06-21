@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import android.widget.ScrollView
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import android.view.ScaleGestureDetector
@@ -51,6 +52,10 @@ class MainActivity : AppCompatActivity() {
 
     private var inputRowHeight = 0
 
+    // ── Bars (top bar + input row) visibility, toggled by tapping the page ──────
+    private var topBarHeight = 0
+    private var barsVisible = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -70,6 +75,7 @@ class MainActivity : AppCompatActivity() {
         observeLoadState()
         observeToasts()
         observeHolyricsPlaylist()
+        observeHolyricsCurrentSong()
     }
 
     // ── Input & search ────────────────────────────────────────────────────────
@@ -112,6 +118,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 showHolyricsPopup()
                 viewModel.fetchHolyricsPlaylist()
+                viewModel.fetchHolyricsCurrentSong()
             }
         }
     }
@@ -160,11 +167,57 @@ class MainActivity : AppCompatActivity() {
         binding.inputRow.post {
             inputRowHeight = binding.inputRow.measuredHeight
         }
+        binding.topBar.post {
+            topBarHeight = binding.topBar.measuredHeight
+        }
         binding.btnSelect.setOnClickListener {
             if (binding.inputRow.visibility == View.VISIBLE) hideInputRow()
             else showInputRow()
         }
         // btnHolyrics: action not wired yet
+    }
+
+    /**
+     * Toggles both the top info bar and the input row so notes can use the full
+     * screen. Triggered by a single tap on the page (the side arrows are separate
+     * views, so tapping them navigates instead of toggling).
+     */
+    private fun toggleBars() {
+        if (topBarHeight == 0) topBarHeight = binding.topBar.measuredHeight
+        if (barsVisible) {
+            animateBarHeight(binding.topBar, binding.topBar.height, 0, endVisible = false)
+            if (binding.inputRow.visibility == View.VISIBLE) {
+                animateBarHeight(binding.inputRow, binding.inputRow.height, 0, endVisible = false)
+            }
+            barsVisible = false
+        } else {
+            animateBarHeight(binding.topBar, 0, topBarHeight, endVisible = true)
+            animateBarHeight(binding.inputRow, 0, inputRowHeight, endVisible = true)
+            binding.btnSelect.text = getString(R.string.btn_hide_bar)
+            barsVisible = true
+        }
+    }
+
+    private fun animateBarHeight(view: View, from: Int, to: Int, endVisible: Boolean) {
+        if (to > 0) view.visibility = View.VISIBLE
+        ValueAnimator.ofInt(from, to).apply {
+            duration = 250
+            addUpdateListener {
+                view.layoutParams.height = it.animatedValue as Int
+                view.requestLayout()
+            }
+            addListener(object : android.animation.AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: android.animation.Animator) {
+                    if (endVisible) {
+                        view.layoutParams.height = to
+                        view.requestLayout()
+                    } else {
+                        view.visibility = View.GONE
+                    }
+                }
+            })
+            start()
+        }
     }
 
     private fun showInputRow() {
@@ -236,6 +289,12 @@ class MainActivity : AppCompatActivity() {
                     binding.pdfContainer.translationX -= distanceX
                     binding.pdfContainer.translationY -= distanceY
                     clampTranslation()
+                    return true
+                }
+
+                // Tap on the page (not the side arrows) toggles both bars for fullscreen notes
+                override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+                    toggleBars()
                     return true
                 }
             }
@@ -345,16 +404,35 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun observeHolyricsCurrentSong() {
+        viewModel.currentHolyricsSong.observe(this) {
+            if (holyricsPopup?.isShowing == true) {
+                viewModel.holyricsPlaylist.value
+                    ?.takeIf { it.isNotEmpty() }
+                    ?.let { numbers -> populateHolyricsButtons(numbers) }
+            }
+        }
+    }
+
     private fun populateHolyricsButtons(numbers: List<Int>) {
         val container = holyricsPopupButtons ?: return
         container.removeAllViews()
         val allSongs = viewModel.allSongs.value ?: emptyList()
+        val current = viewModel.currentHolyricsSong.value
+        var highlighted: View? = null
         numbers.forEach { number ->
             val song = allSongs.find { it.number == number }
             val label = if (song != null) "$number. ${song.title}" else "$number"
+            val isCurrent = number == current
             val btn = Button(this).apply {
-                text = label
+                text = if (isCurrent) "▶ $label" else label
                 textSize = 14f
+                if (isCurrent) {
+                    setTypeface(typeface, android.graphics.Typeface.BOLD)
+                    backgroundTintList = android.content.res.ColorStateList.valueOf(
+                        ContextCompat.getColor(this@MainActivity, R.color.accent)
+                    )
+                }
                 setOnClickListener {
                     viewModel.openSong(number)
                     holyricsPopup?.dismiss()
@@ -364,6 +442,13 @@ class MainActivity : AppCompatActivity() {
                 btn,
                 ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             )
+            if (isCurrent) highlighted = btn
+        }
+        // Auto-scroll so the currently-played song is visible
+        highlighted?.let { view ->
+            (container.parent as? ScrollView)?.post {
+                (container.parent as? ScrollView)?.smoothScrollTo(0, view.top)
+            }
         }
     }
 

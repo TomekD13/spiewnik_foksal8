@@ -199,6 +199,29 @@ Zapamiętaj oryginalną wysokość przed pierwszą animacją (np. w `view.post {
 
 ---
 
+## Przycinanie marginesów PDF — CropBox per strona (offline, bezstratnie)
+
+**Cel:** nuty mają zajmować jak najwięcej ekranu. Oryginalny `Spiewnik.pdf` ma szerokie marginesy (boczne ~10%, stopka z nazwą podrozdziału + nr strony).
+
+**Rozwiązanie zastosowane:** skrypt `crop_pdf.py` (PyMuPDF) ustawia każdej stronie nutowej własny `CropBox` — bez re-rasteryzacji, więc bezstratnie. `PdfRenderer` w aplikacji automatycznie renderuje już tylko przycięty obszar, **bez żadnych zmian w kodzie aplikacji**.
+
+Reguła (per strona, na podstawie `piesni.json`):
+- tylko strony nutowe (suma `strony_pdf`); 32 strony nienutowe (tytułowe/teksty) nietknięte
+- **góra:** bez cropu (żeby nie uciąć klucza wiolinowego/górnych linii)
+- **boki:** detekcja realnego atramentu (piksele) + padding 8 pt, podłoga szerokości 376 pt
+- **dół:**
+  - strona należąca do pieśni 2-stronicowej → usuń **tylko stopkę** (biel zostaje → obie strony rozkładówki równej wysokości)
+  - strona tylko 1-stronicowych pieśni → przytnij **ciasno do nut** (max wielkość)
+
+**Detekcja stopki:** stopka jest oddzielona od nut białą przerwą ≥ 6 pt (zmierzone: min przerwa 7.2 pt na 660 stronach), więc tnie się w tej przerwie — ogonki nut schodzące pod pięciolinię są bezpieczne.
+
+**Pułapki:**
+- `doc.save()` do tego samego pliku co źródłowy rzuca `save to original must be incremental` — zapisuj do pliku tymczasowego i podmień (`os.replace`).
+- Oryginał: kopia w `Spiewnik_original.pdf` (gitignore; oryginał i tak jest w historii git).
+- **Cache staleness:** `PdfPageCache.open()` kopiuje PDF do `cacheDir` tylko `if (!cacheFile.exists())`. Po podmianie assetu przy **reinstalacji** (bez odinstalowania) zostałby stary PDF w cache. Świeża instalacja / odinstalowanie problemu nie ma. Docelowo: wersjonować nazwę pliku cache.
+
+---
+
 ## Duplikaty wpisów w libs.versions.toml
 
 **Problem:** `Invalid TOML catalog definition — coroutines previously defined`.
