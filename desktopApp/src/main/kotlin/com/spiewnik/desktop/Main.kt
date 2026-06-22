@@ -37,6 +37,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
@@ -410,13 +411,13 @@ private fun MiniKeyboard(
             ) {
                 Button(
                     onClick = { shift = !shift },
-                    modifier = Modifier.size(width = 64.dp, height = 48.dp),
+                    modifier = Modifier.size(width = 64.dp, height = 48.dp).focusProperties { canFocus = false },
                     contentPadding = PaddingValues(0.dp),
                     colors = ButtonDefaults.buttonColors(backgroundColor = if (shift) accent else Color(0xFF3A3D41))
                 ) { Text("⇧ Shift", color = Color.White, fontSize = 13.sp) }
                 Button(
                     onClick = onSpace,
-                    modifier = Modifier.height(48.dp).width(160.dp),
+                    modifier = Modifier.height(48.dp).width(160.dp).focusProperties { canFocus = false },
                     contentPadding = PaddingValues(0.dp),
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF3A3D41))
                 ) { Text("spacja", color = Color.White) }
@@ -430,7 +431,9 @@ private fun MiniKeyboard(
 private fun MiniKey(label: String, onClick: () -> Unit) {
     Button(
         onClick = onClick,
-        modifier = Modifier.size(48.dp),
+        // Nie odbieraj fokusu polu edycyjnemu — dzięki temu klawiatura ekranowa nie znika
+        // po naciśnięciu klawisza (pole pozostaje aktywne).
+        modifier = Modifier.size(48.dp).focusProperties { canFocus = false },
         contentPadding = PaddingValues(0.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF3A3D41))
     ) {
@@ -604,6 +607,10 @@ private fun SettingsOverlay(
         focusedBorderColor = accent, unfocusedBorderColor = Color(0xFF555555),
     )
     var active by remember { mutableStateOf(0) } // 0 = IP, 1 = token (target of the on-screen keyboard)
+    // Klawiatura ekranowa pojawia się dopiero po kliknięciu w pole IP lub Token.
+    var ipFocused by remember { mutableStateOf(false) }
+    var tokenFocused by remember { mutableStateOf(false) }
+    val showKeyboard = ipFocused || tokenFocused
     Box(Modifier.fillMaxSize().background(Color(0xCC000000)), contentAlignment = Alignment.Center) {
         Column(
             Modifier.fillMaxWidth(0.7f).background(barColor).padding(20.dp),
@@ -614,29 +621,43 @@ private fun SettingsOverlay(
                 value = ip, onValueChange = onIp, singleLine = true,
                 label = { Text("Adres IP komputera z Holyrics", color = textColor) },
                 colors = tfColors,
-                modifier = Modifier.fillMaxWidth().onFocusChanged { if (it.isFocused) active = 0 }
+                modifier = Modifier.fillMaxWidth().onFocusChanged {
+                    ipFocused = it.isFocused
+                    if (it.isFocused) active = 0
+                }
             )
             OutlinedTextField(
                 value = token, onValueChange = onToken, singleLine = true,
                 label = { Text("Token API", color = textColor) },
                 colors = tfColors,
-                modifier = Modifier.fillMaxWidth().onFocusChanged { if (it.isFocused) active = 1 }
+                modifier = Modifier.fillMaxWidth().onFocusChanged {
+                    tokenFocused = it.isFocused
+                    if (it.isFocused) active = 1
+                }
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text("Automatycznie zmieniaj pieśń razem z Holyrics", color = textColor, modifier = Modifier.weight(1f))
                 Switch(checked = autoFollow, onCheckedChange = onAutoFollow)
             }
-            Text(
-                "Klawiatura niżej wpisuje do zaznaczonego pola (IP lub Token). W Holyrics włącz API: " +
-                    "GetLyricsPlaylist + GetCurrentPresentation (Narzędzia → API). Ta sama sieć WiFi.",
-                color = Color(0xFF9CDCFE), fontSize = 13.sp
-            )
-            MiniKeyboard(
-                onKey = { c -> if (active == 0) onIp(ip + c) else onToken(token + c) },
-                onBackspace = { if (active == 0) onIp(ip.dropLast(1)) else onToken(token.dropLast(1)) },
-                onSpace = { if (active == 0) onIp("$ip ") else onToken("$token ") },
-                onClear = { if (active == 0) onIp("") else onToken("") },
-            )
+            if (showKeyboard) {
+                Text(
+                    "Klawiatura wpisuje do zaznaczonego pola (IP lub Token). W Holyrics włącz API: " +
+                        "GetLyricsPlaylist + GetCurrentPresentation (Narzędzia → API). Ta sama sieć WiFi.",
+                    color = Color(0xFF9CDCFE), fontSize = 13.sp
+                )
+                MiniKeyboard(
+                    onKey = { c -> if (active == 0) onIp(ip + c) else onToken(token + c) },
+                    onBackspace = { if (active == 0) onIp(ip.dropLast(1)) else onToken(token.dropLast(1)) },
+                    onSpace = { if (active == 0) onIp("$ip ") else onToken("$token ") },
+                    onClear = { if (active == 0) onIp("") else onToken("") },
+                )
+            } else {
+                Text(
+                    "Kliknij w pole IP lub Token, aby wpisać dane — pojawi się klawiatura ekranowa. " +
+                        "W Holyrics włącz API: GetLyricsPlaylist + GetCurrentPresentation (Narzędzia → API). Ta sama sieć WiFi.",
+                    color = Color(0xFF9CDCFE), fontSize = 13.sp
+                )
+            }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Button(
                     onClick = onOpenHelp,

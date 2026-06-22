@@ -198,7 +198,10 @@ jako baner. Wszystkie wyjątki logowane do Logcat, bez crasha.
 
 **Rendering / cache** ([`PdfPageCache.kt`](androidApp/src/main/kotlin/com/spiewnik/app/pdf/PdfPageCache.kt)):
 renderowane tylko widoczne strony, LRU cache bitmap (1/6 RAM), klucz `"pageIndex:WxH"`.
-PDF kopiowany do `cacheDir` przed otwarciem (`PdfRenderer` wymaga FD od offsetu 0).
+Bitmapy w formacie **`RGB_565`** (połowa pamięci vs `ARGB_8888`, dzięki czemu cache mieści ~2×
+więcej stron): nuty są czarne na białym tle, a render PDF nie używa przezroczystości — kanał
+alfa jest zbędny, więc jakość obrazu nut się nie pogarsza. Rozdzielczość renderowania (2×)
+bez zmian. PDF kopiowany do `cacheDir` przed otwarciem (`PdfRenderer` wymaga FD od offsetu 0).
 
 ---
 
