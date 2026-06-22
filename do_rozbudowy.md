@@ -4,6 +4,8 @@ Lista pomysłów i usprawnień do wdrożenia w przyszłości — w formie „co 
 
 > Zrealizowane (tryby wg orientacji, usunięcie wyboru trybu z ustawień, skan QR Holyrics)
 > zostały opisane w `README.md` i usunięte z tej listy.
+## 0. desktopApp 
+w wersji pertraktacje przyciski do wprowadzania nr piesni nie mieszczą sie na ekranie. są za duże.
 
 ## 1. Optymalizacja pamięci pod tablet TCL NXTPAPER 14 (2400×1600, 14,3", 3:2)
 
