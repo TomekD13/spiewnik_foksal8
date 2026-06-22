@@ -80,6 +80,7 @@ dependencies {
     implementation(libs.core.splashscreen)
     implementation(libs.gson)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.zxing.android.embedded)
 
     testImplementation(libs.junit)
     testImplementation(libs.mockk)

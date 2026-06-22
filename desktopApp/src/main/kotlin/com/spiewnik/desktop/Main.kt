@@ -96,7 +96,8 @@ class SongbookController(
     private val catalog: SongCatalog,
     private val totalPdfPages: Int,
 ) {
-    var state by mutableStateOf(UiState(totalPdfPages = totalPdfPages))
+    // Okno jest poziome — wspólna reguła daje tryb Pieśń (spójnie z androidem w landscape).
+    var state by mutableStateOf(UiState(navMode = NavMode.defaultFor(isLandscape = true), totalPdfPages = totalPdfPages))
         private set
 
     /** Returns false when the song doesn't exist or has no valid pages. */

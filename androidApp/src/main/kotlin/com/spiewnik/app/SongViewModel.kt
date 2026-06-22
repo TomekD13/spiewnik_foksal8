@@ -1,6 +1,7 @@
 package com.spiewnik.app
 
 import android.app.Application
+import android.content.res.Configuration
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -81,14 +82,12 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
             totalPdfPages = pdfCache.pageCount
             _loadState.postValue(LoadState.Ready)
 
-            val savedNavMode = try {
-                NavMode.valueOf(settings.navMode)
-            } catch (e: Exception) {
-                NavMode.SPREAD
-            }
+            // Tryb startowy zależy od orientacji ekranu: poziom → Pieśń, pion → Strona.
+            // Użytkownik może go zmienić przyciskiem trybu; obrót przywraca domyślny tryb.
+            val initialMode = defaultModeForCurrentOrientation()
 
-            when (savedNavMode) {
-                NavMode.SONG -> openSong(settings.lastSongNumber, savedNavMode, settings.lastPageIndex)
+            when (initialMode) {
+                NavMode.SONG -> openSong(settings.lastSongNumber, initialMode, settings.lastPageIndex)
                 else -> {
                     val page = settings.lastPdfPage.coerceIn(1, totalPdfPages)
                     val song = songs.find { page in it.pages }
@@ -96,7 +95,7 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
                     val hasNext = song?.let { repository.nextSong(it.number) != null } ?: false
                     _state.postValue(UiState(
                         song = song,
-                        navMode = savedNavMode,
+                        navMode = initialMode,
                         currentPdfPage = page,
                         totalPdfPages = totalPdfPages,
                         hasPrevSong = hasPrev,
@@ -188,6 +187,39 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
     fun cycleNavMode() {
         val current = _state.value?.navMode ?: NavMode.SPREAD
         setNavMode(current.next())
+    }
+
+    private fun defaultModeForCurrentOrientation(): NavMode {
+        val isLandscape = getApplication<Application>().resources.configuration.orientation ==
+            Configuration.ORIENTATION_LANDSCAPE
+        return NavMode.defaultFor(isLandscape)
+    }
+
+    /**
+     * Wywoływane po obrocie ekranu — ustawia domyślny tryb dla nowej orientacji.
+     * Ręczny wybór trybu obowiązuje tylko do następnego obrotu.
+     * Wchodząc w tryb Pieśń otwieramy pieśń zawierającą aktualnie oglądaną stronę,
+     * żeby przejście Strona → Pieśń nie zgubiło kontekstu.
+     */
+    fun applyOrientationDefault(isLandscape: Boolean) {
+        val s = _state.value ?: return
+        val mode = NavMode.defaultFor(isLandscape)
+        if (s.navMode == mode) return
+        if (mode == NavMode.SONG) {
+            // Otwórz pieśń odpowiadającą bieżącej stronie (gdy w trybie Strona przewinięto
+            // na inną pieśń), z fallbackiem do aktualnie wczytanej. openSong sam używa postValue.
+            viewModelScope.launch(Dispatchers.IO) {
+                val number = repository.findByPage(s.currentPdfPage)?.number ?: s.song?.number
+                if (number != null) {
+                    openSong(number, NavMode.SONG, 0)
+                } else {
+                    _state.postValue(s.copy(navMode = NavMode.SONG, totalPdfPages = totalPdfPages))
+                }
+            }
+        } else {
+            // PAGE: zachowujemy bieżącą stronę. Wywoływane z wątku głównego (onConfigurationChanged).
+            setNavMode(mode)
+        }
     }
 
     fun resetPosition() {

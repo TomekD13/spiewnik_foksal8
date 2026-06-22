@@ -8,11 +8,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanOptions
 import com.spiewnik.app.BuildConfig
-import com.spiewnik.app.NavMode
 import com.spiewnik.app.R
 import com.spiewnik.app.SongViewModel
 import com.spiewnik.app.databinding.FragmentSettingsBinding
+import com.spiewnik.app.holyrics.HolyricsQrParser
 
 class SettingsFragment : DialogFragment() {
 
@@ -20,6 +22,11 @@ class SettingsFragment : DialogFragment() {
     private val binding get() = _binding!!
 
     private val viewModel: SongViewModel by activityViewModels()
+
+    // Skaner QR (ZXing) — sam prosi o uprawnienie do aparatu przy uruchomieniu.
+    private val qrScanLauncher = registerForActivityResult(ScanContract()) { result ->
+        result.contents?.let { handleHolyricsQr(it) }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,23 +40,6 @@ class SettingsFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Set current nav mode in radio group
-        when (viewModel.state.value?.navMode ?: NavMode.SPREAD) {
-            NavMode.SPREAD -> binding.rbSpread.isChecked = true
-            NavMode.PAGE   -> binding.rbPage.isChecked = true
-            NavMode.SONG   -> binding.rbSong.isChecked = true
-        }
-
-        binding.rgNavMode.setOnCheckedChangeListener { _, checkedId ->
-            val mode = when (checkedId) {
-                R.id.rbSpread -> NavMode.SPREAD
-                R.id.rbPage   -> NavMode.PAGE
-                R.id.rbSong   -> NavMode.SONG
-                else          -> NavMode.SPREAD
-            }
-            viewModel.setNavMode(mode)
-        }
-
         binding.btnResetPosition.setOnClickListener {
             viewModel.resetPosition()
             dismiss()
@@ -58,6 +48,16 @@ class SettingsFragment : DialogFragment() {
         // Holyrics connection settings
         binding.etHolyricsIp.setText(viewModel.settings.holyricsIp)
         binding.etHolyricsToken.setText(viewModel.settings.holyricsToken)
+        binding.btnScanHolyricsQr.setOnClickListener {
+            qrScanLauncher.launch(
+                ScanOptions().apply {
+                    setDesiredBarcodeFormats(ScanOptions.QR_CODE)
+                    setPrompt(getString(R.string.holyrics_scan_qr))
+                    setBeepEnabled(false)
+                    setOrientationLocked(false)
+                }
+            )
+        }
         binding.btnSaveHolyrics.setOnClickListener {
             viewModel.settings.holyricsIp = binding.etHolyricsIp.text.toString().trim()
             viewModel.settings.holyricsToken = binding.etHolyricsToken.text.toString().trim()
@@ -82,6 +82,22 @@ class SettingsFragment : DialogFragment() {
         binding.tvAppInfo.text = "${getString(R.string.settings_version)} ${BuildConfig.VERSION_NAME}"
 
         binding.btnClose.setOnClickListener { dismiss() }
+    }
+
+    /**
+     * Wypełnia pola IP + token z zeskanowanego kodu QR Holyrics (parsowanie w :core).
+     * Nie zapisuje — użytkownik sprawdza i klika „Zapisz".
+     */
+    private fun handleHolyricsQr(contents: String) {
+        val binding = _binding ?: return
+        val config = HolyricsQrParser.parse(contents)
+        if (config == null) {
+            viewModel.showToast(getString(R.string.holyrics_qr_invalid))
+            return
+        }
+        binding.etHolyricsIp.setText(config.ip)
+        binding.etHolyricsToken.setText(config.token)
+        viewModel.showToast(getString(R.string.holyrics_qr_loaded))
     }
 
     override fun onDestroyView() {

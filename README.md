@@ -2,7 +2,8 @@
 
 Aplikacja na Androida (tablet - androidApp) oraz na Windows (desktopApp) do błyskawicznego otwierania nut ze śpiewnika w PDF
 podczas gry. Organista wpisuje numer pieśni (lub szuka po tytule), a aplikacja
-wyświetla właściwe strony — domyślnie jako rozkładówkę (2 strony obok siebie).
+wyświetla właściwe strony. Domyślny tryb widoku zależy od orientacji ekranu
+(w poziomie „Pieśń", w pionie „Strona") i można go zmienić jednym przyciskiem.
 
 Działa w pełni **offline**.
 
@@ -105,7 +106,7 @@ Dwa niezależne mechanizmy zwiększające obszar nut:
 
 ## 5. Tryby nawigacji
 
-Przełączane przyciskiem w input row lub w ustawieniach; zapamiętywane w SharedPreferences (`nav_mode`).
+Przełączane **przyciskiem trybu w input row** (wybór trybu nie jest już w ustawieniach).
 
 | Tryb | Etykieta | Krok ◀ ▶ |
 |---|---|---|
@@ -115,7 +116,16 @@ Przełączane przyciskiem w input row lub w ustawieniach; zapamiętywane w Share
 
 - Po ostatniej stronie pieśni (SPREAD/PAGE) → przejście do pierwszej strony następnej pieśni.
 - Granice: na pierwszej pieśni ◀ wyszarzony; na ostatniej ▶ wyszarzony.
-- **Portrait:** zawsze 1 strona (nigdy rozkładówka), skalowana na pełny obszar; w SPREAD ▶ przechodzi do następnej pieśni.
+
+### 5.1 Tryb domyślny zależny od orientacji
+Reguła jest czysta i współdzielona z desktopem ([`NavMode.defaultFor`](core/src/main/kotlin/com/spiewnik/app/NavMode.kt) w `:core`):
+
+- **pion (portrait) → `PAGE`** (pojedyncza strona — 2 strony obok siebie byłyby za małe),
+- **poziom (landscape) → `SONG`**.
+
+Obrót ekranu przywraca tryb domyślny dla nowej orientacji (przy wejściu w `SONG` otwiera
+pieśń odpowiadającą bieżącej stronie). Przyciskiem trybu można ręcznie wybrać dowolny tryb
+— wybór obowiązuje do następnego obrotu. Desktop (okno poziome) startuje w trybie `SONG`.
 
 ---
 
@@ -148,6 +158,12 @@ Parser: [`HolyricsRepository.kt`](androidApp/src/main/kotlin/com/spiewnik/app/ho
 
 ### 6.3 Konfiguracja
 - **IP i token** wpisywane w ustawieniach aplikacji (⚙ → sekcja Holyrics), zapisywane w SharedPreferences.
+- **Skan QR (najszybciej):** przycisk **„Skanuj kod QR"** w sekcji Holyrics uruchamia aparat
+  (ZXing) i z kodu QR z Holyrics wypełnia pola **IP** i **token** — użytkownik sprawdza i klika
+  „Zapisz". Z QR brane są tylko `ips[0]` i `token`; **port i `enabled` są ignorowane**
+  (parsowanie: [`HolyricsQrParser`](core/src/main/kotlin/com/spiewnik/app/holyrics/HolyricsQrParser.kt) w `:core`).
+  Format QR: `{"enabled":true,"ips":["192.168.x.x"],"port":N,"token":"..."}`. Wymaga uprawnienia
+  `CAMERA`; ręczne wpisanie zawsze pozostaje dostępne (feature tylko na Androidzie).
 - **Token** w Holyrics: `Narzędzia/Tools → API` (pole ID odbiornika API).
 - **Uprawnienia API** w Holyrics: włącz `GetLyricsPlaylist` **oraz** `GetCurrentPresentation`.
 - Aplikacja ma uprawnienie `INTERNET` i `network_security_config` zezwalający na cleartext HTTP (sieć lokalna).
@@ -166,14 +182,16 @@ Błąd pobrania aktualnej pieśni jest tylko logowany (info drugorzędne, bez To
 
 ## 7. Ustawienia, pamięć stanu, błędy
 
-**Ustawienia (⚙):** tryb nawigacji (Rozkładówka/Strona/Pieśń), reset ostatniej pozycji
-(wraca do pieśni 1, nie rusza trybu), IP/token Holyrics, przełącznik auto-follow Holyrics,
+**Ustawienia (⚙):** reset ostatniej pozycji (wraca do pieśni 1), IP/token Holyrics
+(z opcją **skanowania kodu QR**), przełącznik auto-follow Holyrics,
 **Instrukcja obsługi** (dialog z opisem nawigacji i konfiguracji Holyrics), informacje o aplikacji.
-Orientacją zarządza system — brak opcji w aplikacji.
+Wyboru trybu nawigacji **nie ma** w ustawieniach — służy do tego przycisk trybu, a tryb domyślny
+wynika z orientacji (sekcja 5.1). Orientacją zarządza system — brak opcji w aplikacji.
 
 **SharedPreferences** ([`AppSettings.kt`](androidApp/src/main/kotlin/com/spiewnik/app/settings/AppSettings.kt)):
-`last_song_number` (1), `last_page_index` (0), `last_pdf_page` (1), `nav_mode` (SPREAD),
-`holyrics_ip` (""), `holyrics_token` (""). Przy starcie powrót do ostatniej pieśni.
+`last_song_number` (1), `last_page_index` (0), `last_pdf_page` (1),
+`holyrics_ip` (""), `holyrics_token` (""). Tryb startowy wynika z orientacji ekranu
+(nie jest odtwarzany z preferencji). Przy starcie powrót do ostatniej pieśni/strony.
 
 **Błędy:** komunikaty przejściowe jako Toast; błędy krytyczne (brak/niepoprawny PDF lub JSON)
 jako baner. Wszystkie wyjątki logowane do Logcat, bez crasha.
@@ -221,7 +239,7 @@ com.spiewnik.app/
 ├── settings/
 │   └── AppSettings.kt       // wrapper SharedPreferences
 ├── ui/settings/
-│   └── SettingsFragment.kt  // dialog ustawień (tryb, reset, Holyrics IP/token)
+│   └── SettingsFragment.kt  // dialog ustawień (reset, Holyrics IP/token, skan QR)
 └── utils/
     └── PageConverter.kt     // konwersja stron JSON(1-based) ↔ PDF(0-based)
 ```
@@ -275,11 +293,17 @@ adb -s localhost:5555 install -t app-debug.apk   # -t bo debug bywa testOnly
 
 ## 11. Testy
 
-`JUnit 4` + `Mockk` + `kotlinx-coroutines-test` (`src/test`):
+`JUnit 4` + `Mockk` + `kotlinx-coroutines-test`. Większość logiki jest w `:core`, więc
+testy pisane są raz i obowiązują obie platformy:
 - `PageConverter` — konwersja 1-based ↔ 0-based.
-- `SongRepository` — parsowanie `piesni.json`, wyszukiwanie po numerze i tytule (case-insensitive, polskie znaki).
-- Logika nawigacji — kroki i granice dla SPREAD/PAGE/SONG, zachowanie portrait.
+- `SongRepository` / `SongCatalog` — parsowanie `piesni.json`, wyszukiwanie po numerze i tytule (case-insensitive, polskie znaki).
+- Logika nawigacji — kroki i granice dla SPREAD/PAGE/SONG.
+- `NavMode.defaultFor` — tryb domyślny wg orientacji (poziom→Pieśń, pion→Strona).
+- `HolyricsParser` / `HolyricsQrParser` — parsowanie odpowiedzi API oraz kodu QR (IP+token, port ignorowany, odporność na błędny JSON).
+- `AutoFollow`, `LruCache` — decyzja auto-podążania, polityka eviction.
 
 ```bash
-./gradlew testDebugUnitTest
+./gradlew test                      # wszystkie moduły (CI odpala to przy każdym pushu)
+./gradlew :core:test                # sama logika wspólna
+./gradlew :androidApp:testDebugUnitTest
 ```

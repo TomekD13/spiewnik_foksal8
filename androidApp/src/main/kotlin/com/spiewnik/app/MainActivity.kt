@@ -82,6 +82,16 @@ class MainActivity : AppCompatActivity() {
         observeHolyricsCurrentSong()
     }
 
+    override fun onConfigurationChanged(newConfig: android.content.res.Configuration) {
+        super.onConfigurationChanged(newConfig)
+        // Obrót ekranu przywraca domyślny tryb dla nowej orientacji
+        // (poziom → Pieśń, pion → Strona). Re-render po przeliczeniu layoutu.
+        val isLandscape =
+            newConfig.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
+        viewModel.applyOrientationDefault(isLandscape)
+        binding.pdfContainer.post { viewModel.state.value?.let { renderPages(it) } }
+    }
+
     override fun onResume() {
         super.onResume()
         // Poll Holyrics only while in the foreground (no-op if the setting is off)

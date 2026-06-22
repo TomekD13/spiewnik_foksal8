@@ -14,4 +14,13 @@ enum class NavMode {
         PAGE   -> "Strona"
         SONG   -> "Pieśń"
     }
+
+    companion object {
+        /**
+         * Domyślny tryb dla orientacji ekranu: poziom → Pieśń, pion → Strona.
+         * Czysta reguła współdzielona przez obie platformy (android: orientacja tabletu,
+         * desktop: okno traktowane jak poziome).
+         */
+        fun defaultFor(isLandscape: Boolean): NavMode = if (isLandscape) SONG else PAGE
+    }
 }
