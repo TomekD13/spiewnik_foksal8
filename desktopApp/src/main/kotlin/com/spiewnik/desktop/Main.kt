@@ -491,6 +491,8 @@ private fun MiniKeyboard(
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF3A3D41))
                 ) { Text("spacja", color = Color.White) }
                 MiniKey(".") { onKey('.') }
+                // Drugi backspace — bliżej liter (pierwszy jest przy klawiaturze numerycznej)
+                MiniKey("⌫") { onBackspace() }
             }
         }
     }
