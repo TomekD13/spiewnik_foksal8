@@ -44,7 +44,7 @@ spiewnik/
   ekranowy, spis treści (filtr odporny na polskie znaki + ekranowa klawiatura QWERTY z Shift),
   pełny ekran (tap chowa paski), Holyrics (playlista + podświetlanie + auto-follow),
   ustawienia (`DesktopSettings` → `~/.spiewnik/settings.json`), zapamiętywanie ostatniej pieśni,
-  instrukcja obsługi.
+  instrukcja obsługi, numer wersji w ustawieniach (`BuildInfo.VERSION`, generowany z `-PbuildNumber`).
 - Sieć Holyrics: `HttpUrlTransport` (implementacja `HolyricsTransport` z core).
 - Assety: `../shared-assets` jako `resources.srcDir`; ikona okna `logo.png`.
 - Pakowanie: `nativeDistributions` z ikoną `icons/spiewnik.ico`, stałym `upgradeUuid`

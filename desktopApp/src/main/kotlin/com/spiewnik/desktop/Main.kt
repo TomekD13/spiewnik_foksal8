@@ -646,6 +646,11 @@ private fun SettingsOverlay(
                     modifier = Modifier.weight(1f)
                 ) { Text("Zamknij", color = Color.White) }
             }
+            Text(
+                "Wersja ${BuildInfo.VERSION}",
+                color = Color(0xFF808080), fontSize = 12.sp,
+                modifier = Modifier.align(Alignment.End)
+            )
         }
     }
 }

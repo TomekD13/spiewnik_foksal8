@@ -10,7 +10,35 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+// Wersja z numeru buildu CI (-PbuildNumber / env BUILD_NUMBER); lokalnie "1.0.0-dev"
+// (spójnie z androidowym versionName).
+val desktopBuildNumber = (project.findProperty("buildNumber") as String?)?.toIntOrNull()
+    ?: System.getenv("BUILD_NUMBER")?.toIntOrNull()
+    ?: 0
+val desktopVersionName = if (desktopBuildNumber > 0) "1.0.$desktopBuildNumber" else "1.0.0-dev"
+
+// Generuje BuildInfo.kt z wersją — odpowiednik androidowego BuildConfig.VERSION_NAME,
+// żeby pokazać wersję w ustawieniach aplikacji w runtime.
+val generatedBuildInfoDir = layout.buildDirectory.dir("generated/buildinfo/kotlin")
+val generateBuildInfo by tasks.registering {
+    val outDir = generatedBuildInfoDir
+    val versionName = desktopVersionName
+    inputs.property("versionName", versionName)
+    outputs.dir(outDir)
+    doLast {
+        val pkg = outDir.get().dir("com/spiewnik/desktop").asFile
+        pkg.mkdirs()
+        pkg.resolve("BuildInfo.kt").writeText(
+            "package com.spiewnik.desktop\n\n" +
+                "internal object BuildInfo {\n" +
+                "    const val VERSION = \"$versionName\"\n" +
+                "}\n"
+        )
+    }
+}
+
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    dependsOn(generateBuildInfo)
     kotlinOptions { jvmTarget = "17" }
 }
 
@@ -29,13 +57,9 @@ dependencies {
 sourceSets {
     main {
         resources.srcDir("../shared-assets")
+        kotlin.srcDir(generatedBuildInfoDir)
     }
 }
-
-// Wersja instalatora z numeru buildu CI (-PbuildNumber); lokalnie 1.0.0.
-val desktopBuildNumber = (project.findProperty("buildNumber") as String?)?.toIntOrNull()
-    ?: System.getenv("BUILD_NUMBER")?.toIntOrNull()
-    ?: 0
 
 compose.desktop {
     application {
