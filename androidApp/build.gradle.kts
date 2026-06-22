@@ -3,6 +3,13 @@ plugins {
     alias(libs.plugins.kotlin.android)
 }
 
+// Stała nazwa archiwum -> APK nazywa się "app-release.apk" niezależnie od nazwy modułu
+// (po przejściu na monorepo moduł to :androidApp; bez tego AGP nazwałby plik
+// "androidApp-release.apk", przez co CI nie znajdował pliku i release był bez APK).
+base {
+    archivesName.set("app")
+}
+
 android {
     namespace = "com.spiewnik.app"
     compileSdk = 34
