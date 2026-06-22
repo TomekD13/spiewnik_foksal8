@@ -2,12 +2,22 @@
 
 Lista pomysłów i usprawnień do wdrożenia w przyszłości — w formie „co chcemy osiągnąć" + „co trzeba zrobić".
 
-> Zrealizowane (tryby wg orientacji, usunięcie wyboru trybu z ustawień, skan QR Holyrics)
-> zostały opisane w `README.md` i usunięte z tej listy.
-## 0. desktopApp 
-w wersji pertraktacje przyciski do wprowadzania nr piesni nie mieszczą sie na ekranie. są za duże.
+> Zrealizowane (tryby wg orientacji, usunięcie wyboru trybu z ustawień, skan QR Holyrics,
+> numer wersji w aplikacji Windows) zostały opisane w dokumentacji i usunięte z tej listy.
 
-## 1. Optymalizacja pamięci pod tablet TCL NXTPAPER 14 (2400×1600, 14,3", 3:2)
+## 1. desktopApp — przyciski numpada za duże (nie mieszczą się na ekranie)
+
+### Co chcemy osiągnąć
+Numpad do wpisywania numeru pieśni w aplikacji Windows ma przyciski za duże — nie mieszczą
+się na ekranie. (Oryginalna notatka: „w wersji pertraktacje przyciski do wprowadzania nr
+pieśni nie mieszczą się na ekranie, są za duże" — do doprecyzowania, o którą sytuację chodzi.)
+
+### Co trzeba zrobić
+Zmniejszyć rozmiar przycisków / odstępy numpada (`NumpadBar`, `KeyButton` w `Main.kt`) lub
+uczynić je skalowalnymi względem szerokości okna, tak aby cały dolny pasek mieścił się też
+przy mniejszym oknie.
+
+## 2. Optymalizacja pamięci pod tablet TCL NXTPAPER 14 (2400×1600, 14,3", 3:2)
 
 ### Co chcemy osiągnąć
 Płynne działanie bez `OutOfMemory` i zacięć na docelowym tablecie. Przy 2400×1600 jedna
