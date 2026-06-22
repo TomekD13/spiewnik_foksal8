@@ -13,6 +13,7 @@ class DesktopSettings {
         var holyricsIp: String = "",
         var holyricsToken: String = "",
         var autoFollow: Boolean = false,
+        var lastSong: Int = 1,
     )
 
     private val file = File(System.getProperty("user.home"), ".spiewnik/settings.json")
@@ -38,4 +39,8 @@ class DesktopSettings {
     var autoFollow: Boolean
         get() = data.autoFollow
         set(value) { data.autoFollow = value; save() }
+
+    var lastSong: Int
+        get() = data.lastSong
+        set(value) { data.lastSong = value; save() }
 }

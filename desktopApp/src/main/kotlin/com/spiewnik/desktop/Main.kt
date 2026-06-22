@@ -3,6 +3,8 @@ package com.spiewnik.desktop
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -35,10 +37,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,7 +51,9 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.spiewnik.app.NavMode
 import com.spiewnik.app.UiState
+import com.spiewnik.app.holyrics.AutoFollow
 import com.spiewnik.app.holyrics.HolyricsClient
+import com.spiewnik.core.LruCache
 import com.spiewnik.core.SongCatalog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -63,7 +69,7 @@ import org.apache.pdfbox.rendering.PDFRenderer
 class Songbook private constructor(val catalog: SongCatalog, doc: PDDocument) {
     val pageCount: Int = doc.numberOfPages
     private val renderer = PDFRenderer(doc)
-    private val cache = HashMap<Int, ImageBitmap>()
+    private val cache = LruCache<Int, ImageBitmap>(MAX_CACHED_PAGES)
 
     /** [pageIndex] is 0-based (jsonPage - 1). */
     fun renderPage(pageIndex: Int): ImageBitmap = cache.getOrPut(pageIndex) {
@@ -72,6 +78,7 @@ class Songbook private constructor(val catalog: SongCatalog, doc: PDDocument) {
 
     companion object {
         private const val RENDER_DPI = 150f
+        private const val MAX_CACHED_PAGES = 16
         fun load(): Songbook {
             val json = readResource("/piesni.json").decodeToString()
             val doc = PDDocument.load(readResource("/Spiewnik.pdf"))
@@ -148,8 +155,8 @@ private val textColor = Color(0xFFD4D4D4)
 @Composable
 fun App() {
     val songbook = remember { Songbook.load() }
-    val ctrl = remember { SongbookController(songbook.catalog, songbook.pageCount).also { it.openSong(1) } }
     val settings = remember { DesktopSettings() }
+    val ctrl = remember { SongbookController(songbook.catalog, songbook.pageCount).also { it.openSong(settings.lastSong) } }
     val client = remember { HolyricsClient(HttpUrlTransport()) }
     val scope = rememberCoroutineScope()
 
@@ -163,6 +170,7 @@ fun App() {
     var autoFollow by remember { mutableStateOf(settings.autoFollow) }
     var showHolyrics by remember { mutableStateOf(false) }
     var showSettings by remember { mutableStateOf(false) }
+    var showHelp by remember { mutableStateOf(false) }
     var playlist by remember { mutableStateOf<List<Int>>(emptyList()) }
     var currentSong by remember { mutableStateOf<Int?>(null) }
     var status by remember { mutableStateOf<String?>(null) }
@@ -193,11 +201,18 @@ fun App() {
         while (isActive) {
             withContext(Dispatchers.IO) { client.fetchCurrentSong(ip, token) }.onSuccess { number ->
                 currentSong = number
-                if (number != null && number != lastSeen && number != ctrl.state.song?.number) ctrl.openSong(number)
+                if (AutoFollow.shouldOpen(number, lastSeen, ctrl.state.song?.number)) {
+                    number?.let { ctrl.openSong(it) }
+                }
                 lastSeen = number
             }
             delay(2000)
         }
+    }
+
+    // Remember the last opened song between runs.
+    LaunchedEffect(ctrl.state.song?.number) {
+        ctrl.state.song?.number?.let { settings.lastSong = it }
     }
 
     LaunchedEffect(status) { if (status != null) { delay(2500); status = null } }
@@ -242,8 +257,10 @@ fun App() {
                 onIp = { ip = it; settings.holyricsIp = it },
                 onToken = { token = it; settings.holyricsToken = it },
                 onAutoFollow = { autoFollow = it; settings.autoFollow = it },
+                onOpenHelp = { showHelp = true },
                 onClose = { showSettings = false },
             )
+            if (showHelp) HelpOverlay(onClose = { showHelp = false })
             status?.let { StatusBanner(it) }
         }
     }
@@ -372,6 +389,7 @@ private fun MiniKeyboard(
         }
 
         // ── Letters (right, fills the rest of the bar) ──
+        var shift by remember { mutableStateOf(false) }
         Column(
             Modifier.weight(1f),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -379,15 +397,30 @@ private fun MiniKeyboard(
         ) {
             listOf("qwertyuiop", "asdfghjkl", "zxcvbnm").forEach { row ->
                 Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                    row.forEach { c -> MiniKey(c.toString()) { onKey(c) } }
+                    row.forEach { c ->
+                        val shown = if (shift) c.uppercaseChar() else c
+                        MiniKey(shown.toString()) { onKey(shown) }
+                    }
                 }
             }
-            Button(
-                onClick = onSpace,
-                modifier = Modifier.height(48.dp).fillMaxWidth(0.6f),
-                contentPadding = PaddingValues(0.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF3A3D41))
-            ) { Text("spacja", color = Color.White) }
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Button(
+                    onClick = { shift = !shift },
+                    modifier = Modifier.size(width = 64.dp, height = 48.dp),
+                    contentPadding = PaddingValues(0.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = if (shift) accent else Color(0xFF3A3D41))
+                ) { Text("⇧ Shift", color = Color.White, fontSize = 13.sp) }
+                Button(
+                    onClick = onSpace,
+                    modifier = Modifier.height(48.dp).width(160.dp),
+                    contentPadding = PaddingValues(0.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF3A3D41))
+                ) { Text("spacja", color = Color.White) }
+                MiniKey(".") { onKey('.') }
+            }
         }
     }
 }
@@ -465,30 +498,32 @@ private fun NumpadBar(
     onNavMode: () -> Unit,
     navModeLabel: String,
 ) {
-    Row(
-        Modifier.fillMaxWidth().background(barColor).padding(8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(6.dp)
-    ) {
-        // Typed-number display
-        Box(
-            Modifier.width(96.dp).size(width = 96.dp, height = 56.dp).background(bgColor),
-            contentAlignment = Alignment.Center
+    Box(Modifier.fillMaxWidth().background(barColor).padding(8.dp)) {
+        // Number field + numpad — centered in the bar
+        Row(
+            Modifier.align(Alignment.Center),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            Text(if (input.isEmpty()) "—" else input, color = textColor, fontSize = 26.sp, fontWeight = FontWeight.Bold)
+            Box(
+                Modifier.size(width = 96.dp, height = 56.dp).background(bgColor),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(if (input.isEmpty()) "—" else input, color = textColor, fontSize = 26.sp, fontWeight = FontWeight.Bold)
+            }
+            (1..9).forEach { d -> KeyButton(d.toString()) { onDigit(d.toString()) } }
+            KeyButton("0") { onDigit("0") }
+            KeyButton("⌫") { onBackspace() }
+            Button(
+                onClick = onGo,
+                modifier = Modifier.height(56.dp),
+                colors = ButtonDefaults.buttonColors(backgroundColor = accent)
+            ) { Text("Idź", color = Color.White, fontSize = 18.sp) }
         }
-        (1..9).forEach { d -> KeyButton(d.toString()) { onDigit(d.toString()) } }
-        KeyButton("0") { onDigit("0") }
-        KeyButton("⌫") { onBackspace() }
-        Button(
-            onClick = onGo,
-            modifier = Modifier.height(56.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = accent)
-        ) { Text("Idź", color = Color.White, fontSize = 18.sp) }
-        Spacer(Modifier.weight(1f))
+        // Nav-mode stays pinned to the right edge
         Button(
             onClick = onNavMode,
-            modifier = Modifier.height(56.dp),
+            modifier = Modifier.align(Alignment.CenterEnd).height(56.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0E639C))
         ) { Text(navModeLabel, color = Color.White, fontSize = 16.sp) }
     }
@@ -557,44 +592,101 @@ private fun SettingsOverlay(
     onIp: (String) -> Unit,
     onToken: (String) -> Unit,
     onAutoFollow: (Boolean) -> Unit,
+    onOpenHelp: () -> Unit,
     onClose: () -> Unit,
 ) {
     val tfColors = TextFieldDefaults.outlinedTextFieldColors(
         textColor = Color.White, cursorColor = accent,
         focusedBorderColor = accent, unfocusedBorderColor = Color(0xFF555555),
     )
+    var active by remember { mutableStateOf(0) } // 0 = IP, 1 = token (target of the on-screen keyboard)
     Box(Modifier.fillMaxSize().background(Color(0xCC000000)), contentAlignment = Alignment.Center) {
         Column(
-            Modifier.fillMaxWidth(0.6f).background(barColor).padding(20.dp),
+            Modifier.fillMaxWidth(0.7f).background(barColor).padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text("Ustawienia Holyrics", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
             OutlinedTextField(
                 value = ip, onValueChange = onIp, singleLine = true,
                 label = { Text("Adres IP komputera z Holyrics", color = textColor) },
-                colors = tfColors, modifier = Modifier.fillMaxWidth()
+                colors = tfColors,
+                modifier = Modifier.fillMaxWidth().onFocusChanged { if (it.isFocused) active = 0 }
             )
             OutlinedTextField(
                 value = token, onValueChange = onToken, singleLine = true,
                 label = { Text("Token API", color = textColor) },
-                colors = tfColors, modifier = Modifier.fillMaxWidth()
+                colors = tfColors,
+                modifier = Modifier.fillMaxWidth().onFocusChanged { if (it.isFocused) active = 1 }
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text("Automatycznie zmieniaj pieśń razem z Holyrics", color = textColor, modifier = Modifier.weight(1f))
                 Switch(checked = autoFollow, onCheckedChange = onAutoFollow)
             }
             Text(
-                "W Holyrics włącz API: GetLyricsPlaylist + GetCurrentPresentation (Narzędzia → API). Ta sama sieć WiFi.",
+                "Klawiatura niżej wpisuje do zaznaczonego pola (IP lub Token). W Holyrics włącz API: " +
+                    "GetLyricsPlaylist + GetCurrentPresentation (Narzędzia → API). Ta sama sieć WiFi.",
                 color = Color(0xFF9CDCFE), fontSize = 13.sp
             )
-            Button(
-                onClick = onClose,
-                colors = ButtonDefaults.buttonColors(backgroundColor = accent),
-                modifier = Modifier.fillMaxWidth()
-            ) { Text("Zamknij", color = Color.White) }
+            MiniKeyboard(
+                onKey = { c -> if (active == 0) onIp(ip + c) else onToken(token + c) },
+                onBackspace = { if (active == 0) onIp(ip.dropLast(1)) else onToken(token.dropLast(1)) },
+                onSpace = { if (active == 0) onIp("$ip ") else onToken("$token ") },
+                onClear = { if (active == 0) onIp("") else onToken("") },
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Button(
+                    onClick = onOpenHelp,
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0E639C)),
+                    modifier = Modifier.weight(1f)
+                ) { Text("Instrukcja obsługi", color = Color.White) }
+                Button(
+                    onClick = onClose,
+                    colors = ButtonDefaults.buttonColors(backgroundColor = accent),
+                    modifier = Modifier.weight(1f)
+                ) { Text("Zamknij", color = Color.White) }
+            }
         }
     }
 }
+
+@Composable
+private fun HelpOverlay(onClose: () -> Unit) {
+    Box(Modifier.fillMaxSize().background(Color(0xCC000000)), contentAlignment = Alignment.Center) {
+        Column(Modifier.fillMaxSize(0.8f).background(barColor).padding(20.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text("Instrukcja obsługi", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
+                Button(onClick = onClose, colors = ButtonDefaults.buttonColors(backgroundColor = accent)) {
+                    Text("Zamknij", color = Color.White)
+                }
+            }
+            Spacer(Modifier.height(12.dp))
+            Text(
+                HELP_TEXT,
+                color = textColor, fontSize = 15.sp,
+                modifier = Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState())
+            )
+        }
+    }
+}
+
+private const val HELP_TEXT = """NAWIGACJA
+• Wpisz numer pieśni na klawiaturze numerycznej u dołu i naciśnij „Idź".
+• „Spis treści" otwiera pełną listę pieśni — przewijasz i klikasz, albo filtrujesz
+  wpisując numer lub tytuł (ekranowa klawiatura jest pod listą).
+• Strzałki ◀ ▶ przewijają wg trybu nawigacji; na granicach są wyszarzone.
+• Kliknięcie w obszar nut chowa/pokazuje paski (pełny ekran nut).
+
+TRYBY NAWIGACJI (przycisk po prawej w dolnym pasku)
+• Rozkładówka — strzałki o 1 stronę (pokazane 2 strony obok siebie).
+• Strona — pojedyncza strona.
+• Pieśń — strzałki skaczą do poprzedniej/następnej pieśni.
+
+HOLYRICS
+• Ten sam WiFi co komputer z Holyrics; numery pieśni muszą być zgodne.
+• ⚙ → wpisz adres IP komputera z Holyrics i token API (Holyrics: Narzędzia → API).
+• W uprawnieniach API Holyrics włącz: GetLyricsPlaylist oraz GetCurrentPresentation.
+• Przycisk „Holyrics" pokazuje playlistę; aktualnie wyświetlana pieśń jest oznaczona ▶.
+• „Automatycznie zmieniaj pieśń razem z Holyrics" — apka sama otwiera pieśń z rzutnika."""
 
 @Composable
 private fun StatusBanner(message: String) {
@@ -610,7 +702,8 @@ fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
         state = rememberWindowState(width = 1280.dp, height = 800.dp),
-        title = "Śpiewnik KADS Foksal 8"
+        title = "Śpiewnik KADS Foksal 8",
+        icon = painterResource("logo.png")
     ) {
         App()
     }

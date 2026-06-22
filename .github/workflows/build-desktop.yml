@@ -5,6 +5,9 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-latest
@@ -19,12 +22,34 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build desktop distributable (app-image with bundled JRE)
-        run: ./gradlew :desktopApp:createDistributable --console=plain
+      - name: Install WiX Toolset (needed by jpackage for .msi)
+        run: choco install wixtoolset --no-progress -y
 
-      - name: Upload Windows app as artifact
+      - name: Build app-image (always works) and MSI installer
+        run: ./gradlew :desktopApp:createDistributable :desktopApp:packageMsi -PbuildNumber=${{ github.run_number }} --console=plain
+
+      - name: Upload app-image (folder with Spiewnik.exe + JRE)
         uses: actions/upload-artifact@v4
         with:
-          name: spiewnik-windows
+          name: spiewnik-windows-app
           path: desktopApp/build/compose/binaries/main/app/
           retention-days: 30
+
+      - name: Upload MSI installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: spiewnik-windows-installer
+          path: desktopApp/build/compose/binaries/main/msi/*.msi
+          retention-days: 30
+
+      - name: Publish installer as Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: windows-${{ github.run_number }}
+          name: "Śpiewnik Windows #${{ github.run_number }}"
+          files: desktopApp/build/compose/binaries/main/msi/*.msi
+          generate_release_notes: false
+          body: |
+            Instalator Windows (.msi). Kliknij, aby zainstalować — nie wymaga Javy
+            (dołączony JRE). Aktualizacje instalują się w miejsce (stałe UUID).
+            Commit: ${{ github.sha }}
