@@ -3,21 +3,10 @@
 Lista pomysłów i usprawnień do wdrożenia w przyszłości — w formie „co chcemy osiągnąć" + „co trzeba zrobić".
 
 > Zrealizowane (tryby wg orientacji, usunięcie wyboru trybu z ustawień, skan QR Holyrics,
-> numer wersji w aplikacji Windows) zostały opisane w dokumentacji i usunięte z tej listy.
+> numer wersji w aplikacji Windows, zmniejszenie numpada w aplikacji Windows ~20%)
+> zostały opisane w dokumentacji i usunięte z tej listy.
 
-## 1. desktopApp — przyciski numpada za duże (nie mieszczą się na ekranie)
-
-### Co chcemy osiągnąć
-Numpad do wpisywania numeru pieśni w aplikacji Windows ma przyciski za duże — nie mieszczą
-się na ekranie. (Oryginalna notatka: „w wersji pertraktacje przyciski do wprowadzania nr
-pieśni nie mieszczą się na ekranie, są za duże" — do doprecyzowania, o którą sytuację chodzi.)
-
-### Co trzeba zrobić
-Zmniejszyć rozmiar przycisków / odstępy numpada (`NumpadBar`, `KeyButton` w `Main.kt`) lub
-uczynić je skalowalnymi względem szerokości okna, tak aby cały dolny pasek mieścił się też
-przy mniejszym oknie.
-
-## 2. Optymalizacja pamięci pod tablet TCL NXTPAPER 14 (2400×1600, 14,3", 3:2)
+## 1. Optymalizacja pamięci pod tablet TCL NXTPAPER 14 (2400×1600, 14,3", 3:2)
 
 ### Co chcemy osiągnąć
 Płynne działanie bez `OutOfMemory` i zacięć na docelowym tablecie. Przy 2400×1600 jedna
@@ -31,14 +20,13 @@ Cache **już jest** ograniczany rozmiarem pamięci, nie liczbą stron:
 polemiki jest więc nietrafna — limit istnieje. Poprawiamy to, co faktycznie pomaga:
 zmniejszamy koszt pojedynczej strony i agresję prefetchu.
 
-### Co trzeba zrobić (priorytet — pewny zysk)
-1. **`Bitmap.Config.RGB_565` zamiast `ARGB_8888`** w `PdfPageCache.renderPage()`
-   (`PdfPageCache.kt:~95`). Połowa pamięci na stronę (~30 MB → ~15 MB). Nuty są
-   czarno-białe, a bitmapa i tak jest zamalowywana na biało (`eraseColor(WHITE)`),
-   więc kanał alfa jest zbędny — praktycznie bez utraty jakości. Automatycznie 2× więcej
-   stron mieści się w istniejącym cache.
-2. **Mniej agresywny prefetch:** ograniczyć z 2 sąsiednich do **1 (następna strona)**
-   w `prefetchNeighbours()` (`MainActivity.kt:575-593`).
+### Co trzeba zrobić
+1. ✅ **ZROBIONE — `RGB_565` zamiast `ARGB_8888`** w `PdfPageCache.renderPage()`.
+   Połowa pamięci na stronę (~30 MB → ~15 MB); renderowanie (skala 2×) bez zmian, więc
+   jakość nut zachowana. Cache mieści automatycznie ~2× więcej stron.
+2. **Mniej agresywny prefetch (do rozważenia):** ograniczyć z 2 sąsiednich do
+   **1 (następna strona)** w `prefetchNeighbours()` (`MainActivity.kt`). Świadomie pominięte
+   teraz — zostawiamy na później, jeśli pomiary pokażą potrzebę.
 
 ### Do decyzji (tradeoff)
 - **Współczynnik renderowania 2× → 1,5×** (`PdfPageCache.kt:91`). Daje duży zysk

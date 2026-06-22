@@ -92,7 +92,11 @@ class PdfPageCache(private val context: Context) {
                 val bmpW = (pageW * scale).toInt().coerceAtLeast(1)
                 val bmpH = (pageH * scale).toInt().coerceAtLeast(1)
 
-                val bitmap = Bitmap.createBitmap(bmpW, bmpH, Bitmap.Config.ARGB_8888)
+                // RGB_565 zamiast ARGB_8888: połowa zużycia pamięci. Nuty są czarne na
+                // białym tle (bitmapa jest zamalowywana na biało), a render PDF nie używa
+                // przezroczystości — kanał alfa jest zbędny. Rozdzielczość renderowania
+                // (skala 2×) pozostaje bez zmian, więc jakość obrazu nut się nie pogarsza.
+                val bitmap = Bitmap.createBitmap(bmpW, bmpH, Bitmap.Config.RGB_565)
                 bitmap.eraseColor(Color.WHITE)
                 page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
                 page.close()

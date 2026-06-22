@@ -499,34 +499,36 @@ private fun NumpadBar(
     onNavMode: () -> Unit,
     navModeLabel: String,
 ) {
-    Box(Modifier.fillMaxWidth().background(barColor).padding(8.dp)) {
-        // Number field + numpad — centered in the bar
+    Box(Modifier.fillMaxWidth().background(barColor).padding(6.dp)) {
+        // Number field + numpad — centered in the bar (zmniejszone ~20%, by mieściło się w oknie)
         Row(
             Modifier.align(Alignment.Center),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(6.dp)
+            horizontalArrangement = Arrangement.spacedBy(5.dp)
         ) {
             Box(
-                Modifier.size(width = 96.dp, height = 56.dp).background(bgColor),
+                Modifier.size(width = 77.dp, height = 45.dp).background(bgColor),
                 contentAlignment = Alignment.Center
             ) {
-                Text(if (input.isEmpty()) "—" else input, color = textColor, fontSize = 26.sp, fontWeight = FontWeight.Bold)
+                Text(if (input.isEmpty()) "—" else input, color = textColor, fontSize = 21.sp, fontWeight = FontWeight.Bold)
             }
             (1..9).forEach { d -> KeyButton(d.toString()) { onDigit(d.toString()) } }
             KeyButton("0") { onDigit("0") }
             KeyButton("⌫") { onBackspace() }
             Button(
                 onClick = onGo,
-                modifier = Modifier.height(56.dp),
+                modifier = Modifier.height(45.dp),
+                contentPadding = PaddingValues(horizontal = 12.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = accent)
-            ) { Text("Idź", color = Color.White, fontSize = 18.sp) }
+            ) { Text("Idź", color = Color.White, fontSize = 15.sp) }
         }
         // Nav-mode stays pinned to the right edge
         Button(
             onClick = onNavMode,
-            modifier = Modifier.align(Alignment.CenterEnd).height(56.dp),
+            modifier = Modifier.align(Alignment.CenterEnd).height(45.dp),
+            contentPadding = PaddingValues(horizontal = 12.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0E639C))
-        ) { Text(navModeLabel, color = Color.White, fontSize = 16.sp) }
+        ) { Text(navModeLabel, color = Color.White, fontSize = 13.sp) }
     }
 }
 
@@ -534,10 +536,11 @@ private fun NumpadBar(
 private fun KeyButton(label: String, onClick: () -> Unit) {
     Button(
         onClick = onClick,
-        modifier = Modifier.size(width = 56.dp, height = 56.dp),
+        modifier = Modifier.size(width = 45.dp, height = 45.dp),
+        contentPadding = PaddingValues(0.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF3A3D41))
     ) {
-        Text(label, color = Color.White, fontSize = 20.sp)
+        Text(label, color = Color.White, fontSize = 16.sp)
     }
 }
 
