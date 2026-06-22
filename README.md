@@ -250,10 +250,14 @@ sideloadu, hasło publiczne — nie Play Store), dzięki czemu aktualizacje inst
 (`-PbuildNumber=<n>` → `versionName 1.0.<n>`). Build lokalny bez tego parametru ma wersję
 `1.0.0-dev`. Wersja jest widoczna w ustawieniach (Informacje o aplikacji).
 
-### CI / pobranie gotowego APK
-Push na `main` uruchamia GitHub Actions ([`.github/workflows/build-apk.yml`](.github/workflows/build-apk.yml)),
-który buduje release APK i publikuje go jako GitHub Release. Pobierz `app-release.apk`
-z najnowszego release.
+### CI / pobranie gotowych aplikacji
+Push na `main` uruchamia GitHub Actions:
+- [`build-apk.yml`](.github/workflows/build-apk.yml) → **Android**: release APK jako GitHub Release (`app-release.apk`).
+- [`build-desktop.yml`](.github/workflows/build-desktop.yml) → **Windows**: instalator `.msi` jako Release
+  „Śpiewnik Windows #N" (klik → instaluje, z dołączonym JRE).
+
+Wersja Windows ma parytet funkcjonalny z Androidem (poza zoomem); szczegóły uruchamiania
+i budowania obu apek: [`docs/URUCHAMIANIE_I_TESTY.md`](docs/URUCHAMIANIE_I_TESTY.md).
 
 ### Instalacja na tablecie
 1. Skopiuj `app-release.apk` na tablet i otwórz (instalacja przez kliknięcie).

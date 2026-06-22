@@ -44,12 +44,15 @@ Gotowy APK z GitHuba: zakładka **Releases** (buduje workflow `build-apk.yml`).
 ./gradlew :desktopApp:createDistributable
 #   ->  desktopApp/build/compose/binaries/main/app/Spiewnik/
 
-# Instalator .msi (wymaga pełnego JDK z jpackage + WiX)
+# Instalator .msi (wymaga pełnego JDK z jpackage + WiX — lokalnie JBR nie ma jpackage)
 ./gradlew :desktopApp:packageMsi
 ```
 
-Gotowa apka z GitHuba: artefakt **spiewnik-windows** w workflow `build-desktop.yml`
-(uruchom ręcznie z zakładki Actions albo czekaj na push na `main`).
+**Gotowy instalator z GitHuba** (buduje `build-desktop.yml` na każdym pushu na `main`):
+- **Releases → „Śpiewnik Windows #N" → plik `.msi`** — klik, instaluje (dołączony JRE, bez Javy).
+  Aktualizacje wchodzą w miejsce (stałe `upgradeUuid`).
+- Albo **Actions → Build Windows app → Artifacts**: `spiewnik-windows-installer` (.msi)
+  lub `spiewnik-windows-app` (folder z `.exe`).
 
 ---
 

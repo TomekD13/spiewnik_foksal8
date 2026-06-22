@@ -20,10 +20,14 @@ spiewnik/
   JVM, więc oba używają tego samego `.jar`. **Nie potrzeba Kotlin Multiplatform.**
 - **Zasada żelazna:** w `:core` NIE wolno używać `android.*` (`Context`, `AssetManager`,
   `android.util.Log` itd.). Tylko czysty Kotlin + biblioteki działające na zwykłym JVM (Gson…).
-- Co tu jest dziś: `Song` (model), `PageConverter` (numeracja stron), `SongCatalog`
-  (parsowanie `piesni.json` + wyszukiwanie/nawigacja po pieśniach).
-- Ładowanie plików (assety) NIE należy do core — core dostaje gotowy `String`/`ByteArray`,
-  a *skąd* go wziąć decyduje platforma.
+- Co tu jest dziś:
+  - `Song`, `SongCatalog` (parsowanie `piesni.json` + wyszukiwanie/nawigacja), `PageConverter`,
+  - `NavMode` + `UiState` (reguły nawigacji: rozkładówka/strona/pieśń, granice, numery stron),
+  - Holyrics: `HolyricsParser` (parsowanie odpowiedzi), `HolyricsClient` + `HolyricsTransport`
+    (sieć z abstrakcją transportu), `AutoFollow` (decyzja auto-podążania),
+  - `LruCache` (polityka eviction cache stron).
+- Ładowanie plików (assety) i sieć (HTTP) NIE należą do core — core dostaje gotowy
+  `String`/`ByteArray` albo transport przez interfejs; *skąd* je wziąć decyduje platforma.
 
 ### `:androidApp`
 - Aplikacja Android (`com.android.application`), zależy od `:core`.
@@ -35,8 +39,16 @@ spiewnik/
 ### `:desktopApp`
 - Aplikacja Windows w **Compose Desktop** (`org.jetbrains.compose`), zależy od `:core`.
 - Render PDF: **Apache PDFBox** (`PDFRenderer.renderImageWithDPI`, respektuje CropBox) →
-  `BufferedImage.toComposeImageBitmap()`.
-- Assety: `../shared-assets` dołączone jako `resources.srcDir`, ładowane z classpath.
+  `BufferedImage.toComposeImageBitmap()`, cache przez `LruCache`.
+- Funkcje (parytet z Androidem, poza zoomem): nawigacja na `UiState`/`NavMode`, numpad
+  ekranowy, spis treści (filtr odporny na polskie znaki + ekranowa klawiatura QWERTY z Shift),
+  pełny ekran (tap chowa paski), Holyrics (playlista + podświetlanie + auto-follow),
+  ustawienia (`DesktopSettings` → `~/.spiewnik/settings.json`), zapamiętywanie ostatniej pieśni,
+  instrukcja obsługi.
+- Sieć Holyrics: `HttpUrlTransport` (implementacja `HolyricsTransport` z core).
+- Assety: `../shared-assets` jako `resources.srcDir`; ikona okna `logo.png`.
+- Pakowanie: `nativeDistributions` z ikoną `icons/spiewnik.ico`, stałym `upgradeUuid`
+  (aktualizacje w miejsce) i `modules("jdk.unsupported")` (Gson używa `sun.misc.Unsafe`).
 
 ## Jak budować i uruchamiać
 
@@ -60,9 +72,9 @@ Build lokalny używa JDK 17 (JBR z Android Studio). Ustaw `JAVA_HOME` na `…/jb
 ## Linia produkcyjna (CI)
 - `.github/workflows/build-apk.yml` — runner Ubuntu: buduje podpisany **release APK**
   (`:androidApp:assembleRelease`, wersja z `github.run_number`) i publikuje jako GitHub Release.
-- `.github/workflows/build-desktop.yml` — runner Windows: buduje desktop
-  (`:desktopApp:createDistributable`) i wrzuca jako artefakt. Instalator `.msi` (jpackage/WiX)
-  albo Conveyor można dołożyć później.
+- `.github/workflows/build-desktop.yml` — runner Windows: instaluje **WiX**, buduje
+  `createDistributable` (folder z `.exe` jako fallback) **oraz instalator `.msi`**
+  (`packageMsi`), publikuje `.msi` jako Release (tag `windows-<n>`) i wrzuca artefakty.
 
 ## Jak dokładać funkcje (reguła decyzyjna)
 Zadaj sobie pytanie: **czy to logika, czy UI/platforma?**
@@ -83,6 +95,9 @@ zmieniłeś zachowania (siatka bezpieczeństwa zamiast ręcznego klikania na obu
   `kotlinx.serialization` + `Ktor`.
 - **Brak wspólnego UI.** Wspólne ekrany w Compose (Android+Desktop) to osobny, większy krok
   (Compose Multiplatform UI w `commonMain`).
-- **`SongRepository` / `HolyricsRepository`** wciąż żyją w `:androidApp`. Gdy desktop będzie
-  ich potrzebował, przenieś logikę do `:core` (odsprzęgając od `Context`/`Log`), a `:desktopApp`
-  i `:androidApp` niech ją współdzielą.
+- **Parsowanie i sieć Holyrics już są w `:core`** (`HolyricsParser`, `HolyricsClient`).
+  `androidApp/HolyricsRepository` deleguje parsowanie do core, ale wciąż ma własny HTTP
+  (`HttpURLConnection`) — można go w przyszłości przepiąć na `HolyricsClient` + transport
+  (jak desktop), żeby ujednolicić. To dotknie Androida, więc warto przy okazji innego zadania.
+- **`SongRepository` (android)** deleguje już do core `SongCatalog` (tylko ładowanie assetu jest
+  platformowe).
