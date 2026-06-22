@@ -176,20 +176,65 @@ fun App() {
     var playlist by remember { mutableStateOf<List<Int>>(emptyList()) }
     var currentSong by remember { mutableStateOf<Int?>(null) }
     var status by remember { mutableStateOf<String?>(null) }
+    var holyricsSend by remember { mutableStateOf(settings.holyricsSend) }
+    // Songs in the Holyrics playlist (number -> library id); drives the "Wyślij"/"Wyświetl" button.
+    var playlistIds by remember { mutableStateOf<Map<Int, String>>(emptyMap()) }
 
     fun go() {
         input.toIntOrNull()?.let { ctrl.openSong(it) }
         input = ""
     }
 
+    // Background refresh of the playlist (number->id) for the send/show button — no status banner.
+    fun refreshPlaylistSilent() {
+        if (!holyricsSend || ip.isBlank() || token.isBlank()) return
+        scope.launch {
+            withContext(Dispatchers.IO) { client.fetchPlaylistData(ip, token) }
+                .onSuccess { pl -> playlistIds = pl.ids; if (pl.numbers.isNotEmpty()) playlist = pl.numbers }
+        }
+    }
+
+    // "Wyślij do Holyrics": numer otwartej pieśni -> id w bibliotece -> dodanie do playlisty.
+    fun sendToHolyrics() {
+        val number = ctrl.state.song?.number ?: run { status = "Najpierw otwórz pieśń"; return }
+        if (ip.isBlank() || token.isBlank()) { status = "Uzupełnij IP i token w ustawieniach"; return }
+        scope.launch {
+            val id = withContext(Dispatchers.IO) { client.findSongId(ip, token, number) }
+                .getOrElse { status = "Holyrics niedostępny"; return@launch }
+            if (id == null) { status = "Nie znaleziono pieśni $number w Holyrics"; return@launch }
+            withContext(Dispatchers.IO) { client.addToPlaylist(ip, token, id) }
+                .onSuccess {
+                    playlistIds = playlistIds + (number to id) // optimistic -> button flips to "Wyświetl"
+                    status = "Dodano pieśń $number do playlisty Holyrics"
+                    refreshPlaylistSilent()
+                }
+                .onFailure { status = "Holyrics niedostępny" }
+        }
+    }
+
+    // "Wyświetl": rzut otwartej pieśni na ekran Holyrics (id z playlisty lub przez SearchLyrics).
+    fun showInHolyrics() {
+        val number = ctrl.state.song?.number ?: return
+        if (ip.isBlank() || token.isBlank()) return
+        scope.launch {
+            val id = playlistIds[number]
+                ?: withContext(Dispatchers.IO) { client.findSongId(ip, token, number) }.getOrNull()
+            if (id == null) { status = "Nie znaleziono pieśni $number w Holyrics"; return@launch }
+            withContext(Dispatchers.IO) { client.showSong(ip, token, id) }
+                .onSuccess { status = "Wyświetlono w Holyrics" }
+                .onFailure { status = "Holyrics niedostępny" }
+        }
+    }
+
     fun openHolyrics() {
         showHolyrics = true
         if (ip.isBlank() || token.isBlank()) { status = "Uzupełnij IP i token w ustawieniach"; return }
         scope.launch {
-            withContext(Dispatchers.IO) { client.fetchPlaylist(ip, token) }
-                .onSuccess { nums ->
-                    if (nums.isEmpty()) status = "Playlista Holyrics jest pusta"
-                    else { playlist = nums; status = null }
+            withContext(Dispatchers.IO) { client.fetchPlaylistData(ip, token) }
+                .onSuccess { pl ->
+                    playlistIds = pl.ids
+                    if (pl.numbers.isEmpty()) status = "Playlista Holyrics jest pusta"
+                    else { playlist = pl.numbers; status = null }
                 }
                 .onFailure { status = "Holyrics niedostępny" }
             withContext(Dispatchers.IO) { client.fetchCurrentSong(ip, token) }.onSuccess { currentSong = it }
@@ -212,6 +257,12 @@ fun App() {
         }
     }
 
+    // Refresh the playlist (send/show button state) on start and when the option is enabled.
+    LaunchedEffect(holyricsSend, ip, token) {
+        if (holyricsSend && ip.isNotBlank() && token.isNotBlank()) refreshPlaylistSilent()
+        else if (!holyricsSend) playlistIds = emptyMap()
+    }
+
     // Remember the last opened song between runs.
     LaunchedEffect(ctrl.state.song?.number) {
         ctrl.state.song?.number?.let { settings.lastSong = it }
@@ -224,6 +275,10 @@ fun App() {
             Column(Modifier.fillMaxSize().background(bgColor)) {
                 if (barsVisible) TopBar(
                     ctrl,
+                    holyricsSend = holyricsSend,
+                    queuedNumbers = playlistIds.keys,
+                    onSend = { sendToHolyrics() },
+                    onShow = { showInHolyrics() },
                     onOpenToc = { tocQuery = ""; showToc = true },
                     onOpenHolyrics = { openHolyrics() },
                     onOpenSettings = { showSettings = true },
@@ -256,9 +311,11 @@ fun App() {
                 ip = ip,
                 token = token,
                 autoFollow = autoFollow,
+                holyricsSend = holyricsSend,
                 onIp = { ip = it; settings.holyricsIp = it },
                 onToken = { token = it; settings.holyricsToken = it },
                 onAutoFollow = { autoFollow = it; settings.autoFollow = it },
+                onHolyricsSend = { holyricsSend = it; settings.holyricsSend = it },
                 onOpenHelp = { showHelp = true },
                 onClose = { showSettings = false },
             )
@@ -271,6 +328,10 @@ fun App() {
 @Composable
 private fun TopBar(
     ctrl: SongbookController,
+    holyricsSend: Boolean,
+    queuedNumbers: Set<Int>,
+    onSend: () -> Unit,
+    onShow: () -> Unit,
     onOpenToc: () -> Unit,
     onOpenHolyrics: () -> Unit,
     onOpenSettings: () -> Unit,
@@ -288,6 +349,14 @@ private fun TopBar(
             modifier = Modifier.weight(1f)
         )
         Text(s.displayPages, color = textColor, fontSize = 18.sp)
+        if (holyricsSend && song != null) {
+            val showMode = song.number in queuedNumbers
+            BarButton(
+                label = if (showMode) "Wyświetl" else "Wyślij do Holyrics",
+                color = if (showMode) Color(0xFFC2640A) else Color(0xFF1565C0),
+                onClick = if (showMode) onShow else onSend,
+            )
+        }
         BarButton("Spis treści", Color(0xFF0E639C), onOpenToc)
         BarButton("Holyrics", Color(0xFF6A0DAD), onOpenHolyrics)
         BarButton("⚙", Color(0xFF3A3D41), onOpenSettings)
@@ -596,9 +665,11 @@ private fun SettingsOverlay(
     ip: String,
     token: String,
     autoFollow: Boolean,
+    holyricsSend: Boolean,
     onIp: (String) -> Unit,
     onToken: (String) -> Unit,
     onAutoFollow: (Boolean) -> Unit,
+    onHolyricsSend: (Boolean) -> Unit,
     onOpenHelp: () -> Unit,
     onClose: () -> Unit,
 ) {
@@ -638,6 +709,10 @@ private fun SettingsOverlay(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text("Automatycznie zmieniaj pieśń razem z Holyrics", color = textColor, modifier = Modifier.weight(1f))
                 Switch(checked = autoFollow, onCheckedChange = onAutoFollow)
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text("Wysyłaj pieśni do Holyrics (przycisk w pasku)", color = textColor, modifier = Modifier.weight(1f))
+                Switch(checked = holyricsSend, onCheckedChange = onHolyricsSend)
             }
             if (showKeyboard) {
                 Text(
@@ -714,9 +789,13 @@ TRYBY NAWIGACJI (przycisk po prawej w dolnym pasku)
 HOLYRICS
 • Ten sam WiFi co komputer z Holyrics; numery pieśni muszą być zgodne.
 • ⚙ → wpisz adres IP komputera z Holyrics i token API (Holyrics: Narzędzia → API).
-• W uprawnieniach API Holyrics włącz: GetLyricsPlaylist oraz GetCurrentPresentation.
+• W uprawnieniach API Holyrics włącz: GetLyricsPlaylist oraz GetCurrentPresentation;
+  do wysyłania także SearchLyrics, AddLyricsToPlaylist, ShowLyrics.
 • Przycisk „Holyrics" pokazuje playlistę; aktualnie wyświetlana pieśń jest oznaczona ▶.
-• „Automatycznie zmieniaj pieśń razem z Holyrics" — apka sama otwiera pieśń z rzutnika."""
+• „Automatycznie zmieniaj pieśń razem z Holyrics" — apka sama otwiera pieśń z rzutnika.
+• „Wysyłaj pieśni do Holyrics" — w górnym pasku pojawia się przycisk: „Wyślij do Holyrics"
+  dodaje otwartą pieśń do playlisty, potem zmienia się w „Wyświetl" (rzuca na ekran). Gdy
+  pieśń jest już w playliście, od razu widać „Wyświetl"."""
 
 @Composable
 private fun StatusBanner(message: String) {

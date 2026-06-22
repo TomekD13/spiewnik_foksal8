@@ -71,6 +71,12 @@ class SettingsFragment : DialogFragment() {
             if (checked) viewModel.startHolyricsAutoFollow() else viewModel.stopHolyricsAutoFollow()
         }
 
+        // Send-to-Holyrics toggle (shows/hides the top-bar button)
+        binding.swHolyricsSend.isChecked = viewModel.settings.holyricsSend
+        binding.swHolyricsSend.setOnCheckedChangeListener { _, checked ->
+            viewModel.setHolyricsSend(checked)
+        }
+
         binding.btnHelp.setOnClickListener {
             AlertDialog.Builder(requireContext())
                 .setTitle(R.string.help_title)

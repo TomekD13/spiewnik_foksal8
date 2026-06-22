@@ -127,6 +127,18 @@
             android:textSize="15sp"
             android:textColor="@color/bar_text"
             app:thumbTint="@color/accent"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Send-to-Holyrics toggle -->
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/swHolyricsSend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/holyrics_send_toggle"
+            android:textSize="15sp"
+            android:textColor="@color/bar_text"
+            app:thumbTint="@color/accent"
             android:layout_marginBottom="16dp" />
 
         <!-- Divider -->

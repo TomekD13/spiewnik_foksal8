@@ -50,6 +50,16 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
     private val _currentHolyricsSong = MutableLiveData<Int?>(null)
     val currentHolyricsSong: LiveData<Int?> = _currentHolyricsSong
 
+    // ── "Wyślij do Holyrics" ──────────────────────────────────────────────────────
+    // Whether the send feature is enabled (mirrors settings; toggled from the dialog).
+    private val _holyricsSendEnabled = MutableLiveData(settings.holyricsSend)
+    val holyricsSendEnabled: LiveData<Boolean> = _holyricsSendEnabled
+
+    // Songs currently in the Holyrics playlist as a number -> library id map. The button
+    // shows "Wyświetl" when the open song is already here, otherwise "Wyślij do Holyrics".
+    private val _holyricsPlaylistIds = MutableLiveData<Map<Int, String>>(emptyMap())
+    val holyricsPlaylistIds: LiveData<Map<Int, String>> = _holyricsPlaylistIds
+
     private val _allSongs = MutableLiveData<List<Song>>(emptyList())
     val allSongs: LiveData<List<Song>> = _allSongs
 
@@ -236,19 +246,31 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
                 _toastEvent.postValue("Uzupełnij IP i token Holyrics w ustawieniach")
                 return@launch
             }
-            holyricsRepository.fetchPlaylist(ip, token)
-                .onSuccess { numbers ->
-                    Log.i(TAG, "Holyrics fetchPlaylist success: $numbers")
-                    if (numbers.isEmpty()) {
-                        _toastEvent.postValue("Playlista Holyrics jest pusta")
-                    } else {
-                        _holyricsPlaylist.postValue(numbers)
-                    }
+            holyricsRepository.fetchPlaylistData(ip, token)
+                .onSuccess { pl ->
+                    Log.i(TAG, "Holyrics fetchPlaylist success: ${pl.numbers}")
+                    _holyricsPlaylist.postValue(pl.numbers)
+                    _holyricsPlaylistIds.postValue(pl.ids)
+                    if (pl.numbers.isEmpty()) _toastEvent.postValue("Playlista Holyrics jest pusta")
                 }
                 .onFailure { e ->
                     Log.e(TAG, "Holyrics fetchPlaylist failure", e)
                     _toastEvent.postValue("Holyrics niedostępny")
                 }
+        }
+    }
+
+    /** Background refresh of the playlist (number→id) for the send/show button — no toasts. */
+    fun refreshHolyricsPlaylistSilent() {
+        if (!settings.holyricsSend) return
+        val ip = settings.holyricsIp
+        val token = settings.holyricsToken
+        if (ip.isBlank() || token.isBlank()) return
+        viewModelScope.launch(Dispatchers.IO) {
+            holyricsRepository.fetchPlaylistData(ip, token).onSuccess { pl ->
+                _holyricsPlaylist.postValue(pl.numbers)
+                _holyricsPlaylistIds.postValue(pl.ids)
+            }
         }
     }
 
@@ -306,6 +328,70 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
                 .onFailure { e ->
                     Log.e(TAG, "Holyrics fetchCurrentSong failure", e)
                 }
+        }
+    }
+
+    fun setHolyricsSend(enabled: Boolean) {
+        settings.holyricsSend = enabled
+        _holyricsSendEnabled.value = enabled
+        if (enabled) refreshHolyricsPlaylistSilent() else _holyricsPlaylistIds.value = emptyMap()
+    }
+
+    /**
+     * "Wyślij do Holyrics": resolves the open song's number to its Holyrics library id
+     * and adds it to the playlist. Optimistically marks the song as queued so the button
+     * switches to "Wyświetl" immediately, then refreshes the playlist from Holyrics.
+     */
+    fun sendCurrentSongToHolyrics() {
+        val number = _state.value?.song?.number ?: run {
+            _toastEvent.postValue("Najpierw otwórz pieśń")
+            return
+        }
+        val ip = settings.holyricsIp
+        val token = settings.holyricsToken
+        if (ip.isBlank() || token.isBlank()) {
+            _toastEvent.postValue("Uzupełnij IP i token Holyrics w ustawieniach")
+            return
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            val id = holyricsRepository.findSongId(ip, token, number).getOrElse {
+                _toastEvent.postValue("Holyrics niedostępny")
+                return@launch
+            }
+            if (id == null) {
+                _toastEvent.postValue("Nie znaleziono pieśni $number w Holyrics")
+                return@launch
+            }
+            holyricsRepository.addToPlaylist(ip, token, id)
+                .onSuccess {
+                    // Optimistic: mark queued so the button flips to "Wyświetl" right away.
+                    _holyricsPlaylistIds.postValue((_holyricsPlaylistIds.value ?: emptyMap()) + (number to id))
+                    _toastEvent.postValue("Dodano pieśń $number do playlisty Holyrics")
+                    refreshHolyricsPlaylistSilent()
+                }
+                .onFailure { _toastEvent.postValue("Holyrics niedostępny") }
+        }
+    }
+
+    /**
+     * "Wyświetl": projects the open song on the Holyrics output. Uses the id already known
+     * from the playlist; falls back to a SearchLyrics lookup if needed.
+     */
+    fun showCurrentSongInHolyrics() {
+        val number = _state.value?.song?.number ?: return
+        val ip = settings.holyricsIp
+        val token = settings.holyricsToken
+        if (ip.isBlank() || token.isBlank()) return
+        viewModelScope.launch(Dispatchers.IO) {
+            val id = _holyricsPlaylistIds.value?.get(number)
+                ?: holyricsRepository.findSongId(ip, token, number).getOrNull()
+            if (id == null) {
+                _toastEvent.postValue("Nie znaleziono pieśni $number w Holyrics")
+                return@launch
+            }
+            holyricsRepository.showSong(ip, token, id)
+                .onSuccess { _toastEvent.postValue("Wyświetlono w Holyrics") }
+                .onFailure { _toastEvent.postValue("Holyrics niedostępny") }
         }
     }
 

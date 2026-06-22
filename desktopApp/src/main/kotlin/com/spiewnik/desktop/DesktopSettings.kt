@@ -13,6 +13,7 @@ class DesktopSettings {
         var holyricsIp: String = "",
         var holyricsToken: String = "",
         var autoFollow: Boolean = false,
+        var holyricsSend: Boolean = false,
         var lastSong: Int = 1,
     )
 
@@ -39,6 +40,10 @@ class DesktopSettings {
     var autoFollow: Boolean
         get() = data.autoFollow
         set(value) { data.autoFollow = value; save() }
+
+    var holyricsSend: Boolean
+        get() = data.holyricsSend
+        set(value) { data.holyricsSend = value; save() }
 
     var lastSong: Int
         get() = data.lastSong

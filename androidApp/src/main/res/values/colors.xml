@@ -24,6 +24,10 @@
     <!-- Holyrics button -->
     <color name="holyrics_button">#6A0DAD</color>
 
+    <!-- "Wyślij do Holyrics" (niebieski) / "Wyświetl" (ciemny pomarańczowy) -->
+    <color name="holyrics_send">#1565C0</color>
+    <color name="holyrics_show">#C2640A</color>
+
     <!-- PDF page area -->
     <color name="page_background">#1E1E1E</color>
 

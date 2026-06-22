@@ -165,7 +165,8 @@ Parser: [`HolyricsRepository.kt`](androidApp/src/main/kotlin/com/spiewnik/app/ho
   Format QR: `{"enabled":true,"ips":["192.168.x.x"],"port":N,"token":"..."}`. Wymaga uprawnienia
   `CAMERA`; ręczne wpisanie zawsze pozostaje dostępne (feature tylko na Androidzie).
 - **Token** w Holyrics: `Narzędzia/Tools → API` (pole ID odbiornika API).
-- **Uprawnienia API** w Holyrics: włącz `GetLyricsPlaylist` **oraz** `GetCurrentPresentation`.
+- **Uprawnienia API** w Holyrics: włącz `GetLyricsPlaylist` **oraz** `GetCurrentPresentation`
+  (a dla wysyłania — sekcja 6.5 — także `SearchLyrics`, `AddLyricsToPlaylist`, `ShowLyrics`).
 - Aplikacja ma uprawnienie `INTERNET` i `network_security_config` zezwalający na cleartext HTTP (sieć lokalna).
 
 ### 6.4 Komunikaty
@@ -178,19 +179,47 @@ Parser: [`HolyricsRepository.kt`](androidApp/src/main/kotlin/com/spiewnik/app/ho
 
 Błąd pobrania aktualnej pieśni jest tylko logowany (info drugorzędne, bez Toasta).
 
+### 6.5 Wysyłanie pieśni do Holyrics (sterowanie w drugą stronę)
+Opcjonalne — włączane przełącznikiem **„Wysyłaj pieśni do Holyrics"** w ustawieniach
+(jak auto-follow). Gdy włączone, w górnym pasku obok pieśni pojawia się przycisk:
+
+1. **„Wyślij do Holyrics"** (niebieski) — numer otwartej pieśni jest zamieniany na `id`
+   biblioteki Holyrics (`SearchLyrics`, **dokładne** dopasowanie tytułu = numer) i dodawany
+   do playlisty (`AddLyricsToPlaylist`). Przycisk zmienia się w **„Wyświetl"** (pomarańczowy).
+2. **„Wyświetl"** — rzuca pieśń na ekran Holyrics (`ShowLyrics`).
+
+**Przycisk odzwierciedla zawartość playlisty Holyrics:** jeśli otwarta pieśń jest już
+w playliście (dodana wcześniej albo przez operatora), przycisk od razu pokazuje **„Wyświetl"**
+— bez ponownego dodawania. Stan playlisty (mapa `numer → id` z `GetLyricsPlaylist`) odświeżany
+jest przy starcie/wznowieniu, przy włączeniu opcji, po otwarciu popupu Holyrics oraz po „Wyślij"
+(optymistycznie, więc przycisk przeskakuje natychmiast). Przełączenie na pieśń spoza playlisty
+pokazuje „Wyślij do Holyrics".
+
+Logika i parser współdzielone w `:core` ([`HolyricsClient`](core/src/main/kotlin/com/spiewnik/app/holyrics/HolyricsClient.kt),
+[`HolyricsParser`](core/src/main/kotlin/com/spiewnik/app/holyrics/HolyricsParser.kt) — `parseSongId`/`parsePlaylistData`).
+Wymaga włączenia w Holyrics metod: `GetLyricsPlaylist`, `SearchLyrics`, `AddLyricsToPlaylist`, `ShowLyrics`.
+Współgra z auto-follow (po „Wyświetl" Holyrics pokazuje pieśń, którą apka i tak już ma otwartą).
+
+| Sytuacja | Toast |
+|---|---|
+| Brak pieśni w bibliotece Holyrics | „Nie znaleziono pieśni N w Holyrics" |
+| Dodano do playlisty | „Dodano pieśń N do playlisty Holyrics" |
+| Wyświetlono | „Wyświetlono w Holyrics" |
+
 ---
 
 ## 7. Ustawienia, pamięć stanu, błędy
 
 **Ustawienia (⚙):** reset ostatniej pozycji (wraca do pieśni 1), IP/token Holyrics
-(z opcją **skanowania kodu QR**), przełącznik auto-follow Holyrics,
+(z opcją **skanowania kodu QR**), przełącznik auto-follow Holyrics, przełącznik
+**wysyłania pieśni do Holyrics** (sekcja 6.5),
 **Instrukcja obsługi** (dialog z opisem nawigacji i konfiguracji Holyrics), informacje o aplikacji.
 Wyboru trybu nawigacji **nie ma** w ustawieniach — służy do tego przycisk trybu, a tryb domyślny
 wynika z orientacji (sekcja 5.1). Orientacją zarządza system — brak opcji w aplikacji.
 
 **SharedPreferences** ([`AppSettings.kt`](androidApp/src/main/kotlin/com/spiewnik/app/settings/AppSettings.kt)):
 `last_song_number` (1), `last_page_index` (0), `last_pdf_page` (1),
-`holyrics_ip` (""), `holyrics_token` (""). Tryb startowy wynika z orientacji ekranu
+`holyrics_ip` (""), `holyrics_token` (""), `holyrics_auto_follow` (false), `holyrics_send` (false). Tryb startowy wynika z orientacji ekranu
 (nie jest odtwarzany z preferencji). Przy starcie powrót do ostatniej pieśni/strony.
 
 **Błędy:** komunikaty przejściowe jako Toast; błędy krytyczne (brak/niepoprawny PDF lub JSON)

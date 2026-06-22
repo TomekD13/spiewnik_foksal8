@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity() {
         observeToasts()
         observeHolyricsPlaylist()
         observeHolyricsCurrentSong()
+        observeHolyricsSend()
     }
 
     override fun onConfigurationChanged(newConfig: android.content.res.Configuration) {
@@ -96,6 +97,8 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         // Poll Holyrics only while in the foreground (no-op if the setting is off)
         viewModel.startHolyricsAutoFollow()
+        // Refresh the send/show button state from the current Holyrics playlist (no-op if off)
+        viewModel.refreshHolyricsPlaylistSilent()
     }
 
     override fun onPause() {
@@ -138,6 +141,14 @@ class MainActivity : AppCompatActivity() {
                 viewModel.fetchHolyricsPlaylist()
                 viewModel.fetchHolyricsCurrentSong()
             }
+        }
+
+        binding.btnHolyricsSend.setOnClickListener {
+            val songNumber = viewModel.state.value?.song?.number
+            val inPlaylist = songNumber != null &&
+                viewModel.holyricsPlaylistIds.value?.containsKey(songNumber) == true
+            if (inPlaylist) viewModel.showCurrentSongInHolyrics()
+            else viewModel.sendCurrentSongToHolyrics()
         }
     }
 
@@ -396,8 +407,33 @@ class MainActivity : AppCompatActivity() {
             updateTopBar(state)
             updateNavMode(state)
             updateNavButtons(state)
+            updateHolyricsSendButton()
             renderPages(state)
         }
+    }
+
+    private fun observeHolyricsSend() {
+        viewModel.holyricsSendEnabled.observe(this) { updateHolyricsSendButton() }
+        viewModel.holyricsPlaylistIds.observe(this) { updateHolyricsSendButton() }
+    }
+
+    /** Shows the top-bar Holyrics button only when enabled and a song is open;
+     *  morphs label/colour between "Wyślij do Holyrics" (blue) and "Wyświetl" (orange)
+     *  depending on whether the open song is already in the Holyrics playlist. */
+    private fun updateHolyricsSendButton() {
+        val enabled = viewModel.holyricsSendEnabled.value ?: false
+        val songNumber = viewModel.state.value?.song?.number
+        val btn = binding.btnHolyricsSend
+        if (!enabled || songNumber == null) {
+            btn.visibility = View.GONE
+            return
+        }
+        btn.visibility = View.VISIBLE
+        val showMode = viewModel.holyricsPlaylistIds.value?.containsKey(songNumber) == true
+        btn.text = getString(if (showMode) R.string.holyrics_show_button else R.string.holyrics_send_button)
+        val colorRes = if (showMode) R.color.holyrics_show else R.color.holyrics_send
+        btn.backgroundTintList =
+            android.content.res.ColorStateList.valueOf(ContextCompat.getColor(this, colorRes))
     }
 
     private fun observeLoadState() {

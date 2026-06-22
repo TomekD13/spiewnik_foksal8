@@ -9,29 +9,88 @@ import com.google.gson.JsonParser
  */
 object HolyricsParser {
 
-    /** GetLyricsPlaylist: song numbers live in each item's `title` field. */
-    fun parsePlaylist(json: String): List<Int> = try {
+    /**
+     * GetLyricsPlaylist parsed into both the ordered list of song numbers (from each item's
+     * `title`) and a `number -> library id` map (from `id`). The id lets us project an
+     * already-queued song directly (ShowLyrics) without an extra SearchLyrics lookup.
+     */
+    data class Playlist(val numbers: List<Int>, val ids: Map<Int, String>)
+
+    fun parsePlaylistData(json: String): Playlist = try {
         val root = JsonParser.parseString(json).asJsonObject
         if (root.get("status")?.asString != "ok") {
-            emptyList()
+            Playlist(emptyList(), emptyMap())
         } else {
             val data = root.get("data")
             if (data == null || !data.isJsonArray) {
-                emptyList()
+                Playlist(emptyList(), emptyMap())
             } else {
-                data.asJsonArray.mapNotNull { el ->
-                    runCatching { el.asJsonObject.get("title")?.asString?.trim()?.toIntOrNull() }.getOrNull()
+                val numbers = mutableListOf<Int>()
+                val ids = linkedMapOf<Int, String>()
+                data.asJsonArray.forEach { el ->
+                    runCatching {
+                        val o = el.asJsonObject
+                        val number = o.get("title")?.asString?.trim()?.toIntOrNull()
+                        if (number != null) {
+                            numbers.add(number)
+                            val id = o.get("id")?.takeIf { !it.isJsonNull }?.asString
+                            if (!id.isNullOrBlank()) ids.putIfAbsent(number, id)
+                        }
+                    }
                 }
+                Playlist(numbers, ids)
             }
         }
     } catch (e: Exception) {
-        emptyList()
+        Playlist(emptyList(), emptyMap())
     }
+
+    /** GetLyricsPlaylist: song numbers live in each item's `title` field. */
+    fun parsePlaylist(json: String): List<Int> = parsePlaylistData(json).numbers
 
     /**
      * GetCurrentPresentation: the current song number lives in `data.name` when
      * `data.type == "song"`. Returns null when nothing (or a non-song) is presented.
      */
+    /**
+     * SearchLyrics: returns the `id` of the song whose `title` exactly equals [number].
+     * Exact match avoids picking "10"/"100" when searching for "1". Null when none matches.
+     */
+    fun parseSongId(json: String, number: Int): String? = try {
+        val root = JsonParser.parseString(json).asJsonObject
+        if (root.get("status")?.asString != "ok") {
+            null
+        } else {
+            val data = root.get("data")
+            if (data == null || !data.isJsonArray) {
+                null
+            } else {
+                val target = number.toString()
+                data.asJsonArray.asSequence().mapNotNull { el ->
+                    runCatching {
+                        val o = el.asJsonObject
+                        if (o.get("title")?.asString?.trim() == target) o.get("id")?.asString else null
+                    }.getOrNull()
+                }.firstOrNull()
+            }
+        }
+    } catch (e: Exception) {
+        null
+    }
+
+    /**
+     * True when a control method (AddLyricsToPlaylist/ShowLyrics) succeeded.
+     * Those methods may return an empty body or `{"status":"ok"}`; only an explicit
+     * `"status":"error"` (or unparseable non-empty body) counts as failure.
+     */
+    fun isOk(json: String): Boolean {
+        if (json.isBlank()) return true
+        return runCatching {
+            val status = JsonParser.parseString(json).asJsonObject.get("status")?.asString
+            status == null || status == "ok"
+        }.getOrDefault(false)
+    }
+
     fun parseCurrentSong(json: String): Int? = try {
         val root = JsonParser.parseString(json).asJsonObject
         if (root.get("status")?.asString != "ok") {

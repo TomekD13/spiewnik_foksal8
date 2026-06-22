@@ -15,6 +15,7 @@ class AppSettings(context: Context) {
         private const val KEY_HOLYRICS_IP = "holyrics_ip"
         private const val KEY_HOLYRICS_TOKEN = "holyrics_token"
         private const val KEY_HOLYRICS_AUTO_FOLLOW = "holyrics_auto_follow"
+        private const val KEY_HOLYRICS_SEND = "holyrics_send"
     }
 
     var lastSongNumber: Int
@@ -44,6 +45,10 @@ class AppSettings(context: Context) {
     var holyricsAutoFollow: Boolean
         get() = prefs.getBoolean(KEY_HOLYRICS_AUTO_FOLLOW, false)
         set(value) = prefs.edit().putBoolean(KEY_HOLYRICS_AUTO_FOLLOW, value).apply()
+
+    var holyricsSend: Boolean
+        get() = prefs.getBoolean(KEY_HOLYRICS_SEND, false)
+        set(value) = prefs.edit().putBoolean(KEY_HOLYRICS_SEND, value).apply()
 
     fun resetPosition() {
         prefs.edit()
