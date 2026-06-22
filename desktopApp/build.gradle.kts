@@ -42,6 +42,10 @@ compose.desktop {
         mainClass = "com.spiewnik.desktop.MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Msi, TargetFormat.Exe)
+            // Gson tworzy instancje Song przez sun.misc.Unsafe (klasa bez konstruktora
+            // bezargumentowego) — Unsafe jest w module jdk.unsupported, który jlink
+            // domyślnie pomija w okrojonym JRE. Bez tego zainstalowana apka się wywala.
+            modules("jdk.unsupported")
             packageName = "Spiewnik"
             packageVersion = "1.0.$desktopBuildNumber"
             description = "Śpiewnik KADS Foksal 8"
