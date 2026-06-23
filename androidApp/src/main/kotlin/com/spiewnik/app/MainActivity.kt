@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupInput()
-        setupInputRowToggle()
+        measureBarHeights()
         setupNavigation()
         setupZoom()
         observeState()
@@ -229,18 +229,14 @@ class MainActivity : AppCompatActivity() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
     }
 
-    private fun setupInputRowToggle() {
+    /** Measures the bar heights so [toggleBars] can animate them back to full size. */
+    private fun measureBarHeights() {
         binding.inputRow.post {
             inputRowHeight = binding.inputRow.measuredHeight
         }
         binding.topBar.post {
             topBarHeight = binding.topBar.measuredHeight
         }
-        binding.btnSelect.setOnClickListener {
-            if (binding.inputRow.visibility == View.VISIBLE) hideInputRow()
-            else showInputRow()
-        }
-        // btnHolyrics: action not wired yet
     }
 
     /**
@@ -259,7 +255,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             animateBarHeight(binding.topBar, 0, topBarHeight, endVisible = true)
             animateBarHeight(binding.inputRow, 0, inputRowHeight, endVisible = true)
-            binding.btnSelect.text = getString(R.string.btn_hide_bar)
             barsVisible = true
         }
     }
@@ -280,38 +275,6 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         view.visibility = View.GONE
                     }
-                }
-            })
-            start()
-        }
-    }
-
-    private fun showInputRow() {
-        binding.inputRow.visibility = View.VISIBLE
-        binding.inputRow.layoutParams.height = 0
-        binding.inputRow.requestLayout()
-        binding.btnSelect.text = getString(R.string.btn_hide_bar)
-        ValueAnimator.ofInt(0, inputRowHeight).apply {
-            duration = 250
-            addUpdateListener {
-                binding.inputRow.layoutParams.height = it.animatedValue as Int
-                binding.inputRow.requestLayout()
-            }
-            start()
-        }
-    }
-
-    private fun hideInputRow() {
-        ValueAnimator.ofInt(inputRowHeight, 0).apply {
-            duration = 250
-            addUpdateListener {
-                binding.inputRow.layoutParams.height = it.animatedValue as Int
-                binding.inputRow.requestLayout()
-            }
-            addListener(object : android.animation.AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: android.animation.Animator) {
-                    binding.inputRow.visibility = View.GONE
-                    binding.btnSelect.text = getString(R.string.btn_select)
                 }
             })
             start()

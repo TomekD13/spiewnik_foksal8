@@ -58,7 +58,7 @@ UTF-8, ~700 rekordów, posortowane rosnąco po `nr_piesni`. Schemat (model [`Son
 
 ```
 ┌───────────────────────────────────────────────────────────────────────┐
-│ [Nr 123 · Tytuł]        [Strony 12–13] [Wybierz] [Holyrics] [⚙]        │ ← górny pasek (info)
+│ [Nr 123 · Tytuł]              [Strony 12–13] [Holyrics] [⚙]            │ ← górny pasek (info)
 ├───────────────────────────────────────────────────────────────────────┤
 │ [etNumber][Idź]  [actvTitle szukaj po tytule…]      [Rozkładówka]      │ ← input row (chowany)
 ├───────────────────────────────────────────────────────────────────────┤
@@ -66,8 +66,8 @@ UTF-8, ~700 rekordów, posortowane rosnąco po `nr_piesni`. Schemat (model [`Son
 └───────────────────────────────────────────────────────────────────────┘
 ```
 
-**Górny pasek (info):** numer + tytuł pieśni, aktualne strony, przycisk
-**„Wybierz"/„Schowaj pasek"**, przycisk **„Holyrics"**, ikona **⚙** (ustawienia).
+**Górny pasek (info):** numer + tytuł pieśni, aktualne strony, przycisk **„Holyrics"**,
+ikona **⚙** (ustawienia). (Opcjonalnie przycisk „Wyślij/Wyświetl do Holyrics" — sekcja 6.5.)
 
 **Input row** (domyślnie widoczny): pole numeru `etNumber` (klawiatura numeryczna,
 maks. 4 znaki) + **„Idź"** (i Enter), pole autocomplete `actvTitle` (szukanie po tytule),
@@ -78,12 +78,9 @@ przycisk trybu nawigacji.
 Stan startowy: przy pierwszym uruchomieniu otwiera pieśń nr 1.
 
 ### 3.1 Chowanie pasków
-Dwa niezależne mechanizmy zwiększające obszar nut:
-- **Przycisk „Wybierz"/„Schowaj pasek"** w górnym pasku — chowa/pokazuje **input row**
-  (animacja slide 250 ms).
-- **Tapnięcie w środek ekranu** (obszar PDF) — chowa/pokazuje **oba paski naraz**
-  (górny + input row) dla pełnoekranowych nut. Strzałki ◀ ▶ to osobne widoki, więc
-  tapnięcie ich nawiguje, a nie chowa paski.
+**Tapnięcie w środek ekranu** (obszar PDF) chowa/pokazuje **oba paski naraz**
+(górny pasek + input row) dla pełnoekranowych nut (animacja slide 250 ms). Strzałki ◀ ▶
+to osobne widoki, więc tapnięcie ich nawiguje, a nie chowa paski.
 
 ### 3.2 Zoom i pan
 - Zakres zoom **1×–5×** (pinch). Bitmapy renderowane w 2× rozdzielczości ekranu (ostrość przy zoomie).
