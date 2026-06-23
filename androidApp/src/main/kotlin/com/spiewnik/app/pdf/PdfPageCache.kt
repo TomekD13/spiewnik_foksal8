@@ -92,11 +92,11 @@ class PdfPageCache(private val context: Context) {
                 val bmpW = (pageW * scale).toInt().coerceAtLeast(1)
                 val bmpH = (pageH * scale).toInt().coerceAtLeast(1)
 
-                // RGB_565 zamiast ARGB_8888: połowa zużycia pamięci. Nuty są czarne na
-                // białym tle (bitmapa jest zamalowywana na biało), a render PDF nie używa
-                // przezroczystości — kanał alfa jest zbędny. Rozdzielczość renderowania
-                // (skala 2×) pozostaje bez zmian, więc jakość obrazu nut się nie pogarsza.
-                val bitmap = Bitmap.createBitmap(bmpW, bmpH, Bitmap.Config.RGB_565)
+                // MUSI być ARGB_8888 — PdfRenderer.render() wymaga tego formatu. RGB_565
+                // dawało czarny ekran na realnym urządzeniu (Android 14), mimo że na
+                // emulatorze (Android 9) przechodziło. Oszczędność pamięci szukamy gdzie
+                // indziej (skala renderowania / cache), nie kosztem formatu bitmapy.
+                val bitmap = Bitmap.createBitmap(bmpW, bmpH, Bitmap.Config.ARGB_8888)
                 bitmap.eraseColor(Color.WHITE)
                 page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
                 page.close()

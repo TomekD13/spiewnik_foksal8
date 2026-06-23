@@ -21,12 +21,14 @@ polemiki jest więc nietrafna — limit istnieje. Poprawiamy to, co faktycznie p
 zmniejszamy koszt pojedynczej strony i agresję prefetchu.
 
 ### Co trzeba zrobić
-1. ✅ **ZROBIONE — `RGB_565` zamiast `ARGB_8888`** w `PdfPageCache.renderPage()`.
-   Połowa pamięci na stronę (~30 MB → ~15 MB); renderowanie (skala 2×) bez zmian, więc
-   jakość nut zachowana. Cache mieści automatycznie ~2× więcej stron.
+1. ❌ **`RGB_565` — ODRZUCONE.** Próbowane, ale `PdfRenderer.render()` wymaga `ARGB_8888`;
+   RGB_565 dawało **czarny ekran** na realnym tablecie (Android 14), choć przechodziło na
+   emulatorze. Cofnięte do `ARGB_8888`. Oszczędności pamięci szukamy poniżej, NIE w formacie.
 2. **Mniej agresywny prefetch (do rozważenia):** ograniczyć z 2 sąsiednich do
-   **1 (następna strona)** w `prefetchNeighbours()` (`MainActivity.kt`). Świadomie pominięte
-   teraz — zostawiamy na później, jeśli pomiary pokażą potrzebę.
+   **1 (następna strona)** w `prefetchNeighbours()` (`MainActivity.kt`).
+3. **Render w ARGB_8888 + cache w RGB_565 (do rozważenia):** renderować w wymaganym
+   ARGB_8888, a do cache trzymać kopię `bitmap.copy(RGB_565, false)` — pół pamięci w cache
+   bez psucia renderu. Uwaga: kopia + chwilowa bitmapa ARGB w trakcie renderowania.
 
 ### Do decyzji (tradeoff)
 - **Współczynnik renderowania 2× → 1,5×** (`PdfPageCache.kt:91`). Daje duży zysk
@@ -34,10 +36,10 @@ zmniejszamy koszt pojedynczej strony i agresję prefetchu.
   na matowym ekranie NXTPAPER. **Decyzja do podjęcia:** zostawić 2×, dać 1,5×, czy zrobić
   z tego parametr/ustawienie (1,5×/2,0×). Konsekwencja: niższy = mniej RAM, wyższy =
   ostrzejsze cienkie linie.
-- **`android:largeHeap="true"`** — **już włączone** w `AndroidManifest.xml`. To tylko
-  fallback (maskuje problemy, działa różnie na urządzeniach), więc i tak warto wprowadzić
-  RGB_565 + prefetch=1 jako właściwe rozwiązanie. Rozważyć, czy `largeHeap` jest potrzebne
-  po tych zmianach.
+- **`android:largeHeap="true"`** — **już włączone** w `AndroidManifest.xml`. To fallback
+  (maskuje problemy, działa różnie na urządzeniach). Właściwe oszczędności: skala 1,5×,
+  prefetch=1 lub cache w RGB_565 (pkt wyżej). Tablet ma 8 GB RAM, więc na razie ARGB_8888
+  + largeHeap są w pełni wystarczające — pamięć to temat „na później", nie pilny.
 
 ### Opcjonalne (większy nakład, ostrożnie)
 - **Recykling bitmap (`inBitmap`/reuse):** trudne razem z `LruCache`, który wciąż trzyma
@@ -55,3 +57,5 @@ Po zmianach zbudować APK i zmierzyć zużycie pamięci na realnym tablecie prze
 | ARGB_8888, 2× (obecnie) | ~30 MB | ~120 MB 💀 |
 | RGB_565, 2× | ~15 MB | ~60 MB ✅ |
 | RGB_565, 1,5× | ~9 MB | ~36 MB ✅✅ |
+
+
