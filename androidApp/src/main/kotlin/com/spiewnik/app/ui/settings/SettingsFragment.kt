@@ -1,6 +1,7 @@
 package com.spiewnik.app.ui.settings
 
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import com.spiewnik.app.BuildConfig
+import com.spiewnik.app.CrashLogger
 import com.spiewnik.app.R
 import com.spiewnik.app.SongViewModel
 import com.spiewnik.app.databinding.FragmentSettingsBinding
@@ -40,14 +42,19 @@ class SettingsFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnResetPosition.setOnClickListener {
-            viewModel.resetPosition()
-            dismiss()
-        }
-
         // Holyrics connection settings
         binding.etHolyricsIp.setText(viewModel.settings.holyricsIp)
         binding.etHolyricsToken.setText(viewModel.settings.holyricsToken)
+
+        // Reveal token for 5 s, then mask again
+        binding.btnRevealToken.setOnClickListener {
+            val et = binding.etHolyricsToken
+            et.transformationMethod = null
+            et.setSelection(et.text?.length ?: 0)
+            et.postDelayed({
+                _binding?.etHolyricsToken?.transformationMethod = PasswordTransformationMethod.getInstance()
+            }, 5000)
+        }
         binding.btnScanHolyricsQr.setOnClickListener {
             qrScanLauncher.launch(
                 ScanOptions().apply {
@@ -83,6 +90,15 @@ class SettingsFragment : DialogFragment() {
                 .setMessage(R.string.help_text)
                 .setPositiveButton(R.string.settings_close, null)
                 .show()
+        }
+
+        binding.btnShareCrashLog.setOnClickListener {
+            val intent = CrashLogger.shareIntent(requireContext())
+            if (intent == null) {
+                viewModel.showToast(getString(R.string.crash_log_empty))
+            } else {
+                startActivity(android.content.Intent.createChooser(intent, getString(R.string.crash_log_share)))
+            }
         }
 
         binding.tvAppInfo.text = "${getString(R.string.settings_version)} ${BuildConfig.VERSION_NAME}"

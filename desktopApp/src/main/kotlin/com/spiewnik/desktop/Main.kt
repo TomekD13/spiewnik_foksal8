@@ -25,6 +25,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Switch
+import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.darkColors
@@ -370,6 +371,15 @@ private fun BarButton(label: String, color: Color, onClick: () -> Unit) {
     }
 }
 
+/** Suwaki Holyrics: ON = pomarańczowy, OFF = niebieski. */
+@Composable
+private fun holyricsSwitchColors() = SwitchDefaults.colors(
+    checkedThumbColor = Color(0xFFC2640A),
+    checkedTrackColor = Color(0xFFC2640A),
+    uncheckedThumbColor = Color(0xFF0E639C),
+    uncheckedTrackColor = Color(0xFF0E639C),
+)
+
 @Composable
 private fun TocOverlay(
     catalog: SongCatalog,
@@ -709,12 +719,12 @@ private fun SettingsOverlay(
                 }
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Automatycznie zmieniaj pieśń razem z Holyrics", color = textColor, modifier = Modifier.weight(1f))
-                Switch(checked = autoFollow, onCheckedChange = onAutoFollow)
+                Text("Odbieraj i zmieniaj pieśni razem z Holyrics", color = textColor, modifier = Modifier.weight(1f))
+                Switch(checked = autoFollow, onCheckedChange = onAutoFollow, colors = holyricsSwitchColors())
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text("Wysyłaj pieśni do Holyrics (przycisk w pasku)", color = textColor, modifier = Modifier.weight(1f))
-                Switch(checked = holyricsSend, onCheckedChange = onHolyricsSend)
+                Switch(checked = holyricsSend, onCheckedChange = onHolyricsSend, colors = holyricsSwitchColors())
             }
             if (showKeyboard) {
                 Text(
@@ -794,10 +804,14 @@ HOLYRICS
 • W uprawnieniach API Holyrics włącz: GetLyricsPlaylist oraz GetCurrentPresentation;
   do wysyłania także SearchLyrics, AddLyricsToPlaylist, ShowLyrics.
 • Przycisk „Holyrics" pokazuje playlistę; aktualnie wyświetlana pieśń jest oznaczona ▶.
-• „Automatycznie zmieniaj pieśń razem z Holyrics" — apka sama otwiera pieśń z rzutnika.
+• „Odbieraj i zmieniaj pieśni razem z Holyrics" — apka sama otwiera pieśń z rzutnika.
 • „Wysyłaj pieśni do Holyrics" — w górnym pasku pojawia się przycisk: „Wyślij do Holyrics"
   dodaje otwartą pieśń do playlisty, potem zmienia się w „Wyświetl" (rzuca na ekran). Gdy
-  pieśń jest już w playliście, od razu widać „Wyświetl"."""
+  pieśń jest już w playliście, od razu widać „Wyświetl".
+
+LOG BŁĘDÓW
+• Gdy aplikacja się zawiesi, błąd zapisuje się do pliku: ~/.spiewnik/crash.txt
+  (ostatnie 20 crashy)."""
 
 @Composable
 private fun StatusBanner(message: String) {
@@ -809,13 +823,16 @@ private fun StatusBanner(message: String) {
     }
 }
 
-fun main() = application {
-    Window(
-        onCloseRequest = ::exitApplication,
-        state = rememberWindowState(width = 1280.dp, height = 800.dp),
-        title = "Śpiewnik KADS Foksal 8",
-        icon = painterResource("logo.png")
-    ) {
-        App()
+fun main() {
+    DesktopCrashLogger.install()
+    application {
+        Window(
+            onCloseRequest = ::exitApplication,
+            state = rememberWindowState(width = 1280.dp, height = 800.dp),
+            title = "Śpiewnik KADS Foksal 8",
+            icon = painterResource("logo.png")
+        ) {
+            App()
+        }
     }
 }

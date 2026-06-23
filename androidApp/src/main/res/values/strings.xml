@@ -18,8 +18,6 @@
     <!-- Settings dialog -->
     <string name="settings_title">Ustawienia</string>
     <string name="settings_nav_mode">Tryb nawigacji</string>
-    <string name="settings_reset_position">Reset ostatniej pozycji</string>
-    <string name="settings_reset_done">Pozycja zresetowana (pieśń 1)</string>
     <string name="settings_close">Zamknij</string>
     <string name="settings_version">Wersja</string>
 
@@ -29,20 +27,25 @@
     <string name="holyrics_ip_hint">np. 192.168.1.100</string>
     <string name="holyrics_token_label">Token API</string>
     <string name="holyrics_token_hint">token z Holyrics → Narzędzia → API</string>
+    <string name="holyrics_token_reveal">Pokaż token (5 s)</string>
     <string name="holyrics_save">Zapisz</string>
     <string name="holyrics_saved">Zapisano ustawienia Holyrics</string>
-    <string name="holyrics_auto_follow">Automatycznie zmieniaj pieśń razem z Holyrics</string>
+    <string name="holyrics_auto_follow">Odbieraj i zmieniaj pieśni razem z Holyrics</string>
     <string name="holyrics_send_toggle">Wysyłaj pieśni do Holyrics (przycisk w pasku)</string>
     <string name="holyrics_send_button">Wyślij do Holyrics</string>
     <string name="holyrics_show_button">Wyświetl</string>
-    <string name="holyrics_scan_qr">📷 Skanuj kod QR (IP + token)</string>
+    <string name="holyrics_scan_qr">Skanuj kod QR (IP + token)</string>
     <string name="holyrics_qr_loaded">Wczytano z kodu QR — sprawdź i zapisz</string>
     <string name="holyrics_qr_invalid">Nieprawidłowy kod QR Holyrics</string>
+
+    <!-- Crash log -->
+    <string name="crash_log_share">Udostępnij log błędów</string>
+    <string name="crash_log_empty">Brak zapisanych błędów — apka nie zarejestrowała crasha</string>
 
     <!-- Help / instrukcja -->
     <string name="help_button">Instrukcja obsługi</string>
     <string name="help_title">Instrukcja obsługi</string>
-    <string name="help_text">NAWIGACJA\n• Wpisz numer pieśni i naciśnij „Idź" (lub Enter) — otworzy się pieśń.\n• Pole „Szukaj po tytule" działa też jako spis treści: dotknij pustego pola, aby zobaczyć całą listę pieśni; wpisywanie filtruje po numerze lub tytule. Dotknij pozycji, aby otworzyć.\n• Strzałki ◀ ▶ po bokach przewijają pieśń/strony zależnie od trybu nawigacji.\n• Dotknięcie środka ekranu chowa/pokazuje paski (górny pasek i pasek wpisywania) — pełny ekran nut. Strzałki ◀ ▶ działają normalnie.\n• Zoom: rozsuń/zsuń dwa palce (1×–5×). Powiększenie nie resetuje się przy zmianie pieśni.\n\nTRYBY NAWIGACJI (przycisk obok pola tytułu)\n• Domyślny tryb zależy od orientacji: w pionie „Strona", w poziomie „Pieśń". Obrót ekranu przywraca tryb domyślny; przyciskiem możesz go zmienić.\n• Rozkładówka — strzałki przeskakują o 2 strony.\n• Strona — strzałki przeskakują o 1 stronę.\n• Pieśń — strzałki przeskakują do poprzedniej/następnej pieśni.\n\nUSTAWIENIA\n• Reset ostatniej pozycji (wraca do pieśni 1).\n• Dane połączenia z Holyrics: adres IP laptopa i token API.\n• „Automatycznie zmieniaj pieśń razem z Holyrics" — gdy włączone, aplikacja sama otwiera pieśń aktualnie wyświetlaną na rzutniku.\n• „Wysyłaj pieśni do Holyrics" — w górnym pasku pojawia się przycisk Wyślij/Wyświetl (patrz niżej).\n\nHOLYRICS\n• Tablet i laptop muszą być w tej samej sieci WiFi. Numery pieśni muszą być zgodne.\n• Najszybciej: w ustawieniach naciśnij „Skanuj kod QR" i zeskanuj kod z Holyrics — IP i token wpiszą się same (sprawdź i zapisz).\n• Ręcznie: w Holyrics: Narzędzia → API — odczytaj token (pole ID odbiornika) i wpisz go w ustawieniach aplikacji wraz z adresem IP laptopa.\n• W uprawnieniach API Holyrics włącz funkcje: GetLyricsPlaylist (playlista) oraz GetCurrentPresentation (aktualnie wyświetlana pieśń); do wysyłania także SearchLyrics, AddLyricsToPlaylist, ShowLyrics.\n• Przycisk „Holyrics" w górnym pasku pokazuje playlistę; aktualnie wyświetlana pieśń jest podświetlona (▶). Dotknięcie pozycji otwiera pieśń.\n• Wysyłanie pieśni: po włączeniu „Wysyłaj pieśni do Holyrics" obok pieśni jest przycisk — „Wyślij do Holyrics" dodaje ją do playlisty, a „Wyświetl" rzuca na ekran. Gdy pieśń jest już w playliście, od razu widać „Wyświetl".</string>
+    <string name="help_text">NAWIGACJA\n• Wpisz numer pieśni i naciśnij „Idź" (lub Enter) — otworzy się pieśń.\n• Pole „Szukaj po tytule" działa też jako spis treści: dotknij pustego pola, aby zobaczyć całą listę pieśni; wpisywanie filtruje po numerze lub tytule. Dotknij pozycji, aby otworzyć.\n• Strzałki ◀ ▶ po bokach przewijają pieśń/strony zależnie od trybu nawigacji.\n• Dotknięcie środka ekranu chowa/pokazuje paski (górny pasek i pasek wpisywania) — pełny ekran nut. Strzałki ◀ ▶ działają normalnie.\n• Zoom: rozsuń/zsuń dwa palce (1×–5×). Powiększenie nie resetuje się przy zmianie pieśni.\n\nTRYBY NAWIGACJI (przycisk obok pola tytułu)\n• Domyślny tryb zależy od orientacji: w pionie „Strona", w poziomie „Pieśń". Obrót ekranu przywraca tryb domyślny; przyciskiem możesz go zmienić.\n• Rozkładówka — strzałki przeskakują o 2 strony.\n• Strona — strzałki przeskakują o 1 stronę.\n• Pieśń — strzałki przeskakują do poprzedniej/następnej pieśni.\n\nUSTAWIENIA\n• Dane połączenia z Holyrics: adres IP laptopa i token API. Ikona „oka" przy tokenie pokazuje go na 5 sekund.\n• „Odbieraj i zmieniaj pieśni razem z Holyrics" — gdy włączone, aplikacja sama otwiera pieśń aktualnie wyświetlaną na rzutniku.\n• „Wysyłaj pieśni do Holyrics" — w górnym pasku pojawia się przycisk Wyślij/Wyświetl (patrz niżej).\n• Suwaki: pomarańczowy = włączone, niebieski = wyłączone.\n• „Udostępnij log błędów" — gdy aplikacja się zawiesi, zapisuje błąd do pliku; ten przycisk wysyła log (np. mailem, jako załącznik).\n\nHOLYRICS\n• Tablet i laptop muszą być w tej samej sieci WiFi. Numery pieśni muszą być zgodne.\n• Najszybciej: w ustawieniach naciśnij „Skanuj kod QR" i zeskanuj kod z Holyrics — IP i token wpiszą się same (sprawdź i zapisz).\n• Ręcznie: w Holyrics: Narzędzia → API — odczytaj token (pole ID odbiornika) i wpisz go w ustawieniach aplikacji wraz z adresem IP laptopa.\n• W uprawnieniach API Holyrics włącz funkcje: GetLyricsPlaylist (playlista) oraz GetCurrentPresentation (aktualnie wyświetlana pieśń); do wysyłania także SearchLyrics, AddLyricsToPlaylist, ShowLyrics.\n• Przycisk „Holyrics" w górnym pasku pokazuje playlistę; aktualnie wyświetlana pieśń jest podświetlona (▶). Dotknięcie pozycji otwiera pieśń.\n• Wysyłanie pieśni: po włączeniu „Wysyłaj pieśni do Holyrics" obok pieśni jest przycisk — „Wyślij do Holyrics" dodaje ją do playlisty, a „Wyświetl" rzuca na ekran. Gdy pieśń jest już w playliście, od razu widać „Wyświetl".</string>
 
     <!-- Holyrics bottom sheet -->
     <string name="holyrics_sheet_title">Playlista Holyrics</string>

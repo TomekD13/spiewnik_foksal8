@@ -207,10 +207,11 @@ Współgra z auto-follow (po „Wyświetl" Holyrics pokazuje pieśń, którą ap
 
 ## 7. Ustawienia, pamięć stanu, błędy
 
-**Ustawienia (⚙):** reset ostatniej pozycji (wraca do pieśni 1), IP/token Holyrics
-(z opcją **skanowania kodu QR**), przełącznik auto-follow Holyrics, przełącznik
-**wysyłania pieśni do Holyrics** (sekcja 6.5),
+**Ustawienia (⚙):** IP/token Holyrics (z opcją **skanowania kodu QR**; pole token ma ikonę
+„oka" — odsłania token na 5 s), przełącznik **„Odbieraj i zmieniaj pieśni razem z Holyrics"**
+(auto-follow), przełącznik **wysyłania pieśni do Holyrics** (sekcja 6.5),
 **Instrukcja obsługi** (dialog z opisem nawigacji i konfiguracji Holyrics), informacje o aplikacji.
+Oba suwaki świecą **pomarańczowo gdy włączone, niebiesko gdy wyłączone**.
 Wyboru trybu nawigacji **nie ma** w ustawieniach — służy do tego przycisk trybu, a tryb domyślny
 wynika z orientacji (sekcja 5.1). Orientacją zarządza system — brak opcji w aplikacji.
 
@@ -221,6 +222,16 @@ wynika z orientacji (sekcja 5.1). Orientacją zarządza system — brak opcji w 
 
 **Błędy:** komunikaty przejściowe jako Toast; błędy krytyczne (brak/niepoprawny PDF lub JSON)
 jako baner. Wszystkie wyjątki logowane do Logcat, bez crasha.
+
+**Log błędów (crash log):** globalny `UncaughtExceptionHandler` ([`App`](androidApp/src/main/kotlin/com/spiewnik/app/App.kt) +
+[`CrashLogger`](androidApp/src/main/kotlin/com/spiewnik/app/CrashLogger.kt)) zapisuje crashe do
+jednego rolującego pliku `Android/data/com.spiewnik.app/files/logs/crash.txt` (ostatnie
+**20** crashy: czas, wersja, urządzenie, pełny stack trace), po czym oddaje sterowanie
+domyślnemu handlerowi. Przycisk **„Udostępnij log błędów"** w ustawieniach wysyła plik
+(`ACTION_SEND` + `FileProvider`, np. mailem jako załącznik). Formatowanie/rolowanie w `:core`
+([`CrashReport`](core/src/main/kotlin/com/spiewnik/app/CrashReport.kt), z testem); desktop pisze
+do `~/.spiewnik/crash.txt`. Łapie wyjątki JVM (w tym `OutOfMemoryError`); nie łapie crashy
+natywnych ani ANR.
 
 **Rendering / cache** ([`PdfPageCache.kt`](androidApp/src/main/kotlin/com/spiewnik/app/pdf/PdfPageCache.kt)):
 renderowane tylko widoczne strony, LRU cache bitmap (1/6 RAM), klucz `"pageIndex:WxH"`.

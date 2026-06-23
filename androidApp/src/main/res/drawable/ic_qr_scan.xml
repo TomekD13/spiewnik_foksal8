@@ -1,0 +1,23 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Ramki narożników (finder patterns) -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M3,3 h7 v7 h-7 z M5,5 v3 h3 v-3 z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M14,3 h7 v7 h-7 z M16,5 v3 h3 v-3 z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M3,14 h7 v7 h-7 z M5,16 v3 h3 v-3 z" />
+    <!-- Moduły danych -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M13,13 h3 v3 h-3 z M18,13 h3 v2 h-2 v1 h-1 z M13,18 h2 v3 h-2 z M17,17 h2 v2 h-2 z M19,19 h2 v2 h-2 z" />
+</vector>
