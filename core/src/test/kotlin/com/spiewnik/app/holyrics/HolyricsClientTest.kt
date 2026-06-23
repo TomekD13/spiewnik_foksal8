@@ -38,6 +38,13 @@ class HolyricsClientTest {
         assertTrue(failing.fetchCurrentSong("ip", "t").isFailure)
     }
 
+    @Test fun `fetchPlaylistData returns numbers and id map`() {
+        val resp = """{"status":"ok","data":[{"id":"a","title":"5"},{"id":"b","title":"7"}]}"""
+        val pl = client(resp).fetchPlaylistData("ip", "t").getOrThrow()
+        assertEquals(listOf(5, 7), pl.numbers)
+        assertEquals(mapOf(5 to "a", 7 to "b"), pl.ids)
+    }
+
     @Test fun `findSongId returns id of exact title match`() {
         val resp = """{"status":"ok","data":[{"id":"5","title":"1"},{"id":"9","title":"10"}]}"""
         assertEquals("5", client(resp).findSongId("ip", "t", 1).getOrThrow())

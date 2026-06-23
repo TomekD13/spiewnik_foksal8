@@ -16,6 +16,7 @@ class AppSettings(context: Context) {
         private const val KEY_HOLYRICS_TOKEN = "holyrics_token"
         private const val KEY_HOLYRICS_AUTO_FOLLOW = "holyrics_auto_follow"
         private const val KEY_HOLYRICS_SEND = "holyrics_send"
+        private const val KEY_CRASH_LOG = "crash_log_enabled"
     }
 
     var lastSongNumber: Int
@@ -49,6 +50,10 @@ class AppSettings(context: Context) {
     var holyricsSend: Boolean
         get() = prefs.getBoolean(KEY_HOLYRICS_SEND, false)
         set(value) = prefs.edit().putBoolean(KEY_HOLYRICS_SEND, value).apply()
+
+    var crashLogEnabled: Boolean
+        get() = prefs.getBoolean(KEY_CRASH_LOG, true)
+        set(value) = prefs.edit().putBoolean(KEY_CRASH_LOG, value).apply()
 
     fun resetPosition() {
         prefs.edit()

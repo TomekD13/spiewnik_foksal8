@@ -162,6 +162,19 @@
             app:backgroundTint="@color/accent_secondary"
             android:layout_marginBottom="12dp" />
 
+        <!-- Crash logging toggle -->
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/swCrashLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/crash_log_toggle"
+            android:textSize="15sp"
+            android:textColor="@color/bar_text"
+            app:thumbTint="@color/holyrics_switch"
+            app:trackTint="@color/holyrics_switch"
+            android:layout_marginBottom="12dp" />
+
         <!-- Share crash log -->
         <Button
             android:id="@+id/btnShareCrashLog"

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import androidx.core.content.FileProvider
+import com.spiewnik.app.settings.AppSettings
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -31,6 +32,7 @@ object CrashLogger {
     }
 
     fun write(context: Context, throwable: Throwable) {
+        if (!AppSettings(context).crashLogEnabled) return
         val file = logFile(context)
         file.parentFile?.mkdirs()
         val time = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(Date())

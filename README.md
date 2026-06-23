@@ -227,8 +227,9 @@ jako baner. Wszystkie wyjątki logowane do Logcat, bez crasha.
 [`CrashLogger`](androidApp/src/main/kotlin/com/spiewnik/app/CrashLogger.kt)) zapisuje crashe do
 jednego rolującego pliku `Android/data/com.spiewnik.app/files/logs/crash.txt` (ostatnie
 **20** crashy: czas, wersja, urządzenie, pełny stack trace), po czym oddaje sterowanie
-domyślnemu handlerowi. Przycisk **„Udostępnij log błędów"** w ustawieniach wysyła plik
-(`ACTION_SEND` + `FileProvider`, np. mailem jako załącznik). Formatowanie/rolowanie w `:core`
+domyślnemu handlerowi. Suwak **„Zapisuj log błędów"** (domyślnie włączony) włącza/wyłącza zapis, a przycisk
+**„Udostępnij log błędów"** wysyła plik (`ACTION_SEND` + `FileProvider`, np. mailem jako
+załącznik). Formatowanie/rolowanie w `:core`
 ([`CrashReport`](core/src/main/kotlin/com/spiewnik/app/CrashReport.kt), z testem); desktop pisze
 do `~/.spiewnik/crash.txt`. Łapie wyjątki JVM (w tym `OutOfMemoryError`); nie łapie crashy
 natywnych ani ANR.

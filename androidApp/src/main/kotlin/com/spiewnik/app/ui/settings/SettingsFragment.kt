@@ -92,6 +92,12 @@ class SettingsFragment : DialogFragment() {
                 .show()
         }
 
+        // Crash logging on/off
+        binding.swCrashLog.isChecked = viewModel.settings.crashLogEnabled
+        binding.swCrashLog.setOnCheckedChangeListener { _, checked ->
+            viewModel.settings.crashLogEnabled = checked
+        }
+
         binding.btnShareCrashLog.setOnClickListener {
             val intent = CrashLogger.shareIntent(requireContext())
             if (intent == null) {

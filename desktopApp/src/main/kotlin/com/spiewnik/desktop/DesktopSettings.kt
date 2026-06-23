@@ -14,6 +14,7 @@ class DesktopSettings {
         var holyricsToken: String = "",
         var autoFollow: Boolean = false,
         var holyricsSend: Boolean = false,
+        var crashLogEnabled: Boolean = true,
         var lastSong: Int = 1,
     )
 
@@ -44,6 +45,10 @@ class DesktopSettings {
     var holyricsSend: Boolean
         get() = data.holyricsSend
         set(value) { data.holyricsSend = value; save() }
+
+    var crashLogEnabled: Boolean
+        get() = data.crashLogEnabled
+        set(value) { data.crashLogEnabled = value; save() }
 
     var lastSong: Int
         get() = data.lastSong

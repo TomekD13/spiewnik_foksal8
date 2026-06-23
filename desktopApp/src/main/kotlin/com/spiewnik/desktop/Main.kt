@@ -178,6 +178,7 @@ fun App() {
     var currentSong by remember { mutableStateOf<Int?>(null) }
     var status by remember { mutableStateOf<String?>(null) }
     var holyricsSend by remember { mutableStateOf(settings.holyricsSend) }
+    var crashLogEnabled by remember { mutableStateOf(settings.crashLogEnabled) }
     // Songs in the Holyrics playlist (number -> library id); drives the "Wyślij"/"Wyświetl" button.
     var playlistIds by remember { mutableStateOf<Map<Int, String>>(emptyMap()) }
 
@@ -317,6 +318,8 @@ fun App() {
                 onToken = { token = it; settings.holyricsToken = it },
                 onAutoFollow = { autoFollow = it; settings.autoFollow = it },
                 onHolyricsSend = { holyricsSend = it; settings.holyricsSend = it },
+                crashLogEnabled = crashLogEnabled,
+                onCrashLog = { crashLogEnabled = it; settings.crashLogEnabled = it },
                 onOpenHelp = { showHelp = true },
                 onClose = { showSettings = false },
             )
@@ -678,10 +681,12 @@ private fun SettingsOverlay(
     token: String,
     autoFollow: Boolean,
     holyricsSend: Boolean,
+    crashLogEnabled: Boolean,
     onIp: (String) -> Unit,
     onToken: (String) -> Unit,
     onAutoFollow: (Boolean) -> Unit,
     onHolyricsSend: (Boolean) -> Unit,
+    onCrashLog: (Boolean) -> Unit,
     onOpenHelp: () -> Unit,
     onClose: () -> Unit,
 ) {
@@ -725,6 +730,10 @@ private fun SettingsOverlay(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text("Wysyłaj pieśni do Holyrics (przycisk w pasku)", color = textColor, modifier = Modifier.weight(1f))
                 Switch(checked = holyricsSend, onCheckedChange = onHolyricsSend, colors = holyricsSwitchColors())
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text("Zapisuj log błędów (~/.spiewnik/crash.txt)", color = textColor, modifier = Modifier.weight(1f))
+                Switch(checked = crashLogEnabled, onCheckedChange = onCrashLog, colors = holyricsSwitchColors())
             }
             if (showKeyboard) {
                 Text(
@@ -811,7 +820,7 @@ HOLYRICS
 
 LOG BŁĘDÓW
 • Gdy aplikacja się zawiesi, błąd zapisuje się do pliku: ~/.spiewnik/crash.txt
-  (ostatnie 20 crashy)."""
+  (ostatnie 20 crashy). Można wyłączyć w ustawieniach („Zapisuj log błędów")."""
 
 @Composable
 private fun StatusBanner(message: String) {
