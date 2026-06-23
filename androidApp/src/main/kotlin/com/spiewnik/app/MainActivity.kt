@@ -190,6 +190,8 @@ class MainActivity : AppCompatActivity() {
         val list = view.findViewById<ListView>(R.id.lvSongs)
         val adapter = ArrayAdapter(this, R.layout.item_song, ArrayList(labels))
         list.adapter = adapter
+        // Pusta lista (brak wyników) -> lupka + komunikat zamiast pustego/białego tła
+        list.emptyView = view.findViewById(R.id.emptyState)
 
         val dialog = AlertDialog.Builder(this).setView(view).create()
         search.doAfterTextChanged { adapter.filter.filter(it?.toString() ?: "") }
@@ -202,6 +204,10 @@ class MainActivity : AppCompatActivity() {
         }
         dialog.setOnDismissListener { enterImmersiveMode() }
         dialog.show()
+        // Ciemne tło okna (zamiast domyślnego białego, które prześwitywało przy braku wyników)
+        dialog.window?.setBackgroundDrawable(
+            ColorDrawable(ContextCompat.getColor(this, R.color.bar_background))
+        )
         dialog.window?.setLayout(
             (resources.displayMetrics.widthPixels * 0.7f).toInt(),
             (resources.displayMetrics.heightPixels * 0.9f).toInt()

@@ -14,7 +14,7 @@
         android:inputType="text"
         android:imeOptions="actionSearch|flagNoExtractUi"
         android:textSize="18sp"
-        android:textColor="@color/bar_text"
+        android:textColor="@color/black"
         android:background="@drawable/input_background"
         android:paddingStart="12dp"
         android:paddingEnd="12dp" />
@@ -29,5 +29,30 @@
         android:fadeScrollbars="false"
         android:divider="@color/nav_button"
         android:dividerHeight="1dp" />
+
+    <!-- Empty state: pokazywane przez ListView.setEmptyView gdy brak wyników -->
+    <LinearLayout
+        android:id="@+id/emptyState"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/ic_search"
+            android:contentDescription="@string/toc_no_results" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/toc_no_results"
+            android:textSize="16sp"
+            android:textColor="@color/empty_state" />
+    </LinearLayout>
 
 </LinearLayout>

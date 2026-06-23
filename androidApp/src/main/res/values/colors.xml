@@ -28,6 +28,9 @@
     <color name="holyrics_send">#1565C0</color>
     <color name="holyrics_show">#C2640A</color>
 
+    <!-- Empty state (spis treści — brak wyników): lupka + komunikat -->
+    <color name="empty_state">#888888</color>
+
     <!-- PDF page area -->
     <color name="page_background">#1E1E1E</color>
 
