@@ -196,7 +196,6 @@ class MainActivity : AppCompatActivity() {
         list.setOnItemClickListener { _, _, position, _ ->
             val selected = adapter.getItem(position) ?: return@setOnItemClickListener
             selected.substringBefore(".").trim().toIntOrNull()?.let { number ->
-                binding.etNumber.setText(number.toString())
                 viewModel.openSong(number)
             }
             dialog.dismiss()
@@ -283,7 +282,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun openSongFromInput() {
         val number = binding.etNumber.text?.toString()?.trim()?.toIntOrNull()
-        if (number != null && number > 0) viewModel.openSong(number)
+        if (number != null && number > 0) {
+            viewModel.openSong(number)
+            binding.etNumber.text?.clear() // pole puste po „Idź" (gotowe na kolejny numer)
+        }
     }
 
     // ── Navigation buttons ────────────────────────────────────────────────────
