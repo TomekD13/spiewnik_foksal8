@@ -36,4 +36,11 @@ class SongCatalogTest {
         assertNull(catalog.previousSong(1))
         assertNull(catalog.nextSong(3))
     }
+
+    @Test fun `findByPage returns the song containing the page (both pages of a spread)`() {
+        assertEquals(1, catalog.findByPage(10)?.number)
+        assertEquals(3, catalog.findByPage(12)?.number)
+        assertEquals(3, catalog.findByPage(13)?.number) // druga strona pieśni 3
+        assertNull(catalog.findByPage(99))              // strona spoza jakiejkolwiek pieśni
+    }
 }

@@ -168,7 +168,7 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
                 val newPage = (s.currentPdfPage - 1).coerceAtLeast(1)
                 if (newPage != s.currentPdfPage) {
                     settings.lastPdfPage = newPage
-                    _state.value = s.copy(currentPdfPage = newPage)
+                    _state.value = pageState(s, newPage)
                 }
             }
             NavMode.SONG -> s.song?.let { goToPrevSong(it.number, s.navMode) }
@@ -182,11 +182,27 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
                 val newPage = (s.currentPdfPage + 1).coerceAtMost(s.totalPdfPages)
                 if (newPage != s.currentPdfPage) {
                     settings.lastPdfPage = newPage
-                    _state.value = s.copy(currentPdfPage = newPage)
+                    _state.value = pageState(s, newPage)
                 }
             }
             NavMode.SONG -> s.song?.let { goToNextSong(it.number, s.navMode) }
         }
+    }
+
+    /**
+     * Stan po przejściu na [newPage] w trybie SPREAD/PAGE — dobiera też pieśń zawierającą
+     * tę stronę (górny pasek + numer wysyłany do Holyrics). Wyszukiwania są w pamięci
+     * (katalog jest cache'owany), więc bezpieczne na wątku głównym.
+     */
+    private fun pageState(s: UiState, newPage: Int): UiState {
+        val song = repository.findByPage(newPage)
+        return s.copy(
+            currentPdfPage = newPage,
+            song = song,
+            songPages = song?.pages?.filter { it in 1..totalPdfPages } ?: emptyList(),
+            hasPrevSong = song?.let { repository.previousSong(it.number) != null } ?: false,
+            hasNextSong = song?.let { repository.nextSong(it.number) != null } ?: false,
+        )
     }
 
     fun setNavMode(mode: NavMode) {

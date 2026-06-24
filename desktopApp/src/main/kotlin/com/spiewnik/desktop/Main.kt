@@ -126,7 +126,7 @@ class SongbookController(
         when (s.navMode) {
             NavMode.SPREAD, NavMode.PAGE -> {
                 val p = (s.currentPdfPage - 1).coerceAtLeast(1)
-                if (p != s.currentPdfPage) state = s.copy(currentPdfPage = p)
+                if (p != s.currentPdfPage) state = pageState(s, p)
             }
             NavMode.SONG -> s.song?.let { catalog.previousSong(it.number) }?.let { openSong(it.number) }
         }
@@ -137,10 +137,23 @@ class SongbookController(
         when (s.navMode) {
             NavMode.SPREAD, NavMode.PAGE -> {
                 val p = (s.currentPdfPage + 1).coerceAtMost(s.totalPdfPages)
-                if (p != s.currentPdfPage) state = s.copy(currentPdfPage = p)
+                if (p != s.currentPdfPage) state = pageState(s, p)
             }
             NavMode.SONG -> s.song?.let { catalog.nextSong(it.number) }?.let { openSong(it.number) }
         }
+    }
+
+    /** Stan po przejściu na [page] w SPREAD/PAGE — dobiera pieśń zawierającą stronę
+     *  (górny pasek + numer wysyłany do Holyrics). */
+    private fun pageState(s: UiState, page: Int): UiState {
+        val song = catalog.findByPage(page)
+        return s.copy(
+            currentPdfPage = page,
+            song = song,
+            songPages = song?.pages?.filter { it in 1..totalPdfPages } ?: emptyList(),
+            hasPrevSong = song?.let { catalog.previousSong(it.number) != null } ?: false,
+            hasNextSong = song?.let { catalog.nextSong(it.number) != null } ?: false,
+        )
     }
 
     fun cycleNavMode() {

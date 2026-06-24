@@ -33,7 +33,7 @@ class SongRepository(private val context: Context) {
     fun findByNumber(number: Int): Song? = catalog().findByNumber(number)
 
     /** Pierwsza pieśń zawierająca daną stronę PDF (1-based). */
-    fun findByPage(page: Int): Song? = catalog().songs.find { page in it.pages }
+    fun findByPage(page: Int): Song? = catalog().findByPage(page)
 
     fun searchByTitle(query: String): List<Song> = catalog().searchByTitle(query)
 

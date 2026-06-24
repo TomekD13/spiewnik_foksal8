@@ -15,6 +15,9 @@ class SongCatalog private constructor(val songs: List<Song>) {
 
     fun findByNumber(number: Int): Song? = songs.find { it.number == number }
 
+    /** Pierwsza pieśń zawierająca daną stronę PDF (1-based). */
+    fun findByPage(page: Int): Song? = songs.find { page in it.pages }
+
     fun searchByTitle(query: String): List<Song> {
         if (query.isBlank()) return emptyList()
         val lower = query.lowercase()
